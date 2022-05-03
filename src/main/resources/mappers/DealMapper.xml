@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhousemay5.mapper.DealMapper">
+
+    <insert id="save" parameterType="Deal" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO deal(addr_lv1, addr_lv2, addr_lv3, addr_lv4, bunji, bunji_main, bunji_sub, apt_name, square, deal_year_month, deal_day, price, floor, built_year, addr_road, rel_data, deal_type, dealer_loc)
+        VALUES (#{addr_lv1}, #{addr_lv2}, #{addr_lv3}, #{addr_lv4}, #{bunji}, #{bunji_main}, #{bunji_sub}, #{apt_name}, #{square}, #{deal_year_month}, #{deal_day}, #{price}, #{floor}, #{built_year}, #{addr_road}, #{rel_data}, #{deal_type}, #{dealer_loc});
+    </insert>
+
+    <select id="findById" resultType="Deal">
+        SELECT id, addr_lv1, addr_lv2, addr_lv3, addr_lv4,
+               bunji, bunji_main, bunji_sub, apt_name, square,
+               deal_year_month, deal_day, price, floor, built_year,
+               addr_road, rel_data, deal_type, dealer_loc
+        FROM deal
+        WHERE id = #{id};
+    </select>
+
+    <select id="findAll" resultType="Deal">
+        SELECT `id`, addr_lv1, addr_lv2, addr_lv3, addr_lv4,
+               bunji, bunji_main, bunji_sub, apt_name, square,
+               deal_year_month, deal_day, price, floor, built_year,
+               addr_road, rel_data, deal_type, dealer_loc
+		FROM deal;
+    </select>
+
+    <select id="findByLegacyAddress" resultType="Deal">
+        SELECT `id`, addr_lv1, addr_lv2, addr_lv3, addr_lv4,
+               bunji, bunji_main, bunji_sub, apt_name, square,
+               deal_year_month, deal_day, price, floor, built_year,
+               addr_road, rel_data, deal_type, dealer_loc
+        FROM deal
+        WHERE addr_lv1 = #{addr_lv1} AND
+              addr_lv2 = #{addr_lv2} AND
+              addr_lv3 = #{addr_lv3} AND
+              bunji_main = #{bunji_main} AND
+              bunji_sub = #{bunji_sub}
+    </select>
+
+</mapper>
