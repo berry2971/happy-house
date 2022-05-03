@@ -1,0 +1,10 @@
+"
+INTO TABLE `district` FIELDS TERMINATED BY ","
+IGNORE 1 ROWS
+(@id, @addr_lv1, @addr_lv2, @addr_lv3, @addr_lv4)
+SET
+`id` = @id,
+`addr_lv1` = @addr_lv1,
+`addr_lv2` = @addr_lv2,
+`addr_lv3` = @addr_lv3,
+`addr_lv4` = @addr_lv4;

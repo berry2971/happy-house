@@ -16,9 +16,9 @@ echo/
 
 echo [93mImport districts...[0m
 
-type lib\frag1.fsql > lib\temp\cur.sql
+type lib\frag3.fsql > lib\temp\cur.sql
 echo|set /p=districts.csv >> lib/temp/cur.sql
-type lib\frag2.fsql >> lib\temp\cur.sql
+type lib\frag4.fsql >> lib\temp\cur.sql
 mysql --local-infile=1 -u %ID% -p%PW% -P %PORT% happyhouse < lib\temp\cur.sql
 
 echo [93mImported districts successfully.[0m
