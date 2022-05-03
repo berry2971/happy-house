@@ -12,6 +12,7 @@ import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.nio.file.AccessDeniedException;
+import java.util.ArrayList;
 
 @CrossOrigin("*")
 @RestController
@@ -43,7 +44,7 @@ public class UserController {
         if (!checkIdIsEqualToTarget(id, user)) {
             throw new IllegalArgumentException("요청 id와 변경 id가 다릅니다");
         }
-        return userService.modifyUser(id, user);
+        return userService.modifyUser(user);
     }
 
     @ApiOperation(value = "로그인", notes = "id와 pw를 통해 로그인")

@@ -20,7 +20,7 @@
     </select>
 
     <select id="findAll" resultType="Deal">
-        SELECT `id`, addr_lv1, addr_lv2, addr_lv3, addr_lv4,
+        SELECT id, addr_lv1, addr_lv2, addr_lv3, addr_lv4,
                bunji, bunji_main, bunji_sub, apt_name, square,
                deal_year_month, deal_day, price, floor, built_year,
                addr_road, rel_data, deal_type, dealer_loc
@@ -28,7 +28,7 @@
     </select>
 
     <select id="findByLegacyAddress" resultType="Deal">
-        SELECT `id`, addr_lv1, addr_lv2, addr_lv3, addr_lv4,
+        SELECT id, addr_lv1, addr_lv2, addr_lv3, addr_lv4,
                bunji, bunji_main, bunji_sub, apt_name, square,
                deal_year_month, deal_day, price, floor, built_year,
                addr_road, rel_data, deal_type, dealer_loc
