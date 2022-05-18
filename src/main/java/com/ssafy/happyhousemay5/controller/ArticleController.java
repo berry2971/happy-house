@@ -21,7 +21,7 @@ public class ArticleController {
     }
 
     @ApiOperation(value = "게시글 목록 조회", notes = "특정 게시판의 게시글 목록 반환")
-    @GetMapping("/")
+    @GetMapping("")
     public List<Article> getArticles(
             @RequestParam String boardName,
             @RequestParam(required = false, defaultValue = "1") int page
@@ -38,7 +38,7 @@ public class ArticleController {
     }
 
     @ApiOperation(value = "게시글 작성", notes = "게시글 작성 후 게시글 반환")
-    @PostMapping("/")
+    @PostMapping("")
     public Article writeArticle(
             @RequestBody Article article
     ) throws Exception {
