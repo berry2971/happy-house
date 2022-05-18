@@ -55,6 +55,20 @@ CREATE TABLE `deal` (
   KEY `IDX_DEAL_ADDR` (`apt_name`,`addr_lv3`,`bunji`,`addr_lv4`,`addr_lv2`,`addr_lv1`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+DROP TABLE IF EXISTS `board`;
+CREATE TABLE `board` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `board_name` varchar(100) DEFAULT NULL,
+  `title` varchar(200) DEFAULT NULL,
+  `author` varchar(100) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `write_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `content` longtext,
+  PRIMARY KEY (`id`),
+  KEY `idx_board_title` (`title`),
+  KEY `idx_board_board_name` (`board_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 SHOW VARIABLES LIKE '%infile%';
 SET GLOBAL LOCAL_INFILE = TRUE;
 SHOW VARIABLES LIKE '%infile%';
