@@ -2,7 +2,6 @@ package com.ssafy.happyhousemay5.controller;
 
 import com.ssafy.happyhousemay5.domain.entity.Article;
 import com.ssafy.happyhousemay5.service.ArticleService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

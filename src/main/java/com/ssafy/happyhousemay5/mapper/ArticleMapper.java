@@ -10,8 +10,6 @@ public interface ArticleMapper {
 
     Article findById(Long id) throws Exception;
 
-    List<Article> findByBoardName(String boardName) throws Exception;
-
     List<Article> findByBoardNameAndOffsetAndLimit(String boardName, int offset, int articlesPerPage);
 
     void save(Article article) throws Exception;

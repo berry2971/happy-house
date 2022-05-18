@@ -6,20 +6,14 @@
 <mapper namespace="com.ssafy.happyhousemay5.mapper.ArticleMapper">
 
     <insert id="save" parameterType="Article" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO board(board_name, title, author, password, write_time, content)
-        VALUES (#{board_name}, #{title}, #{author}, #{password}, #{write_time}, #{content});
+        INSERT INTO board(board_name, title, author, password, content)
+        VALUES (#{board_name}, #{title}, #{author}, #{password}, #{content});
     </insert>
 
     <select id="findById" resultType="Article">
         SELECT id, board_name, title, author, password, write_time, content
         FROM board
         WHERE id = #{id};
-    </select>
-
-    <select id="findByBoardName" resultType="Article">
-        SELECT id, board_name, title, author, password, write_time, content
-		FROM board
-        WHERE board_name = #{boardName};
     </select>
 
     <select id="findByBoardNameAndOffsetAndLimit" resultType="Article">
@@ -35,7 +29,6 @@
             title = #{title},
             author = #{author},
             password = #{password},
-            write_time = #{write_time},
             content = #{content}
         WHERE id = #{id};
     </update>
