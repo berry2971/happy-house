@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhousemay5.mapper.ArticleMapper">
+
+    <insert id="save" parameterType="Article" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO board(board_name, title, author, password, write_time, content)
+        VALUES (#{board_name}, #{title}, #{author}, #{password}, #{write_time}, #{content});
+    </insert>
+
+    <select id="findById" resultType="Article">
+        SELECT id, board_name, title, author, password, write_time, content
+        FROM board
+        WHERE id = #{id};
+    </select>
+
+    <select id="findByBoardName" resultType="Article">
+        SELECT id, board_name, title, author, password, write_time, content
+		FROM board
+        WHERE board_name = #{boardName};
+    </select>
+
+    <select id="findByBoardNameAndOffsetAndLimit" resultType="Article">
+        SELECT id, board_name, title, author, password, write_time, content
+        FROM board
+        WHERE board_name = #{boardName}
+        LIMIT #{offset}, #{articlesPerPage};
+    </select>
+
+    <update id="modify" parameterType="Article">
+        UPDATE board
+        SET board_name = #{board_name},
+            title = #{title},
+            author = #{author},
+            password = #{password},
+            write_time = #{write_time},
+            content = #{content}
+        WHERE id = #{id};
+    </update>
+
+    <delete id="remove">
+        DELETE FROM board
+        WHERE id = #{id};
+    </delete>
+
+</mapper>
