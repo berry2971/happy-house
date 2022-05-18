@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.happyhousemay5.mapper.DealMapper">
+<mapper namespace="com.ssafy.happyhouse.mapper.DealMapper">
 
     <insert id="save" parameterType="Deal" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO deal(addr_lv1, addr_lv2, addr_lv3, addr_lv4, bunji, bunji_main, bunji_sub, apt_name, square, deal_year_month, deal_day, price, floor, built_year, addr_road, rel_data, deal_type, dealer_loc)

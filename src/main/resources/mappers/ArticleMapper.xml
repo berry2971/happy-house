@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ssafy.happyhousemay5.mapper.ArticleMapper">
+<mapper namespace="com.ssafy.happyhouse.mapper.ArticleMapper">
 
     <insert id="save" parameterType="Article" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO board(board_name, title, author, password, content)
