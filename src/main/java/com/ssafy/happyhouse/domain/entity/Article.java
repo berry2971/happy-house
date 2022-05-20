@@ -4,20 +4,20 @@ public class Article {
 
     private Long id;
     private String board_name;
+    private String subject;
     private String title;
     private String author;
-    private String password;
     private String write_time;
     private String content;
 
     public Article() { }
 
-    public Article(Long id, String board_name, String title, String author, String password, String write_time, String content) {
+    public Article(Long id, String board_name, String subject, String title, String author, String write_time, String content) {
         this.id = id;
         this.board_name = board_name;
+        this.subject = subject;
         this.title = title;
         this.author = author;
-        this.password = password;
         this.write_time = write_time;
         this.content = content;
     }
@@ -38,6 +38,14 @@ public class Article {
         this.board_name = board_name;
     }
 
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -52,14 +60,6 @@ public class Article {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getWrite_time() {

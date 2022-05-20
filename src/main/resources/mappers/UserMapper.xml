@@ -9,26 +9,26 @@
         SELECT id, pw, name, tel,
                bookmarkedAddressState, bookmarkedAddressCity, bookmarkedAddressTown,
                bookmarkedAddressVillage, bookmarkedAddressHamlet
-        FROM user;
+        FROM member;
     </select>
 
     <select id="findById" resultType="User">
         SELECT id, pw, name, tel,
                bookmarkedAddressState, bookmarkedAddressCity, bookmarkedAddressTown,
                bookmarkedAddressVillage, bookmarkedAddressHamlet
-        FROM user
+        FROM member
         WHERE id = #{id};
     </select>
 
     <insert id="save" parameterType="User">
-        INSERT INTO user (id, pw, name, tel, bookmarkedAddressState, bookmarkedAddressCity, bookmarkedAddressTown, bookmarkedAddressVillage, bookmarkedAddressHamlet)
+        INSERT INTO member (id, pw, name, tel, bookmarkedAddressState, bookmarkedAddressCity, bookmarkedAddressTown, bookmarkedAddressVillage, bookmarkedAddressHamlet)
         VALUES (#{id}, #{pw}, #{name}, #{tel},
                 #{bookmarkedAddressState}, #{bookmarkedAddressCity}, #{bookmarkedAddressTown},
                 #{bookmarkedAddressVillage}, #{bookmarkedAddressHamlet});
     </insert>
 
     <update id="modifyUser" parameterType="User">
-        UPDATE user
+        UPDATE member
         SET pw = #{pw},
             name = #{name},
             tel = #{tel},

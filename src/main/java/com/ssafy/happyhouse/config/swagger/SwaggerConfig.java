@@ -1,4 +1,4 @@
-package com.ssafy.happyhouse.config;
+package com.ssafy.happyhouse.config.swagger;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
