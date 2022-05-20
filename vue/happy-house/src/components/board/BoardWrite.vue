@@ -1,6 +1,6 @@
 <template>
   <div class="regist">
-    <h1>QnA 등록</h1>
+    <h2>QnA 등록</h2>
     <div class="regist_form">
       <label for="author">작성자</label>
       <input

@@ -37,7 +37,7 @@ label {
 }
 button,
 .btn {
-  width: 8%;
+  width: 15%;
   background-color: #d0d3d0;
   color: rgb(80, 82, 79);
   padding: 14px 10px;
@@ -55,19 +55,42 @@ button,
   background-color: #f2f2f2;
   padding: 20px;
 }
+.header-right a {
+  float: right;
+  color: white;
+  text-decoration: none;
+  font-size: small;
+  padding: 5px;
+}
+
+.header-right a:hover {
+  color: gray;
+  text-decoration: none;
+}
+
 .happy_logo {
-  width: 350px;
+  width: 250px;
 }
 .header {
   text-align: center;
-  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  height: 20%;
+  background-color: #000000;
 }
 .header img {
   vertical-align: middle;
 }
 
-.header menu {
-  margin: 10px;
+.menu a {
+  color: white;
+  text-decoration: none;
+  font-size: large;
+  padding: 10px;
+}
+
+.menu a:hover {
+  color: gray;
+  text-decoration: none;
 }
 
 .logo {

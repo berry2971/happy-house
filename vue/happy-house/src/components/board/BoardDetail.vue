@@ -1,6 +1,6 @@
 <template>
   <div class="regist">
-    <h1>QnA 상세보기</h1>
+    <h2>QnA 상세보기</h2>
     <div class="regist_form">
       <label for="title">제목</label>
       <div class="view">{{ article.title }}</div>
@@ -11,13 +11,13 @@
       <label for="content">내용</label>
       <div class="view" v-html="article.content"></div>
       <div style="padding-top: 15px">
-        <button class="btn" @click="checkAuthor(article.author, 0)">
+        <b-button class="btn" @click="checkAuthor(article.author, 0)">
           삭제
-        </button>
-        <button class="btn" @click="checkAuthor(article.author, article.id)">
+        </b-button>
+        <b-button class="btn" @click="checkAuthor(article.author, article.id)">
           수정
-        </button>
-        <button class="btn" @click="moveList()">목록</button>
+        </b-button>
+        <b-button class="btn" @click="moveList()">목록</b-button>
       </div>
     </div>
   </div>

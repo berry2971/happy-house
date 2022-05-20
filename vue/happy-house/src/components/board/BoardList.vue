@@ -1,7 +1,8 @@
 <template>
   <div class="regist">
+    <h2>QnA</h2>
     <div style="text-align: right">
-      <button @click="moveWrite">글 등록</button>
+      <b-button @click="moveWrite">글 등록</b-button>
     </div>
     <div v-if="articles.length">
       <table id="book-list">

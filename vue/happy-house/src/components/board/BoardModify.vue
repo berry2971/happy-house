@@ -1,6 +1,6 @@
 <template>
   <div class="regist">
-    <h1>QnA 수정</h1>
+    <h2>QnA 수정</h2>
     <div class="regist_form">
       <label for="author">작성자</label>
       <input
@@ -37,8 +37,8 @@
         rows="5"
       ></textarea
       ><br />
-      <button @click="checkValue">수정</button>
-      <button @click="moveList">목록</button>
+      <b-button @click="checkValue">수정</b-button>
+      <b-button @click="moveList">목록</b-button>
     </div>
   </div>
 </template>
