@@ -1,14 +1,14 @@
 package com.ssafy.happyhouse.domain.dto;
 
-public class MemberFindPasswordDto {
+public class UserFindPasswordDto {
 
     private String id;
     private String name;
     private String tel;
 
-    MemberFindPasswordDto() { }
+    UserFindPasswordDto() { }
 
-    public MemberFindPasswordDto(String id, String name, String tel) {
+    public UserFindPasswordDto(String id, String name, String tel) {
         this.id = id;
         this.name = name;
         this.tel = tel;

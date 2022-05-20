@@ -1,13 +1,13 @@
 package com.ssafy.happyhouse.domain.dto;
 
-public class MemberLoginDto {
+public class UserLoginDto {
 
     private String id;
     private String pw;
 
-    public MemberLoginDto() { }
+    public UserLoginDto() { }
 
-    public MemberLoginDto(String id, String pw) {
+    public UserLoginDto(String id, String pw) {
         this.id = id;
         this.pw = pw;
     }

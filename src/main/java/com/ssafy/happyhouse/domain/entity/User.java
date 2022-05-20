@@ -1,6 +1,6 @@
 package com.ssafy.happyhouse.domain.entity;
 
-public class Member {
+public class User {
 
     private String id;
     private String pw;
@@ -10,10 +10,11 @@ public class Member {
     private String bmk_addr_lv2;
     private String bmk_addr_lv3;
     private String bmk_addr_lv4;
+    private EnumRole role;
 
-    public Member() { }
+    public User() { }
 
-    public Member(String id, String pw, String name, String tel, String bmk_addr_lv1, String bmk_addr_lv2, String bmk_addr_lv3, String bmk_addr_lv4) {
+    public User(String id, String pw, String name, String tel, String bmk_addr_lv1, String bmk_addr_lv2, String bmk_addr_lv3, String bmk_addr_lv4, EnumRole role) {
         this.id = id;
         this.pw = pw;
         this.name = name;
@@ -22,6 +23,7 @@ public class Member {
         this.bmk_addr_lv2 = bmk_addr_lv2;
         this.bmk_addr_lv3 = bmk_addr_lv3;
         this.bmk_addr_lv4 = bmk_addr_lv4;
+        this.role = role;
     }
 
     public String getId() {
@@ -86,6 +88,14 @@ public class Member {
 
     public void setBmk_addr_lv4(String bmk_addr_lv4) {
         this.bmk_addr_lv4 = bmk_addr_lv4;
+    }
+
+    public EnumRole getRole() {
+        return role;
+    }
+
+    public void setRole(EnumRole role) {
+        this.role = role;
     }
 
 }

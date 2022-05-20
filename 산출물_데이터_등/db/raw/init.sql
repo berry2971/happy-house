@@ -14,8 +14,8 @@ CREATE TABLE `district` (
                             KEY `idx_district_adrr_lv4` (`addr_lv4`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `member`;
-CREATE TABLE `member` (
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
                         `id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
                         `pw` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
                         `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -24,6 +24,7 @@ CREATE TABLE `member` (
                         `bmk_addr_lv2` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
                         `bmk_addr_lv3` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
                         `bmk_addr_lv4` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                        `role` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
                         PRIMARY KEY (`id`),
                         KEY `idx_user_name` (`name`),
                         KEY `idx_user_tel` (`tel`)

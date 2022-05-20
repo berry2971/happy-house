@@ -1,9 +1,9 @@
 package com.ssafy.happyhouse.controller;
 
-import com.ssafy.happyhouse.domain.dto.MemberFindPasswordDto;
-import com.ssafy.happyhouse.domain.dto.MemberLoginDto;
-import com.ssafy.happyhouse.domain.entity.Member;
-import com.ssafy.happyhouse.service.MemberService;
+import com.ssafy.happyhouse.domain.dto.UserFindPasswordDto;
+import com.ssafy.happyhouse.domain.dto.UserLoginDto;
+import com.ssafy.happyhouse.domain.entity.User;
+import com.ssafy.happyhouse.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,75 +17,75 @@ import java.nio.file.AccessDeniedException;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/members")
-public class MemberController {
+@RequestMapping("api/users")
+public class UserController {
 
-    private final MemberService memberService;
+    private final UserService userService;
 
     @Autowired
-    public MemberController(MemberService memberService) {
-        this.memberService = memberService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @ApiOperation(value = "회원 조회", notes = "id를 통해 회원 정보를 조회")
     @GetMapping("/{id}")
-    public Member getMember(@PathVariable String id) throws Exception {
-        return memberService.getMember(id);
+    public User getUser(@PathVariable String id) throws Exception {
+        return userService.getUser(id);
     }
 
     @ApiOperation(value = "회원 등록", notes = "User 객체를 통해 신규 회원을 등록")
     @PostMapping("/")
-    public Member registerMember(@RequestBody Member member) throws Exception {
-        return memberService.registerUser(member);
+    public User registerUser(@RequestBody User user) throws Exception {
+        return userService.registerUser(user);
     }
 
     @ApiOperation(value = "회원 수정", notes = "id와 User 객체를 통해 기존 회원 정보를 수정")
     @PutMapping("/{id}")
-    public Member modifyMember(@PathVariable String id, @RequestBody Member member) throws Exception {
-        if (!checkIdIsEqualToTarget(id, member)) {
+    public User modifyUser(@PathVariable String id, @RequestBody User user) throws Exception {
+        if (!checkIdIsEqualToTarget(id, user)) {
             throw new IllegalArgumentException("요청 id와 변경 id가 다릅니다");
         }
-        return memberService.modifyMember(member);
+        return userService.modifyUser(user);
     }
 
     @ApiOperation(value = "로그인", notes = "id와 pw를 통해 로그인")
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody MemberLoginDto memberLoginDto) throws Exception {
-        String token = memberService.login(memberLoginDto.getId(), memberLoginDto.getPw());
+    public ResponseEntity<String> login(@RequestBody UserLoginDto userLoginDto) throws Exception {
+        String token = userService.login(userLoginDto.getId(), userLoginDto.getPw());
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
     @ApiOperation(value = "로그인 정보 조회", notes = "현재 세션에 로그인되어 있는 계정 정보를 조회")
     @GetMapping("/login/current")
-    public Member getCurrentMember(HttpServletRequest request) throws Exception {
+    public User getCurrentUser(HttpServletRequest request) throws Exception {
         String id = retrieveLoginInfoFromSession(request.getSession());
         if (id == null) {
             throw new AccessDeniedException("로그인되어 있지 않음");
         }
-        Member member = memberService.getMember(id);
-        if (!checkMemberExists(member)) {
+        User user = userService.getUser(id);
+        if (!checkUserExists(user)) {
             throw new AuthenticationException("존재하지 않는 아이디");
         } else {
-            return member;
+            return user;
         }
     }
 
     @ApiOperation(value = "비밀번호 찾기", notes = "id, tel, name을 통해 비밀번호 찾기")
     @PostMapping("/find-password")
     public String findPassword(
-            @RequestBody MemberFindPasswordDto memberFindPasswordDto
+            @RequestBody UserFindPasswordDto userFindPasswordDto
     ) throws Exception {
-        String id = memberFindPasswordDto.getId();
-        String name = memberFindPasswordDto.getName();
-        String tel = memberFindPasswordDto.getTel();
+        String id = userFindPasswordDto.getId();
+        String name = userFindPasswordDto.getName();
+        String tel = userFindPasswordDto.getTel();
 
-        Member member = memberService.getMember(id);
-        if (!checkMemberExists(member)) {
+        User user = userService.getUser(id);
+        if (!checkUserExists(user)) {
             throw new AuthenticationException("존재하지 않는 아이디");
-        } if (!checkNameAndTelEqualsTarget(member, name, tel)) {
+        } if (!checkNameAndTelEqualsTarget(user, name, tel)) {
             throw new AccessDeniedException("이름 또는 전화번호가 일치하지 않음");
         } else {
-            return member.getPw();
+            return user.getPw();
         }
     }
 
@@ -96,16 +96,16 @@ public class MemberController {
         return "success";
     }
 
-    private boolean checkIdIsEqualToTarget(String id, Member member) {
-        return id.equals(member.getId());
+    private boolean checkIdIsEqualToTarget(String id, User user) {
+        return id.equals(user.getId());
     }
 
-    private boolean checkMemberExists(Member member) {
-        return member != null;
+    private boolean checkUserExists(User user) {
+        return user != null;
     }
 
-    private boolean checkIdMatchesPw(Member member, String pw) throws Exception {
-        return member != null && pw.equals(member.getPw());
+    private boolean checkIdMatchesPw(User user, String pw) throws Exception {
+        return user != null && pw.equals(user.getPw());
     }
 
     private void saveLoginInfoToSession(HttpSession httpSession, String id) {
@@ -116,8 +116,8 @@ public class MemberController {
         return (String)httpSession.getAttribute("login-id");
     }
 
-    private boolean checkNameAndTelEqualsTarget(Member member, String name, String tel) {
-        return member.getName().equals(name) && member.getTel().equals(tel);
+    private boolean checkNameAndTelEqualsTarget(User user, String name, String tel) {
+        return user.getName().equals(name) && user.getTel().equals(tel);
     }
 
 }

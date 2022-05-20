@@ -40,6 +40,13 @@ public class JwtTokenProvider {
         return builder.sign(Algorithm.HMAC256(SECRET_KEY));
     }
 
+    public void verify(String token) {
+        JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(SECRET_KEY))
+                .withIssuer(ISSUER)
+                .build();
+        jwtVerifier.verify(token);
+    }
+
     public String getIdFromToken(String token) {
         return decode(token).getClaim("id").asString();
     }

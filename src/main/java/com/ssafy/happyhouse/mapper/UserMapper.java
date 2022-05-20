@@ -1,6 +1,6 @@
 package com.ssafy.happyhouse.mapper;
 
-import com.ssafy.happyhouse.domain.entity.Member;
+import com.ssafy.happyhouse.domain.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -8,12 +8,12 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    List<Member> findAll() throws Exception;
+    List<User> findAll() throws Exception;
 
-    Member findById(String id) throws Exception;
+    User findById(String id) throws Exception;
 
-    void save(Member member) throws Exception;
+    void save(User user) throws Exception;
 
-    void modifyUser(Member member);
+    void modifyUser(User user);
 
 }
