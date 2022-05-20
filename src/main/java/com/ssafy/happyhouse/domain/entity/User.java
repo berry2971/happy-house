@@ -10,11 +10,11 @@ public class User {
     private String bmk_addr_lv2;
     private String bmk_addr_lv3;
     private String bmk_addr_lv4;
-    private EnumRole role;
+    private String role;
 
     public User() { }
 
-    public User(String id, String pw, String name, String tel, String bmk_addr_lv1, String bmk_addr_lv2, String bmk_addr_lv3, String bmk_addr_lv4, EnumRole role) {
+    public User(String id, String pw, String name, String tel, String bmk_addr_lv1, String bmk_addr_lv2, String bmk_addr_lv3, String bmk_addr_lv4, String role) {
         this.id = id;
         this.pw = pw;
         this.name = name;
@@ -90,11 +90,11 @@ public class User {
         this.bmk_addr_lv4 = bmk_addr_lv4;
     }
 
-    public EnumRole getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(EnumRole role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

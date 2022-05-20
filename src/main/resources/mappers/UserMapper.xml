@@ -7,24 +7,21 @@
 
     <select id="findAll" resultType="User">
         SELECT id, pw, name, tel,
-               bookmarkedAddressState, bookmarkedAddressCity, bookmarkedAddressTown,
-               bookmarkedAddressVillage, bookmarkedAddressHamlet
+               bmk_addr_lv1, bmk_addr_lv2, bmk_addr_lv3, bmk_addr_lv4, role
         FROM user;
     </select>
 
     <select id="findById" resultType="User">
         SELECT id, pw, name, tel,
-               bookmarkedAddressState, bookmarkedAddressCity, bookmarkedAddressTown,
-               bookmarkedAddressVillage, bookmarkedAddressHamlet
+               bmk_addr_lv1, bmk_addr_lv2, bmk_addr_lv3, bmk_addr_lv4, role
         FROM user
         WHERE id = #{id};
     </select>
 
     <insert id="save" parameterType="User">
-        INSERT INTO user (id, pw, name, tel, bookmarkedAddressState, bookmarkedAddressCity, bookmarkedAddressTown, bookmarkedAddressVillage, bookmarkedAddressHamlet)
+        INSERT INTO user (id, pw, name, tel, bmk_addr_lv1, bmk_addr_lv2, bmk_addr_lv3, bmk_addr_lv4, role)
         VALUES (#{id}, #{pw}, #{name}, #{tel},
-                #{bookmarkedAddressState}, #{bookmarkedAddressCity}, #{bookmarkedAddressTown},
-                #{bookmarkedAddressVillage}, #{bookmarkedAddressHamlet});
+                #{bmk_addr_lv1}, #{bmk_addr_lv2}, #{bmk_addr_lv3}, #{bmk_addr_lv4}, #{role});
     </insert>
 
     <update id="modifyUser" parameterType="User">
@@ -32,11 +29,11 @@
         SET pw = #{pw},
             name = #{name},
             tel = #{tel},
-            bookmarkedAddressState = #{bookmarkedAddressState},
-            bookmarkedAddressCity = #{bookmarkedAddressCity},
-            bookmarkedAddressTown = #{bookmarkedAddressTown},
-            bookmarkedAddressVillage = #{bookmarkedAddressVillage},
-            bookmarkedAddressHamlet = #{bookmarkedAddressHamlet}
+            bmk_addr_lv1 = #{bmk_addr_lv1},
+            bmk_addr_lv2 = #{bmk_addr_lv2},
+            bmk_addr_lv3 = #{bmk_addr_lv3},
+            bmk_addr_lv4 = #{bmk_addr_lv4},
+            role = #{role}
         WHERE id = #{id};
     </update>
 

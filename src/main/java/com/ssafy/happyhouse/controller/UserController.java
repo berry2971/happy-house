@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "회원 등록", notes = "User 객체를 통해 신규 회원을 등록")
-    @PostMapping("/")
+    @PostMapping("auth")
     public User registerUser(@RequestBody User user) throws Exception {
         return userService.registerUser(user);
     }
@@ -49,7 +49,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "로그인", notes = "id와 pw를 통해 로그인")
-    @PostMapping("/login")
+    @PostMapping("auth/login")
     public ResponseEntity<String> login(@RequestBody UserLoginDto userLoginDto) throws Exception {
         String token = userService.login(userLoginDto.getId(), userLoginDto.getPw());
         return new ResponseEntity<>(token, HttpStatus.OK);
@@ -71,7 +71,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "비밀번호 찾기", notes = "id, tel, name을 통해 비밀번호 찾기")
-    @PostMapping("/find-password")
+    @PostMapping("auth/find-password")
     public String findPassword(
             @RequestBody UserFindPasswordDto userFindPasswordDto
     ) throws Exception {

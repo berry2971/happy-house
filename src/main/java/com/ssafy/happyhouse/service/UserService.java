@@ -4,11 +4,13 @@ import com.ssafy.happyhouse.config.security.JwtTokenProvider;
 import com.ssafy.happyhouse.domain.entity.User;
 import com.ssafy.happyhouse.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.naming.AuthenticationException;
 
 @Service
 @Transactional
@@ -17,16 +19,19 @@ public class UserService {
     private final UserMapper userMapper;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
     @Autowired
     public UserService(
             UserMapper userMapper,
             JwtTokenProvider jwtTokenProvider,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            AuthenticationManager authenticationManager
     ) {
         this.userMapper = userMapper;
         this.jwtTokenProvider = jwtTokenProvider;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
     }
 
     public User getUser(String id) throws Exception {
@@ -45,11 +50,11 @@ public class UserService {
     }
 
     public String login(String id, String pw) throws Exception {
-        User findUser = userMapper.findById(id);
-        if (findUser == null || passwordEncoder.matches(pw, findUser.getPw())) {
-            throw new AuthenticationException("아이디가 존재하지 않거나 비밀번호가 잘못되었습니다.");
-        }
-        String token = jwtTokenProvider.createToken(id);
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(id, pw)
+        );
+        UserDetails userDetails = (UserDetails)authentication.getPrincipal();
+        String token = jwtTokenProvider.createToken(userDetails.getUsername());
         return token;
     }
 
