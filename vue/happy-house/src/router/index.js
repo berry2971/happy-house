@@ -6,6 +6,7 @@ import BoardWrite from "@/components/board/BoardWrite.vue";
 import BoardList from "@/components/board/BoardList.vue";
 import BoardDetail from "@/components/board/BoardDetail.vue";
 import BoardModify from "@/components/board/BoardModify.vue";
+import UserLogin from "@/components/user/UserLogin.vue";
 
 Vue.use(VueRouter);
 
@@ -42,6 +43,11 @@ const routes = [
         component: BoardModify,
       },
     ],
+  },
+  {
+    path: "/user/login",
+    name: "login",
+    component: UserLogin,
   },
 ];
 

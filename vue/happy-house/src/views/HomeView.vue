@@ -1,16 +1,18 @@
 <template>
-  <div><main-content></main-content></div>
+  <div><ka-kao-map></ka-kao-map></div>
 </template>
 
 <script>
-import MainContent from "../components/MainContent.vue";
+import KaKaoMap from "../components/map/KaKaoMap.vue";
 
 export default {
-  components: { MainContent },
+  components: { KaKaoMap },
   data() {
     return {
-      msg: "임시 메인 페이지",
+      msg: "메인 페이지",
     };
   },
 };
 </script>
+
+<style></style>
