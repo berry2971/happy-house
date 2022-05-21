@@ -1,7 +1,33 @@
 .login {
     position: absolute;
+    height: auto;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
+    text-align: center;
   }
+
+.login a{
+  margin: 5%;
+}
+
+.join{
+  width: 40%;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.join-form label{
+  display: inline-block;
+  width: auto;
+  margin:3px;
+}
+
+.join-form input{
+  margin:10px;
+}
