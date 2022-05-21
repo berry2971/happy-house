@@ -1,12 +1,12 @@
 <template>
-  <div><ka-kao-map></ka-kao-map></div>
+  <div><MapIndex></MapIndex></div>
 </template>
 
 <script>
-import KaKaoMap from "../components/map/KaKaoMap.vue";
+import MapIndex from "../components/map/MapIndex.vue";
 
 export default {
-  components: { KaKaoMap },
+  components: { MapIndex },
   data() {
     return {
       msg: "메인 페이지",
