@@ -6,7 +6,9 @@ import BoardWrite from "@/components/board/BoardWrite.vue";
 import BoardList from "@/components/board/BoardList.vue";
 import BoardDetail from "@/components/board/BoardDetail.vue";
 import BoardModify from "@/components/board/BoardModify.vue";
+import UserView from "@/views/UserView.vue";
 import UserLogin from "@/components/user/UserLogin.vue";
+import UserJoin from "@/components/user/UserJoin.vue";
 
 Vue.use(VueRouter);
 
@@ -45,9 +47,21 @@ const routes = [
     ],
   },
   {
-    path: "/user/login",
-    name: "login",
-    component: UserLogin,
+    path: "/user",
+    name: "user",
+    component: UserView,
+    children: [
+      {
+        path: "login",
+        name: "login",
+        component: UserLogin,
+      },
+      {
+        path: "join",
+        name: "join",
+        component: UserJoin,
+      },
+    ],
   },
 ];
 

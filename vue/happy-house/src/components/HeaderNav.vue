@@ -2,7 +2,7 @@
   <div class="header">
     <div class="header-right">
       <router-link to="/user/login">로그인</router-link>
-      <router-link to="/board">회원가입</router-link>
+      <router-link to="/user/join">회원가입</router-link>
     </div>
 
     <div class="menu">
