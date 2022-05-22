@@ -2,13 +2,19 @@
   <div>
     <div id="kakao-map" ref="map"></div>
     <div id="deals-list" ref="list">
-      <div v-for="deal in deals">
+      <div class="apt-item" v-for="apt in apts">
         <div>
-          <div>{{deal.addr_lv3}} {{deal.bunji}}</div>
-          <div>{{deal.addr_road}}</div>
-          <div>{{deal.apt_name}}</div>
-          <div>{{deal.deal_year_month}}</div>
-          <div>{{deal.price}}</div>
+          <div>{{apt.name}}</div>
+          <div>{{apt.addr}}</div>
+          <div>{{apt.roadAddr}}</div>
+          <div>{{apt.built_year}}</div>
+          <div class="deal-item" v-for="deal in apt.deals">
+            <div>가격: {{ new Intl.NumberFormat('kr-KR', {maximumSignificantDigits:3}).format( parseInt(deal.price)*10000 ) }}</div>
+            <div>면적: {{deal.square}}</div>
+            <div>연월: {{deal.deal_year_month}}</div>
+            <div>일: {{deal.deal_day}}</div>
+            <div>층: {{deal.floor}}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -24,9 +30,9 @@ export default {
   data() {
     return {
       mapInstance: null,
-      deals: null,
-      mapLat: 33.450701,
-      mapLng: 126.570667,
+      apts: null,
+      mapLat: 37.50092120938686,
+      mapLng: 127.03674326873177,
     };
   },
   mounted() {
@@ -47,20 +53,6 @@ export default {
     });
 
     kakao.maps.event.addListener(this.mapInstance, "tilesloaded", () => {
-      const center = this.mapInstance.getCenter();
-      this.mapLng = center.getLng();
-      this.mapLat = center.getLat();
-      const geocoder = new kakao.maps.services.Geocoder();
-      const coord = new kakao.maps.LatLng(center.getLat(), center.getLng());
-      geocoder.coord2RegionCode(coord.getLng(), coord.getLat(), (result, status) => {
-        if (status === kakao.maps.services.Status.OK) {
-          // this.addrLv1 = result[0].region_1depth_name;
-          // this.addrLv2 = result[0].region_2depth_name;
-          // this.addrLv3 = result[0].region_3depth_name;
-          this.$emit("change-addr-by-map", result[0]);
-        }
-      });
-
       this.displayAptList();
     });
   },
@@ -79,6 +71,8 @@ export default {
       else return stateName;
     },
     displayAptList() {
+      this.apts = [];
+
       const places = new kakao.maps.services.Places();
       places.setMap(this.mapInstance);
 
@@ -95,9 +89,15 @@ export default {
         }
       };
 
-      const displayApt = (apt) => {
-        const dealsListEl = document.getElementById("deals-list");
+      const searchOptions = {
+        useMapCenter: true,
+        radius: 20000,
+        sort: kakao.maps.services.SortBy.DISTANCE,
+      };
+      places.keywordSearch("아파트", callback, searchOptions);
 
+
+      const displayApt = (apt) => {
         const splitedAddress = apt.address_name.split(" ");
         const addrLv1_ = this.briefStateNameToFullStateName(splitedAddress[0]);
         const addrLv2_ = splitedAddress[1];
@@ -105,6 +105,14 @@ export default {
         const splitedBunji = splitedAddress[3].split("-");
         const bunji_main_ = splitedBunji[0];
         const bunji_sub_ = splitedBunji.length > 1 ? splitedBunji[1] : "0";
+
+        const aptData = {
+          name: apt.place_name,
+          addr: apt.address_name,
+          roadAddr: apt.road_address_name,
+          builtYear: apt.built_year,
+          deals: [],
+        };
 
         axios
           .get("http://localhost:8090/deals/where", {
@@ -117,16 +125,13 @@ export default {
             },
           })
           .then((res) => {
-            this.deals = res.data;
+            console.log(res);
+            for (let i in res.data) {
+              aptData.deals.push(res.data[i]);
+            }
+            this.apts.push(aptData);
           });
       };
-
-      const searchOptions = {
-        useMapCenter: true,
-        useMapBounds: true,
-        sort: kakao.maps.services.SortBy.DISTANCE,
-      };
-      places.keywordSearch("아파트", callback, searchOptions);
     },
     printCenter() {
       console.log(this.mapInstance.getCenter());
@@ -160,5 +165,19 @@ export default {
 #kakao-map {
   width: 500px;
   height: 500px;
+}
+
+.apt-item {
+  border-style: solid;
+  border-width: 1px;
+  padding:5px;
+  margin:5px;
+}
+
+.deal-item {
+  border-style: solid;
+  border-width: 1px;
+  padding:5px;
+  margin:5px;
 }
 </style>
