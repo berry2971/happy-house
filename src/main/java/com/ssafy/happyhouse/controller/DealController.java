@@ -12,7 +12,7 @@ import java.util.List;
 @Slf4j
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/deals")
+@RequestMapping("deals")
 public class DealController {
 
     private final DealService dealService;

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.mapper.CommentMapper">
+
+    <insert id="save" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO comment(article_id, content)
+        VALUES (#{articleId}, #{content});
+    </insert>
+
+    <select id="findById" resultType="Article">
+        SELECT id, article_id, content
+        FROM comment
+        WHERE id = #{id};
+    </select>
+
+    <select id="findByArticleIdAndOffsetAndLimit" resultType="Article">
+        SELECT id, article_id, content
+        FROM comment
+        WHERE article_id = #{articleId}
+        LIMIT #{offset}, #{commentsPerPage};
+    </select>
+
+    <delete id="remove">
+        DELETE FROM comment
+        WHERE id = #{id};
+    </delete>
+
+</mapper>
