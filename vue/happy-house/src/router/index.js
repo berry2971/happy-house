@@ -19,13 +19,13 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/board",
+    path: "/board/community",
     name: "board",
     component: BoardView,
-    redirect: "/board/list",
+    redirect: "/board/community",
     children: [
       {
-        path: "list",
+        path: "/",
         name: "list",
         component: BoardList,
       },
@@ -33,14 +33,15 @@ const routes = [
         path: "write",
         name: "write",
         component: BoardWrite,
+        title: "글쓰기",
       },
       {
-        path: "detail/:id",
+        path: "/:id",
         name: "detail",
         component: BoardDetail,
       },
       {
-        path: "modify/:id",
+        path: "edit/:id",
         name: "modify",
         component: BoardModify,
       },

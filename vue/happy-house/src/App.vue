@@ -36,26 +36,7 @@ label {
   display: inline-block;
   width: 80px;
 }
-button,
-.btn {
-  width: 15%;
-  background-color: #d0d3d0;
-  color: rgb(80, 82, 79);
-  padding: 14px 10px;
-  margin: 8px 15px;
-  border: 1px solid #787878;
-  border-radius: 4px;
-  font-size: small;
-  cursor: pointer;
-}
-.regist {
-  padding: 10px;
-}
-.regist_form {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-}
+
 .header-right a {
   float: right;
   color: white;
@@ -102,21 +83,5 @@ button,
 .underline {
   display: inline-block;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 70%, cyan 30%);
-}
-#book-list {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-#book-list thead {
-  background-color: #ccc;
-  font-weight: bold;
-}
-
-#book-list td,
-#book-list th {
-  text-align: center;
-  border-bottom: 1px solid #ddd;
-  height: 50px;
 }
 </style>

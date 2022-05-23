@@ -1,44 +1,39 @@
 <template>
   <div class="regist">
-    <h2>QnA 등록</h2>
-    <div class="regist_form">
-      <label for="author">작성자</label>
-      <input
+    <b-form class="regist-form" @submit.stop.prevent>
+      <b-form-select
+        v-model="subject"
+        :options="options"
+        class="mb-3 regist-select"
+        style="width: auto; margin: 10px"
+      >
+        <template #first>
+          <b-form-select-option value="null" disabled
+            >지역선택</b-form-select-option
+          >
+        </template> </b-form-select
+      ><br />
+      <b-form-input
         type="text"
-        id="author"
-        name="author"
-        v-model="author"
-        ref="author"
-      /><br />
-      <label for="password">비밀번호</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        v-model="password"
-        ref="password"
-      /><br />
-      <label for="title">제목</label>
-      <input
-        type="text"
-        id="title"
+        class="title"
         name="title"
         v-model="title"
-        ref="title"
-      /><br />
-      <label for="content">내용</label><br />
-      <textarea
-        id="content"
+        placeholder="제목"
+        style="border: none"
+      />
+      <hr />
+      <b-form-textarea
+        class="content"
         name="content"
         v-model="content"
-        ref="content"
-        cols="35"
-        rows="5"
-      ></textarea
-      ><br />
-      <button @click="checkValue">등록</button>
-      <button @click="moveList">목록</button>
-    </div>
+        placeholder="글 내용 작성"
+        rows="20"
+        max-rows="100"
+        style="border: none"
+      />
+      <b-button @click="checkValue">등록</b-button>
+      <b-button @click="moveList">목록</b-button>
+    </b-form>
   </div>
 </template>
 
@@ -49,29 +44,43 @@ export default {
   name: "BoardWrite",
   data() {
     return {
-      author: "",
-      password: "",
+      author: "test",
       title: "",
       content: "",
-      board_name: "qna",
+      board_name: "community",
+      subject: "null",
+      options: [
+        { value: "서울", text: "서울특별시" },
+        { value: "경기", text: "경기도" },
+        { value: "부산", text: "부산광역시" },
+        { value: "인천", text: "인천광역시" },
+        { value: "대구", text: "대구광역시" },
+        { value: "광주", text: "광주광역시" },
+        { value: "대전", text: "대전광역시" },
+        { value: "울산", text: "울산광역시" },
+        { value: "세종", text: "세종특별자치시" },
+        { value: "강원", text: "강원도" },
+        { value: "충북", text: "충청북도" },
+        { value: "충남", text: "충청남도" },
+        { value: "전북", text: "전라북도" },
+        { value: "전남", text: "전라남도" },
+        { value: "경북", text: "경상북도" },
+        { value: "경남", text: "경상남도" },
+        { value: "제주", text: "제주특별자치도" },
+      ],
     };
   },
   methods: {
-    // 입력값 체크하기 - 체크가 성공하면 registBook 호출
     checkValue() {
       // 사용자 입력값 체크하기
       // isbn, 제목, 저자, 가격, 설명이 없을 경우 각 항목에 맞는 메세지를 출력
       let err = true;
       let msg = "";
-      !this.author &&
-        ((msg = "작성자 입력해주세요"),
-        (err = false),
-        this.$refs.author.focus());
       err &&
-        !this.password &&
-        ((msg = "비밀번호를 입력해주세요"),
+        !this.subject &&
+        ((msg = "지역을 선택해주세요"),
         (err = false),
-        this.$refs.password.focus());
+        this.$refs.subject.focus());
       err &&
         !this.title &&
         ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
@@ -80,7 +89,6 @@ export default {
         ((msg = "내용 입력해주세요"),
         (err = false),
         this.$refs.content.focus());
-
       if (!err) alert(msg);
       // 만약, 내용이 다 입력되어 있다면 registBook 호출
       else this.registArticle();
@@ -88,12 +96,12 @@ export default {
 
     registArticle() {
       http
-        .post("/articles/", {
-          author: this.author,
-          password: this.password,
+        .post("/articles", {
+          author: "user",
+          subject: this.subject,
           title: this.title,
           content: this.content,
-          board_name: "qna",
+          board_name: "community",
         })
         .then(({ data }) => {
           // 서버에서 정상적인 값이 넘어 왔을경우 실행.

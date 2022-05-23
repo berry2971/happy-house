@@ -1,10 +1,11 @@
 <template>
   <tr>
+    <td class="subject">{{ article.subject }}</td>
     <td>
       <!-- <router-link :to="`/board/detail?articleno=${article.articleno}`">{{
         article.subject
       }}</router-link> -->
-      <router-link :to="{ name: 'detail', params: { id: article.id } }">{{
+      <router-link :to="{ name: 'detail', params: { id: article.id } }" class="board-title">{{
         article.title
       }}</router-link>
     </td>

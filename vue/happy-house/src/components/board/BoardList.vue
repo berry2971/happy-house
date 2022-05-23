@@ -1,18 +1,19 @@
 <template>
   <div class="regist">
-    <h2>QnA</h2>
     <div style="text-align: right">
       <b-button @click="moveWrite">글 등록</b-button>
     </div>
     <div v-if="articles.length">
-      <table id="book-list">
+      <table id="board-list">
         <colgroup>
-          <col style="width: 45%" />
+          <col style="width: 15%" />
+          <col style="width: 35%" />
           <col style="width: 25%" />
-          <col style="width: 25%" />
+          <col style="width: 30%" />
         </colgroup>
         <thead>
           <tr>
+            <th>지역</th>
             <th>제목</th>
             <th>작성자</th>
             <th>작성일</th>
@@ -45,14 +46,12 @@ export default {
     };
   },
   created() {
-    http.get("/articles/?boardName=qna&page=1").then(({ data }) => {
-      console.log(data);
+    http.get("/articles?boardName=community&page=1").then(({ data }) => {
       this.articles = data;
     });
   },
   methods: {
     moveWrite() {
-      console.log("글쓰기 가자");
       this.$router.push({ name: "write" });
     },
   },

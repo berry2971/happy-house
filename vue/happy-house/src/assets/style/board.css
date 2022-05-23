@@ -1,0 +1,84 @@
+button,
+.btn {
+  width: 15%;
+  background-color: #d0d3d0;
+  color: rgb(80, 82, 79);
+  padding: 14px 10px;
+  margin: 8px 15px;
+  border: 1px solid #787878;
+  border-radius: 4px;
+  font-size: small;
+  cursor: pointer;
+}
+.regist{
+  padding: 10px;
+}
+.regist-form {
+  border-radius: 5px;
+  padding: 20px;
+}
+.title {
+  border: none;
+  font-weight: bold;
+  font-size: large;
+}
+
+input::placeholder {
+  font-weight: lighter;
+}
+
+.content{
+  height: 80%;
+}
+
+a.board-title {
+  color: black;
+}
+
+.subject{
+  color:dodgerblue;
+}
+
+.subject-span{
+  text-align: center;
+  width: 30%;
+  height: 100%;
+  margin-right: 1%;
+  color:dodgerblue;
+}
+
+.title-span{
+  text-align: center;
+  width: 70%;
+  height: 130%;
+  font-size: 200%;
+}
+
+.author-span{
+  font-size: 120%;
+}
+
+.write_time-span{
+  font-size: 120%;
+}
+
+.content-span{
+  font-size: 120%;
+}
+
+#board-list {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #board-list thead {
+    background-color: #ccc;
+    font-weight: bold;
+  }
+  
+  #board-list td,
+  #board-list th {
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    height: 50px;
+  }

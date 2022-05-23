@@ -144,9 +144,12 @@ export default {
           if (data != null) {
             msg = "회원가입을 축하합니다.";
           }
-          alert(msg);
-          this.moveList();
+          alert(data);
+          this.moveLogin();
         });
+    },
+    moveLogin() {
+      this.$router.push({ name: "login" });
     },
   },
   computed: {
