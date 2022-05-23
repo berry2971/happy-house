@@ -52,13 +52,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // login
             "/api/users/auth",
             "/api/users/auth/",
-            "/api/users/auth/**"
+            "/api/users/auth/**",
+            // deal
+            "/deals/**",
+            "/districts/**"
     };
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http = http
-                .cors().and().csrf().disable();
+                .cors()
+                .and().csrf().disable();
 
         http = http
                 .sessionManagement()
@@ -90,7 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedOriginPattern("*");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
 
