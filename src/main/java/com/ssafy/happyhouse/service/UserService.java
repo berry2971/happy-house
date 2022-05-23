@@ -43,7 +43,7 @@ public class UserService {
     }
 
     public User registerUser(User user) throws Exception {
-        user.setPw(passwordEncoder.encode(user.getPw()));
+        user.setPw(getEncodedPasswordFromRawPassword(user.getPw()));
         userMapper.save(user);
         return user;
     }
@@ -61,6 +61,10 @@ public class UserService {
         UserDetails userDetails = (UserDetails)authentication.getPrincipal();
         String token = jwtTokenProvider.createToken(userDetails.getUsername());
         return token;
+    }
+
+    public String getEncodedPasswordFromRawPassword(String password) {
+        return passwordEncoder.encode(password);
     }
 
 }

@@ -5,13 +5,15 @@ public class UserFindPasswordDto {
     private String id;
     private String name;
     private String tel;
+    private String newPw;
 
     UserFindPasswordDto() { }
 
-    public UserFindPasswordDto(String id, String name, String tel) {
+    public UserFindPasswordDto(String id, String name, String tel, String newPw) {
         this.id = id;
         this.name = name;
         this.tel = tel;
+        this.newPw = newPw;
     }
 
     public String getId() {
@@ -36,6 +38,14 @@ public class UserFindPasswordDto {
 
     public void setTel(String tel) {
         this.tel = tel;
+    }
+
+    public String getNewPw() {
+        return newPw;
+    }
+
+    public void setNewPw(String newPw) {
+        this.newPw = newPw;
     }
 
 }

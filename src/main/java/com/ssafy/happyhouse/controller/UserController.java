@@ -61,13 +61,10 @@ public class UserController {
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "로그인 정보 조회", notes = "현재 세션에 로그인되어 있는 계정 정보를 조회")
+    @ApiOperation(value = "로그인 정보 조회", notes = "현재 로그인되어 있는 계정 정보를 조회")
     @GetMapping("/login/current")
     public User getCurrentUser(HttpServletRequest request) throws Exception {
-        String id = retrieveLoginInfoFromSession(request.getSession());
-        if (id == null) {
-            throw new AccessDeniedException("로그인되어 있지 않음");
-        }
+        String id = (String)request.getAttribute("userId");
         User user = userService.getUser(id);
         if (!checkUserExists(user)) {
             throw new AuthenticationException("존재하지 않는 아이디");
@@ -76,14 +73,15 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "비밀번호 찾기", notes = "id, tel, name을 통해 비밀번호 찾기")
-    @PostMapping("auth/find-password")
+    @ApiOperation(value = "분실 비밀번호 갱신", notes = "id, tel, name을 통해 분실 비밀번호 갱신")
+    @PostMapping("auth/forget-password")
     public String findPassword(
             @RequestBody UserFindPasswordDto userFindPasswordDto
     ) throws Exception {
         String id = userFindPasswordDto.getId();
         String name = userFindPasswordDto.getName();
         String tel = userFindPasswordDto.getTel();
+        String newPw = userFindPasswordDto.getNewPw();
 
         User user = userService.getUser(id);
         if (!checkUserExists(user)) {
@@ -91,15 +89,17 @@ public class UserController {
         } if (!checkNameAndTelEqualsTarget(user, name, tel)) {
             throw new AccessDeniedException("이름 또는 전화번호가 일치하지 않음");
         } else {
-            return user.getPw();
+            user.setPw(userService.getEncodedPasswordFromRawPassword(newPw));
+            userService.modifyUser(user);
         }
+
+        return "success";
     }
 
     @ApiOperation(value = "로그아웃", notes = "현재 로그인된 계정을 로그아웃 처리")
     @PostMapping("/logout")
-    public String logout(
-            @RequestBody String id
-    ) throws Exception {
+    public String logout(HttpServletRequest request) throws Exception {
+        String id = (String)request.getAttribute("userId");
         blacklistMapper.add(id);
         return "success";
     }
