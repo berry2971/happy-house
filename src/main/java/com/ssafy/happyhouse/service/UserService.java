@@ -2,6 +2,7 @@ package com.ssafy.happyhouse.service;
 
 import com.ssafy.happyhouse.config.security.JwtTokenProvider;
 import com.ssafy.happyhouse.domain.entity.User;
+import com.ssafy.happyhouse.mapper.BlacklistMapper;
 import com.ssafy.happyhouse.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,18 +21,21 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final BlacklistMapper blacklistMapper;
 
     @Autowired
     public UserService(
             UserMapper userMapper,
             JwtTokenProvider jwtTokenProvider,
             PasswordEncoder passwordEncoder,
-            AuthenticationManager authenticationManager
+            AuthenticationManager authenticationManager,
+            BlacklistMapper blacklistMapper
     ) {
         this.userMapper = userMapper;
         this.jwtTokenProvider = jwtTokenProvider;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.blacklistMapper = blacklistMapper;
     }
 
     public User getUser(String id) throws Exception {
@@ -50,6 +54,7 @@ public class UserService {
     }
 
     public String login(String id, String pw) throws Exception {
+        blacklistMapper.remove(id);
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(id, pw)
         );

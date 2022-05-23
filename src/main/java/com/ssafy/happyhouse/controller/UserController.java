@@ -3,6 +3,7 @@ package com.ssafy.happyhouse.controller;
 import com.ssafy.happyhouse.domain.dto.UserFindPasswordDto;
 import com.ssafy.happyhouse.domain.dto.UserLoginDto;
 import com.ssafy.happyhouse.domain.entity.User;
+import com.ssafy.happyhouse.mapper.BlacklistMapper;
 import com.ssafy.happyhouse.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,15 @@ import java.nio.file.AccessDeniedException;
 public class UserController {
 
     private final UserService userService;
+    private final BlacklistMapper blacklistMapper;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(
+            UserService userService,
+            BlacklistMapper blacklistMapper
+    ) {
         this.userService = userService;
+        this.blacklistMapper = blacklistMapper;
     }
 
     @ApiOperation(value = "회원 조회", notes = "id를 통해 회원 정보를 조회")
@@ -89,10 +95,12 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "로그아웃", notes = "현재 세션에 로그인된 계정을 로그아웃")
+    @ApiOperation(value = "로그아웃", notes = "현재 로그인된 계정을 로그아웃 처리")
     @PostMapping("/logout")
-    public String logout(HttpServletRequest request) throws Exception {
-        request.getSession().invalidate();
+    public String logout(
+            @RequestBody String id
+    ) throws Exception {
+        blacklistMapper.add(id);
         return "success";
     }
 
