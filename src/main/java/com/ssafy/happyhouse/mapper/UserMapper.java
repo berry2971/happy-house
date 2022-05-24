@@ -8,11 +8,11 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    List<User> findAll() throws Exception;
+    List<User> findAll();
 
-    User findById(String id) throws Exception;
+    User findById(String id);
 
-    void save(User user) throws Exception;
+    void save(User user);
 
     void modifyUser(User user);
 

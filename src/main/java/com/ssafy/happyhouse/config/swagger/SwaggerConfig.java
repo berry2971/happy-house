@@ -51,7 +51,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().title(title)
-                .description("<h3>HappyHouse</h3>with Spring Boot, Vanilla JS<br>")
+                .description("<h3>HappyHouse</h3>with Spring Boot 2, Vue 2<br>")
                 .contact(new Contact("SSAFY", "https://edu.ssafy.com", "ssafy@ssafy.com"))
                 .license("SSAFY License")
                 .licenseUrl("https://www.ssafy.com/ksp/jsp/swp/etc/swpPrivacy.jsp")

@@ -6,35 +6,34 @@
 <mapper namespace="com.ssafy.happyhouse.mapper.ArticleMapper">
 
     <insert id="save" parameterType="Article" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO board(board_name, title, author, password, content)
-        VALUES (#{board_name}, #{title}, #{author}, #{password}, #{content});
+        INSERT INTO article(board_name, subject, title, author, content)
+        VALUES (#{board_name}, #{subject},#{title}, #{author}, #{content});
     </insert>
 
     <select id="findById" resultType="Article">
-        SELECT id, board_name, title, author, password, write_time, content
-        FROM board
+        SELECT id, board_name, subject, title, author, write_time, content
+        FROM article
         WHERE id = #{id};
     </select>
 
     <select id="findByBoardNameAndOffsetAndLimit" resultType="Article">
-        SELECT id, board_name, title, author, password, write_time, content
-        FROM board
+        SELECT id, board_name, subject, title, author, write_time, content
+        FROM article
         WHERE board_name = #{boardName}
         LIMIT #{offset}, #{articlesPerPage};
     </select>
 
     <update id="modify" parameterType="Article">
-        UPDATE board
+        UPDATE article
         SET board_name = #{board_name},
             title = #{title},
-            author = #{author},
-            password = #{password},
+            subject = #{subject},
             content = #{content}
         WHERE id = #{id};
     </update>
 
     <delete id="remove">
-        DELETE FROM board
+        DELETE FROM article
         WHERE id = #{id};
     </delete>
 

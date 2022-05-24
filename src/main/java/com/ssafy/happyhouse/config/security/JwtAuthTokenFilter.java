@@ -1,8 +1,9 @@
 package com.ssafy.happyhouse.config.security;
 
-import com.ssafy.happyhouse.mapper.UserMapper;
+import com.ssafy.happyhouse.mapper.BlacklistMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,18 +22,18 @@ import java.io.IOException;
 public class JwtAuthTokenFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final UserMapper userMapper;
     private final UserDetailsService userDetailsService;
+    private final BlacklistMapper blacklistMapper;
 
     @Autowired
     public JwtAuthTokenFilter(
             JwtTokenProvider jwtTokenProvider,
-            UserMapper userMapper,
-            UserDetailsService userDetailsService
+            UserDetailsService userDetailsService,
+            BlacklistMapper blacklistMapper
     ) {
         this.jwtTokenProvider = jwtTokenProvider;
-        this.userMapper = userMapper;
         this.userDetailsService = userDetailsService;
+        this.blacklistMapper = blacklistMapper;
     }
 
     @Override
@@ -43,8 +44,14 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
             return;
         }
         String token = authorizationHeader.substring("Bearer ".length());
+        System.out.println(token);
+        jwtTokenProvider.verify(token);
         String id = jwtTokenProvider.getIdFromToken(token);
         try {
+            if (blacklistMapper.findById(id).size() > 0) {
+                throw new AuthorizationServiceException("로그아웃된 계정입니다.");
+            }
+
             UserDetails userDetails = userDetailsService.loadUserByUsername(id);
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                     userDetails,
@@ -55,11 +62,14 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
                     new WebAuthenticationDetailsSource().buildDetails(request)
             );
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+
+            request.setAttribute("userId", id);
+
             filterChain.doFilter(request, response);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
-
     }
 
 }

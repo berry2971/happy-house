@@ -4,6 +4,7 @@ import com.ssafy.happyhouse.domain.entity.Article;
 import com.ssafy.happyhouse.mapper.ArticleMapper;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,11 +44,15 @@ public class ArticleService {
     }
 
     public boolean removeArticle(
-            Long id
+            Long id,
+            String loginId
     ) throws Exception {
         Article findArticle = articleMapper.findById(id);
         if (findArticle == null) {
             throw new NotFoundException("존재하지 않는 게시글입니다.");
+        }
+        if (!loginId.equals(findArticle.getAuthor())) {
+            throw new AuthorizationServiceException("삭제 권한이 없습니다.");
         }
         articleMapper.remove(id);
         return true;
@@ -55,11 +60,15 @@ public class ArticleService {
 
     public Article modifyArticle(
             Long id,
-            Article article
+            Article article,
+            String loginId
     ) throws Exception {
         Article findArticle = articleMapper.findById(id);
         if (findArticle == null) {
             throw new NotFoundException("존재하지 않는 게시글입니다.");
+        }
+        if (!loginId.equals(findArticle.getAuthor())) {
+            throw new AuthorizationServiceException("수정 권한이 없습니다.");
         }
         articleMapper.modify(article);
         return article;

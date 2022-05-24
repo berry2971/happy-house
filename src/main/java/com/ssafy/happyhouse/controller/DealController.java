@@ -12,7 +12,7 @@ import java.util.List;
 @Slf4j
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/deals")
+@RequestMapping("deals")
 public class DealController {
 
     private final DealService dealService;
@@ -23,9 +23,9 @@ public class DealController {
     }
 
     @ApiOperation(value = "모든 거래내역 조회", notes = "모든 거래내역 리스트를 반환")
-    @GetMapping("/")
+    @GetMapping("")
     public List<Deal> index() throws Exception {
-        log.debug("parameters: none");
+        log.info("parameters: none");
         return dealService.getAll();
     }
 
@@ -38,7 +38,7 @@ public class DealController {
             @RequestParam(value = "bunji_main") String bunji_main,
             @RequestParam(value = "bunji_sub") String bunji_sub
     ) throws Exception {
-        log.debug("parameters: address {}, {}, {}, number {}, {}", addr_lv1, addr_lv2, addr_lv3, bunji_main, bunji_sub);
+        //log.info("parameters: address {}, {}, {}, number {}, {}", addr_lv1, addr_lv2, addr_lv3, bunji_main, bunji_sub);
         return dealService.getDealsByLegacyAddress(addr_lv1, addr_lv2, addr_lv3, bunji_main, bunji_sub);
     }
 

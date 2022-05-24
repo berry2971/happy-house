@@ -10,6 +10,7 @@ import UserView from "@/views/UserView.vue";
 import UserLogin from "@/components/user/UserLogin.vue";
 import UserJoin from "@/components/user/UserJoin.vue";
 import AptDetail from "@/components/map/AptDetail.vue";
+import UserModify from "@/components/user/UserModify.vue";
 
 Vue.use(VueRouter);
 
@@ -25,13 +26,13 @@ const routes = [
     component: AptDetail,
   },
   {
-    path: "/board",
+    path: "/board/community",
     name: "board",
     component: BoardView,
-    redirect: "/board/list",
+    redirect: "/board/community",
     children: [
       {
-        path: "list",
+        path: "/",
         name: "list",
         component: BoardList,
       },
@@ -39,14 +40,15 @@ const routes = [
         path: "write",
         name: "write",
         component: BoardWrite,
+        title: "글쓰기",
       },
       {
-        path: "detail/:id",
+        path: "/:id",
         name: "detail",
         component: BoardDetail,
       },
       {
-        path: "modify/:id",
+        path: "edit/:id",
         name: "modify",
         component: BoardModify,
       },
@@ -66,6 +68,11 @@ const routes = [
         path: "join",
         name: "join",
         component: UserJoin,
+      },
+      {
+        path: "modify/:id",
+        name: "UserModify",
+        component: UserModify,
       },
     ],
   },

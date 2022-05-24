@@ -50,47 +50,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             // login
-            "/api/users/auth",
-            "/api/users/auth/",
-            "/api/users/auth/**"
+            "/users/auth/**",
+            // deal
+            "/deals/**",
+            "/districts/**"
     };
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http = http
-                .cors().and().csrf().disable();
+        http = http.cors().and().csrf().disable();
 
-        http = http
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and();
+        http
+            .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http = http
-                .exceptionHandling()
-                .authenticationEntryPoint(
-                        (request, response, e) -> {
-                            response.sendError(
-                                    HttpServletResponse.SC_UNAUTHORIZED,
-                                    e.getMessage()
-                            );
-                        }).and();
+        http
+            .exceptionHandling()
+                .authenticationEntryPoint((request, response, e) -> {
+                    response.sendError(
+                            HttpServletResponse.SC_UNAUTHORIZED,
+                            e.getMessage()
+                    );
+                });
 
-        http.authorizeRequests()
+        http
+            .authorizeRequests()
                 .antMatchers("/admin/**").hasRole(EnumRole.ADMIN.name())
                 .antMatchers(AUTH_PERMIT_LIST).permitAll()
                 .anyRequest().hasRole(EnumRole.USER.name());
 
-        http.addFilterBefore(
-                jwtAuthTokenFilter,
-                UsernamePasswordAuthenticationFilter.class
-        );
+        http.addFilterBefore(jwtAuthTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedOriginPattern("*");
         corsConfiguration.addAllowedHeader("*");
         corsConfiguration.addAllowedMethod("*");
 

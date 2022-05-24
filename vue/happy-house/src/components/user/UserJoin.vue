@@ -84,10 +84,7 @@
             v-model="bmk_addr_lv4"
             placeholder="리(선택)"
           />
-          <b-button
-            @click="checkValue"
-            variant="outline-secondary"
-            style="width: 90%"
+          <b-button @click="checkValue" variant="outline-secondary" style="width: 90%"
             >회원가입</b-button
           >
         </b-form>
@@ -111,7 +108,6 @@ export default {
       bmk_addr_lv2: "",
       bmk_addr_lv3: "",
       bmk_addr_lv4: "",
-      role: "0",
     };
   },
   methods: {
@@ -122,6 +118,10 @@ export default {
       err && !this.pw && ((msg = "비밀번호를 입력해주세요"), (err = false));
       err && !this.name && ((msg = "이름을 입력해주세요"), (err = false));
       err && !this.tel && ((msg = "전화번호를 입력해주세요"), (err = false));
+      err && !this.bmk_addr_lv1 && ((msg = "광역시도를 입력해주세요"), (err = false));
+      err && !this.bmk_addr_lv2 && ((msg = "시군구를 입력해주세요"), (err = false));
+      err && !this.bmk_addr_lv3 && ((msg = "읍면동를 입력해주세요"), (err = false));
+      err && !this.bmk_addr_lv4 && ((msg = "리, 상세주소를 입력해주세요"), (err = false));
 
       if (!err) alert(msg);
       else this.joinUser();
@@ -137,16 +137,18 @@ export default {
           bmk_addr_lv2: this.bmk_addr_lv2,
           bmk_addr_lv3: this.bmk_addr_lv3,
           bmk_addr_lv4: this.bmk_addr_lv4,
-          role: "0",
         })
         .then(({ data }) => {
           let msg = "회원가입시 문제가 발생했습니다.";
           if (data != null) {
             msg = "회원가입을 축하합니다.";
           }
-          alert(msg);
-          this.moveList();
+          alert(data);
+          this.moveLogin();
         });
+    },
+    moveLogin() {
+      this.$router.push({ name: "login" });
     },
   },
   computed: {

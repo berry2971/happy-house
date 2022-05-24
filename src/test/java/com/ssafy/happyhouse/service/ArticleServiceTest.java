@@ -4,7 +4,11 @@ import com.ssafy.happyhouse.domain.entity.Article;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -24,23 +28,24 @@ class ArticleServiceTest {
     }
 
     @Test
+    @Commit
     void createArticle() throws Exception {
         Article article1 = new Article(
                 -1L,
                 "게시판1",
+                "서울",
                 "테스트1",
                 "글쓴이1",
-                "비밀번호1",
-                "글쓴시간1",
+                ZonedDateTime.now(),
                 "내용1"
         );
         Article article2 = new Article(
                 -2L,
-                "게시판2",
+                "게시판1",
+                "부산",
                 "테스트2",
                 "글쓴이2",
-                "비밀번호2",
-                "글쓴시간2",
+                ZonedDateTime.of(2022, 4, 10, 16, 15, 45, 9193, ZoneId.of("Asia/Seoul")),
                 "내용2"
         );
         Article articleResult1 = articleService.createArticle(article1);

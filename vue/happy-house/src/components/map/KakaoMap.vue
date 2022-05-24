@@ -1,5 +1,4 @@
 <template>
-
   <div id="indexMap">
     <div id="kakao-map" ref="map"></div>
     <div id="deal-list-wrap">
@@ -432,6 +431,5 @@ export default {
 .hidden {
   display: block;
 }
-
 
 </style>

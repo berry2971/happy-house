@@ -2,6 +2,7 @@ package com.ssafy.happyhouse.config.security;
 
 import com.ssafy.happyhouse.domain.entity.User;
 import com.ssafy.happyhouse.mapper.UserMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -27,16 +29,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        try {
-            User user = userMapper.findById(id);
-            CustomUserDetails userDetails = new CustomUserDetails(user);
-            List<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority(user.getRole()));
-            userDetails.setAuthorities(authorities);
-            return userDetails;
-        } catch (Exception e) {
-            throw new UsernameNotFoundException("없습니다...");
+        User user = userMapper.findById(id);
+        if (user == null) {
+            log.info("ID에 해당하는 사용자를 찾을 수 없습니다.");
+            throw new UsernameNotFoundException("ID에 해당하는 사용자를 찾을 수 없습니다.");
         }
+        CustomUserDetails userDetails = new CustomUserDetails(user);
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole()));
+        userDetails.setAuthorities(authorities);
+        return userDetails;
     }
 
 }

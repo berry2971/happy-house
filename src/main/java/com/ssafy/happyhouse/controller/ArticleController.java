@@ -3,14 +3,17 @@ package com.ssafy.happyhouse.controller;
 import com.ssafy.happyhouse.domain.entity.Article;
 import com.ssafy.happyhouse.service.ArticleService;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+@Slf4j
 @CrossOrigin("*")
 @RestController
-@RequestMapping("api/articles")
+@RequestMapping("articles")
 public class ArticleController {
 
     private final ArticleService articleService;
@@ -40,26 +43,33 @@ public class ArticleController {
     @ApiOperation(value = "게시글 작성", notes = "게시글 작성 후 게시글 반환")
     @PostMapping("")
     public Article writeArticle(
-            @RequestBody Article article
+            @RequestBody Article article,
+            HttpServletRequest request
     ) throws Exception {
+        String loginId = (String)request.getAttribute("userId");
+        article.setAuthor(loginId);
         return articleService.createArticle(article);
     }
 
     @ApiOperation(value = "게시글 삭제", notes = "게시글 삭제 후 boolean 반환")
     @DeleteMapping("/{id}")
     public boolean removeArticle(
-            @PathVariable Long id
+            @PathVariable Long id,
+            HttpServletRequest request
     ) throws Exception {
-        return articleService.removeArticle(id);
+        String loginId = (String)request.getAttribute("userId");
+        return articleService.removeArticle(id, loginId);
     }
 
     @ApiOperation(value = "게시글 수정", notes = "게시글 수정 후 게시글 반환")
     @PutMapping("/{id}")
     public Article modifyArticle(
             @PathVariable Long id,
-            @RequestBody Article article
+            @RequestBody Article article,
+            HttpServletRequest request
     ) throws Exception {
-        return articleService.modifyArticle(id, article);
+        String loginId = (String)request.getAttribute("userId");
+        return articleService.modifyArticle(id, article, loginId);
     }
 
 }
