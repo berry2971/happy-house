@@ -1,13 +1,14 @@
 <template>
+
   <div id="indexMap">
     <div id="kakao-map" ref="map"></div>
     <div id="deal-list-wrap">
       <div id="deals-list" ref="list">
         <div class="apt-item" v-for="(apt, idx) in apts">
-          <div @click="moveToDetailPage($event)" :id="idx">
+          <div @click="moveToDetailPage($event)" :id="idx" @mouseover="emphaMarker(apt, $event)" @mouseout="disEmphaMarker(apt, $event)">
             <div>
-              <img src="./apt_blue.png" style="height:20px; width:20px">
-              <div class="apt-item-name">{{ apt.name }}</div>
+              <img src="./apt_blue.png" style="height:16px; width:16px; margin-right: 3px;">
+              <span class="apt-item-name">{{ apt.name }}</span>
             </div>
             <div class="apt-item-addr">{{ apt.addr }}</div>
             <div class="apt-item-roadaddr">{{ apt.roadAddr }}</div>
@@ -26,8 +27,8 @@
 <!--              <div>층: {{ deal.floor }}</div>-->
 <!--            </div>-->
             <div v-if="apt.numDeal > 0">
-              <div>실거래 {{apt.numDeal}}건</div>
-              <div>최저 {{apt.minPrice/10000}}억 ~ 최고 {{apt.maxPrice/10000}}억</div>
+              <div class="apt-item-num-deal">실거래 {{apt.numDeal}}건</div>
+              <div class="apt-item-price-range">최저 {{apt.minPrice/10000}}억 ~ 최고 {{apt.maxPrice/10000}}억</div>
             </div>
           </div>
         </div>
@@ -108,7 +109,6 @@ export default {
       else return stateName;
     },
     displayAptList() {
-      document.getElementById("deals-list").innerHTML = "";
       this.apts = [];
 
       const places = new kakao.maps.services.Places();
@@ -135,7 +135,7 @@ export default {
               continue;
             }
 
-            this.displayMarker(apt);
+            //this.displayMarker(apt);
             displayApt(apt);
           }
         }
@@ -180,6 +180,7 @@ export default {
           numDeal: 0,
           minPrice: 100000000000,
           maxPrice: 0,
+          marker: null,
         };
 
 
@@ -201,6 +202,7 @@ export default {
               aptData.maxPrice = Math.max(aptData.maxPrice, res.data[i].price);
             }
 
+            this.displayMarker(aptData);
             this.apts.push(aptData);
           });
       };
@@ -218,7 +220,42 @@ export default {
         }
       });
     },
+    emphaMarker(apt, event) {
+      this.emphasizeDealListItem(event.currentTarget.parentNode);
+      const position = new kakao.maps.LatLng(apt.y, apt.x);
+      let overlayContent = this.createOverlayContent(apt.numDeal, apt.name, apt.minPrice, apt.maxPrice);
+      const overlay = new kakao.maps.CustomOverlay({
+        content: overlayContent,
+        // map: this.mapInstance,
+        position: position,
+      });
+      overlay.setMap(this.mapInstance);
+      this.overlays.push(overlay);
+    },
+    disEmphaMarker(apt, event) {
+      this.disEmphasizeDealListItem(event.currentTarget.parentNode);
+      for (let i = 0; i < this.overlays.length; i++) {
+        this.overlays[i].setMap(null);
+      }
+      this.overlays = [];
+    },
     /*marker*/
+    createOverlayContent(numDeal, name, minPrice, maxPrice) {
+      if (numDeal != 0) {
+        return `
+          <div style="border-radius:5px; padding:5px; width=50px; background-color: white;">
+            <div style="font-size:16px;">${name}</div>
+            <div style="font-size:12px;">${minPrice/10000}억~${maxPrice/10000}억</div>
+          </div>
+        `;
+      } else {
+        return `
+          <div style="border-radius:5px; padding:5px; width=50px; background-color: white;">
+            <div>${name}</div>
+          </div>
+        `;
+      }
+    },
     displayMarker(apt) {
       const position = new kakao.maps.LatLng(apt.y, apt.x);
       const marker = new kakao.maps.Marker({
@@ -227,7 +264,9 @@ export default {
       marker.setMap(this.mapInstance);
       this.markers.push(marker);
 
-      const overlayContent = `<div style="padding:5px; width=50px; background-color: white;">${apt.place_name}</div>`;
+      let overlayContent = this.createOverlayContent(apt.numDeal, apt.name, apt.minPrice, apt.maxPrice);
+      apt.marker = marker;
+
       const overlay = new kakao.maps.CustomOverlay({
         content: overlayContent,
         // map: this.mapInstance,
@@ -239,9 +278,9 @@ export default {
         overlay.setMap(this.mapInstance);
         const dealsListItem = document.getElementsByClassName("apt-item-name");
         for (let i = 0; i < dealsListItem.length; i++) {
-          if (dealsListItem[i].innerHTML == apt.place_name) {
+          if (dealsListItem[i].innerHTML == apt.name) {
             const targetBoldItem = dealsListItem[i].parentElement.parentElement.parentElement;
-            targetBoldItem.style.border = "3px solid red";
+            this.emphasizeDealListItem(targetBoldItem);
             break;
           }
         }
@@ -249,8 +288,49 @@ export default {
 
       kakao.maps.event.addListener(marker, 'mouseout', () => {
         overlay.setMap(null);
+        const dealsListItem = document.getElementsByClassName("apt-item-name");
+        for (let i = 0; i < dealsListItem.length; i++) {
+          if (dealsListItem[i].innerHTML == apt.name) {
+            const targetBoldItem = dealsListItem[i].parentElement.parentElement.parentElement;
+            this.disEmphasizeDealListItem(targetBoldItem);
+            break;
+          }
+        }
       });
-    }
+    },
+    emphasizeDealListItem(targetBoldItem) {
+      targetBoldItem.style.color="white";
+      targetBoldItem.style.backgroundColor="rgba(15, 15, 255, 0.8)";
+      targetBoldItem.style.borderRadius="5px";
+      targetBoldItem.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
+
+      const t1 = targetBoldItem.getElementsByClassName("apt-item-price-range");
+      Array.prototype.forEach.call(t1, (el) => {
+        el.style.color="white";
+      })
+      const t2 = targetBoldItem.getElementsByClassName("apt-item-num-deal");
+      Array.prototype.forEach.call(t2, (el) => {
+        el.style.color="white";
+      })
+
+    },
+    disEmphasizeDealListItem(targetBoldItem) {
+      targetBoldItem.style.color="black";
+      targetBoldItem.style.backgroundColor="rgba(255, 255, 255, 0)";
+      targetBoldItem.style.borderRadius="0px";
+
+      const t1 = targetBoldItem.getElementsByClassName("apt-item-price-range");
+      Array.prototype.forEach.call(t1, (el) => {
+        el.style.color="firebrick";
+      })
+      const t2 = targetBoldItem.getElementsByClassName("apt-item-num-deal");
+      Array.prototype.forEach.call(t2, (el) => {
+        el.style.color="firebrick";
+      })
+    },
   },
   watch: {
     addrLv1() {
@@ -292,6 +372,7 @@ export default {
 }
 
 #deal-list-wrap {
+  height: 100vh;
   padding: 1%;
   width: 20%;
   z-index: 15;
@@ -302,11 +383,11 @@ export default {
 }
 
 #deals-list {
+  overflow-y: auto;
+  height: 100%;
   margin: 0px;
   padding: 5px;
   min-height: 100px;
-
-
   background-color: rgba(255, 255, 255, 0.7);
 }
 
@@ -314,22 +395,43 @@ export default {
   margin-bottom: 5px;
   padding: 5px;
   border-style: solid;
-  border-width: 1px;
+  border-width: 3px;
+  border-color: rgba(255,255,255,0);
 }
 
 .deal-item {
   margin-bottom: 5px;
   padding: 5px;
   border-style: solid;
-  border-width: 1px;
+  border-width: 3px;
 }
 
 .apt-item-name {
+  font-weight: bold;
+  font-size: 16px;
 }
 
 .apt-item-addr {
+  font-size: 13px;
 }
 
 .apt-item-roadaddr {
+  font-size: 13px;
 }
+
+.apt-item-num-deal {
+  color: firebrick;
+  font-size: 13px;
+}
+
+.apt-item-price-range {
+  color: firebrick;
+  font-size: 13px;
+}
+
+.hidden {
+  display: block;
+}
+
+
 </style>
