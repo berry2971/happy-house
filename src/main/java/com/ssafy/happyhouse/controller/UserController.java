@@ -38,6 +38,12 @@ public class UserController {
         return userService.getUser(id);
     }
 
+    @ApiOperation(value = "회원 조회", notes = "id를 통해 회원 정보를 조회")
+    @GetMapping("/auth/{id}")
+    public String getUserWith(@PathVariable String id) throws Exception {
+        return userService.getUser(id) != null ? "yes" : "no";
+    }
+
     @ApiOperation(value = "회원 등록", notes = "User 객체를 통해 신규 회원을 등록")
     @PostMapping("/auth")
     public User registerUser(@RequestBody User user) throws Exception {
