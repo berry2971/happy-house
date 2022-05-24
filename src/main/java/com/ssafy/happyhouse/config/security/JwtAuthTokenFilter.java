@@ -44,6 +44,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
             return;
         }
         String token = authorizationHeader.substring("Bearer ".length());
+        System.out.println(token);
         jwtTokenProvider.verify(token);
         String id = jwtTokenProvider.getIdFromToken(token);
         try {

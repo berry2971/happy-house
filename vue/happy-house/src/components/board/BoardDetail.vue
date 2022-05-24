@@ -1,7 +1,6 @@
 <template>
   <div class="regist">
     <div class="regist_form">
-      <hr />
       <span class="subject-span">{{ article.subject }}</span>
       <span class="title-span">{{ article.title }}</span>
       <br />
@@ -32,20 +31,32 @@ export default {
     };
   },
   created() {
-    http.get(`/articles/${this.$route.params.id}`).then(({ data }) => {
-      this.article = data;
-    });
+    http
+      .get(`/articles/${this.$route.params.id}`, {
+        headers: {
+          Authorization: `Bearer ` + sessionStorage.getItem("token"),
+        },
+      })
+      .then(({ data }) => {
+        this.article = data;
+      });
   },
   methods: {
     boardDelete() {
-      http.delete(`/articles/${this.$route.params.id}`).then(({ data }) => {
-        let msg = "삭제 처리시 문제가 발생했습니다.";
-        if (data != "null") {
-          msg = "삭제가 완료되었습니다.";
-        }
-        alert(msg);
-        this.$router.push({ name: "list" });
-      });
+      http
+        .delete(`/articles/${this.$route.params.id}`, {
+          headers: {
+            Authorization: `Bearer ` + sessionStorage.getItem("token"),
+          },
+        })
+        .then(({ data }) => {
+          let msg = "삭제 처리시 문제가 발생했습니다.";
+          if (data != "null") {
+            msg = "삭제가 완료되었습니다.";
+          }
+          alert(msg);
+          this.$router.push({ name: "list" });
+        });
     },
     moveModify(id) {
       this.$router.push({ name: "modify", params: { id: id } });
@@ -56,7 +67,7 @@ export default {
   },
   filters: {
     formatDate(regtime) {
-      return moment(new Date(regtime)).format("YYYY.MM.DD");
+      return moment(new Date(regtime)).add(-1, "day").format("YYYY.MM.DD");
     },
   },
 };
