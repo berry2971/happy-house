@@ -9,6 +9,7 @@ import BoardModify from "@/components/board/BoardModify.vue";
 import UserView from "@/views/UserView.vue";
 import UserLogin from "@/components/user/UserLogin.vue";
 import UserJoin from "@/components/user/UserJoin.vue";
+import AptDetail from "@/components/map/AptDetail.vue";
 
 Vue.use(VueRouter);
 
