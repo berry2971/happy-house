@@ -1,6 +1,7 @@
 <template>
   <div class="regist">
     <b-form class="regist-form" @submit.stop.prevent>
+      <b-form-input hidden v-model="author" name="author" />
       <b-form-select
         v-model="subject"
         :options="options"
@@ -8,9 +9,7 @@
         style="width: auto; margin: 10px"
       >
         <template #first>
-          <b-form-select-option value="null" disabled
-            >지역선택</b-form-select-option
-          >
+          <b-form-select-option value="null" disabled>지역선택</b-form-select-option>
         </template> </b-form-select
       ><br />
       <b-form-input
@@ -44,7 +43,7 @@ export default {
   name: "BoardWrite",
   data() {
     return {
-      author: "test",
+      author: "",
       title: "",
       content: "",
       board_name: "community",
@@ -70,6 +69,19 @@ export default {
       ],
     };
   },
+  created() {
+    if (this.$store.getters.isLogin != null) {
+      http
+        .get("/users/login/current", {
+          headers: {
+            Authorization: `Bearer ` + sessionStorage.getItem("token"),
+          },
+        })
+        .then(({ data }) => {
+          this.author = data.id;
+        });
+    }
+  },
   methods: {
     checkValue() {
       // 사용자 입력값 체크하기
@@ -78,17 +90,11 @@ export default {
       let msg = "";
       err &&
         !this.subject &&
-        ((msg = "지역을 선택해주세요"),
-        (err = false),
-        this.$refs.subject.focus());
-      err &&
-        !this.title &&
-        ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
+        ((msg = "지역을 선택해주세요"), (err = false), this.$refs.subject.focus());
+      err && !this.title && ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
       err &&
         !this.content &&
-        ((msg = "내용 입력해주세요"),
-        (err = false),
-        this.$refs.content.focus());
+        ((msg = "내용 입력해주세요"), (err = false), this.$refs.content.focus());
       if (!err) alert(msg);
       // 만약, 내용이 다 입력되어 있다면 registBook 호출
       else this.registArticle();
@@ -96,13 +102,21 @@ export default {
 
     registArticle() {
       http
-        .post("/articles", {
-          author: "user",
-          subject: this.subject,
-          title: this.title,
-          content: this.content,
-          board_name: "community",
-        })
+        .post(
+          "/articles",
+          {
+            author: this.author,
+            subject: this.subject,
+            title: this.title,
+            content: this.content,
+            board_name: "community",
+          },
+          {
+            headers: {
+              Authorization: `Bearer ` + sessionStorage.getItem("token"),
+            },
+          }
+        )
         .then(({ data }) => {
           // 서버에서 정상적인 값이 넘어 왔을경우 실행.
           let msg = "등록 처리시 문제가 발생했습니다.";
@@ -116,6 +130,7 @@ export default {
     moveList() {
       this.$router.push({ name: "list" });
     },
+    findAuthor() {},
   },
 };
 </script>

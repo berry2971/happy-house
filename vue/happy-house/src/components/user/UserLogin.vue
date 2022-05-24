@@ -32,6 +32,7 @@
 
 <script>
 import http from "@/api/http";
+const store = "store";
 
 export default {
   name: "UserLogin",
@@ -60,25 +61,18 @@ export default {
         })
         .then(({ data }) => {
           // 서버에서 정상적인 값이 넘어 왔을경우 실행.
-
-          http
-            .get("/users/test123", data)
-            .then((response) => {
-              console.log(response);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
           let msg = "로그인 문제가 발생했습니다.";
           if (data != null) {
-            sessionStorage.setItem("access-token", data);
+            sessionStorage.clear("vuex");
+            sessionStorage.clear("token");
+
+            this.$store.dispatch("setToken", data);
             msg = "로그인이 완료되었습니다.";
           }
-          console.log(msg);
+          alert(msg);
+          location.href = "/";
+          //this.$router.push({ name: "home" });
         });
-    },
-    moveHome() {
-      this.$router.push({ name: "home" });
     },
   },
 };

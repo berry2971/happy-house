@@ -50,6 +50,14 @@ label {
   text-decoration: none;
 }
 
+.userInfo {
+  color: white;
+  float: right;
+  text-decoration: none;
+  font-size: small;
+  padding: 5px;
+}
+
 .happy_logo {
   width: 250px;
 }

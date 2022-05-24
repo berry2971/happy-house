@@ -4,11 +4,11 @@
     <div id="deals-list" ref="list">
       <div v-for="deal in deals">
         <div>
-          <div>{{deal.addr_lv3}} {{deal.bunji}}</div>
-          <div>{{deal.addr_road}}</div>
-          <div>{{deal.apt_name}}</div>
-          <div>{{deal.deal_year_month}}</div>
-          <div>{{deal.price}}</div>
+          <div>{{ deal.addr_lv3 }} {{ deal.bunji }}</div>
+          <div>{{ deal.addr_road }}</div>
+          <div>{{ deal.apt_name }}</div>
+          <div>{{ deal.deal_year_month }}</div>
+          <div>{{ deal.price }}</div>
         </div>
       </div>
     </div>
@@ -52,22 +52,28 @@ export default {
       this.mapLat = center.getLat();
       const geocoder = new kakao.maps.services.Geocoder();
       const coord = new kakao.maps.LatLng(center.getLat(), center.getLng());
-      geocoder.coord2RegionCode(coord.getLng(), coord.getLat(), (result, status) => {
-        if (status === kakao.maps.services.Status.OK) {
-          // this.addrLv1 = result[0].region_1depth_name;
-          // this.addrLv2 = result[0].region_2depth_name;
-          // this.addrLv3 = result[0].region_3depth_name;
-          this.$emit("change-addr-by-map", result[0]);
+      geocoder.coord2RegionCode(
+        coord.getLng(),
+        coord.getLat(),
+        (result, status) => {
+          if (status === kakao.maps.services.Status.OK) {
+            // this.addrLv1 = result[0].region_1depth_name;
+            // this.addrLv2 = result[0].region_2depth_name;
+            // this.addrLv3 = result[0].region_3depth_name;
+            this.$emit("change-addr-by-map", result[0]);
+          }
         }
-      });
+      );
 
       this.displayAptList();
     });
   },
   methods: {
     briefStateNameToFullStateName(stateName) {
-      if (["부산", "인천", "대구", "대전", "광주", "울산"].includes(stateName)) return stateName + "광역시";
-      else if (["경기", "강원", "제주"].includes(stateName)) return stateName + "도";
+      if (["부산", "인천", "대구", "대전", "광주", "울산"].includes(stateName))
+        return stateName + "광역시";
+      else if (["경기", "강원", "제주"].includes(stateName))
+        return stateName + "도";
       else if (stateName == "서울") return "서울특별시";
       else if (stateName == "경남") return "경상남도";
       else if (stateName == "경북") return "경상북도";
@@ -150,9 +156,11 @@ export default {
       this.moveMapWithKeyword(`${this.addrLv1} ${this.addrLv2}`);
     },
     addrLv3() {
-      this.moveMapWithKeyword(`${this.addrLv1} ${this.addrLv2} ${this.addrLv3}`)
-    }
-  }
+      this.moveMapWithKeyword(
+        `${this.addrLv1} ${this.addrLv2} ${this.addrLv3}`
+      );
+    },
+  },
 };
 </script>
 

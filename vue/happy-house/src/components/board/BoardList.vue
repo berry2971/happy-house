@@ -46,9 +46,15 @@ export default {
     };
   },
   created() {
-    http.get("/articles?boardName=community&page=1").then(({ data }) => {
-      this.articles = data;
-    });
+    http
+      .get("/articles?boardName=community&page=1", {
+        headers: {
+          Authorization: `Bearer ` + sessionStorage.getItem("token"),
+        },
+      })
+      .then(({ data }) => {
+        this.articles = data;
+      });
   },
   methods: {
     moveWrite() {

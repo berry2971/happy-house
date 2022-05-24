@@ -41,7 +41,8 @@
     </div>
 
     <!--지도-->
-    <KakaoMap ref="kakaoMap"
+    <KakaoMap
+      ref="kakaoMap"
       :addrLv1="addrLv1"
       :addrLv2="addrLv2"
       :addrLv3="addrLv3"
@@ -70,8 +71,8 @@ export default {
     },
     addrLv2() {
       // TODO: load <select> of addrLv2
-    }
-  }
+    },
+  },
 };
 </script>
 

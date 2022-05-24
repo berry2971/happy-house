@@ -1,12 +1,34 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
-
-export default new Vuex.Store({
-  state: {},
-  getters: {},
-  mutations: {},
-  actions: {},
+const store = new Vuex.Store({
+  namespaced: true,
+  state: {
+    token: null,
+  },
+  getters: {
+    isLogin(state) {
+      return state.token == null ? false : true;
+    },
+  },
+  mutations: {
+    setToken(state, _token) {
+      sessionStorage.setItem("token", _token);
+    },
+  },
+  actions: {
+    setToken: ({ commit }, _token) => {
+      commit("setToken", _token);
+    },
+  },
   modules: {},
+  plugins: [
+    createPersistedState({
+      storage: sessionStorage,
+    }),
+  ],
 });
+
+export default store;
