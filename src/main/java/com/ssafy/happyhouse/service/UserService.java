@@ -44,11 +44,13 @@ public class UserService {
 
     public User registerUser(User user) throws Exception {
         user.setPw(getEncodedPasswordFromRawPassword(user.getPw()));
+        user.setRole("ROLE_USER");
         userMapper.save(user);
         return user;
     }
 
     public User modifyUser(User user) throws Exception {
+        user.setRole("ROLE_USER");
         userMapper.modifyUser(user);
         return user;
     }

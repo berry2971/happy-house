@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.nio.file.AccessDeniedException;
 
 @CrossOrigin("*")
@@ -40,7 +39,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "회원 등록", notes = "User 객체를 통해 신규 회원을 등록")
-    @PostMapping("auth")
+    @PostMapping("/auth")
     public User registerUser(@RequestBody User user) throws Exception {
         return userService.registerUser(user);
     }
@@ -55,7 +54,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "로그인", notes = "id와 pw를 통해 로그인")
-    @PostMapping("auth/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<String> login(@RequestBody UserLoginDto userLoginDto) throws Exception {
         String token = userService.login(userLoginDto.getId(), userLoginDto.getPw());
         return new ResponseEntity<>(token, HttpStatus.OK);
@@ -74,7 +73,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "분실 비밀번호 갱신", notes = "id, tel, name을 통해 분실 비밀번호 갱신")
-    @PostMapping("auth/forget-password")
+    @PostMapping("/auth/forget-password")
     public String findPassword(
             @RequestBody UserFindPasswordDto userFindPasswordDto
     ) throws Exception {
@@ -85,9 +84,9 @@ public class UserController {
 
         User user = userService.getUser(id);
         if (!checkUserExists(user)) {
-            throw new AuthenticationException("존재하지 않는 아이디");
+            throw new AuthenticationException("존재하지 않는 아이디입니다.");
         } if (!checkNameAndTelEqualsTarget(user, name, tel)) {
-            throw new AccessDeniedException("이름 또는 전화번호가 일치하지 않음");
+            throw new AccessDeniedException("이름 또는 전화번호가 일치하지 않습니다.");
         } else {
             user.setPw(userService.getEncodedPasswordFromRawPassword(newPw));
             userService.modifyUser(user);
@@ -110,18 +109,6 @@ public class UserController {
 
     private boolean checkUserExists(User user) {
         return user != null;
-    }
-
-    private boolean checkIdMatchesPw(User user, String pw) throws Exception {
-        return user != null && pw.equals(user.getPw());
-    }
-
-    private void saveLoginInfoToSession(HttpSession httpSession, String id) {
-        httpSession.setAttribute("login-id", id);
-    }
-
-    private String retrieveLoginInfoFromSession(HttpSession httpSession) {
-        return (String)httpSession.getAttribute("login-id");
     }
 
     private boolean checkNameAndTelEqualsTarget(User user, String name, String tel) {

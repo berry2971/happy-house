@@ -1,7 +1,6 @@
 package com.ssafy.happyhouse.config.security;
 
 import com.ssafy.happyhouse.mapper.BlacklistMapper;
-import com.ssafy.happyhouse.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.access.AuthorizationServiceException;
@@ -45,9 +44,10 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
             return;
         }
         String token = authorizationHeader.substring("Bearer ".length());
+        jwtTokenProvider.verify(token);
         String id = jwtTokenProvider.getIdFromToken(token);
         try {
-            if (blacklistMapper.findById(id) != null) {
+            if (blacklistMapper.findById(id).size() > 0) {
                 throw new AuthorizationServiceException("로그아웃된 계정입니다.");
             }
 
@@ -63,11 +63,12 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
             request.setAttribute("userId", id);
+
             filterChain.doFilter(request, response);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
-
     }
 
 }

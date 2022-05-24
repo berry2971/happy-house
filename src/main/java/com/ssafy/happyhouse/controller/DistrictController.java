@@ -21,7 +21,7 @@ public class DistrictController {
         this.districtMapper = districtMapper;
     }
 
-    @ApiOperation(value = "모든 거래내역 조회", notes = "모든 거래내역 리스트를 반환")
+    @ApiOperation(value = "행정구역 조회", notes = "상위 행정구역의 하위 행정구역 반환")
     @GetMapping("")
     public List<String> getDistrictsWithPreviousLevels(
             @RequestParam String addr_lv1,

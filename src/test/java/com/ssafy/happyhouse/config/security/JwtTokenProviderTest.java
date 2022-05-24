@@ -1,14 +1,10 @@
 package com.ssafy.happyhouse.config.security;
 
-import com.ssafy.happyhouse.domain.entity.EnumRole;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.annotation.PostConstruct;
 import java.util.Base64;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class JwtTokenProviderTest {
 
@@ -24,7 +20,13 @@ class JwtTokenProviderTest {
 
     @Test
     void printTokenForTest() {
-        String token = jwtTokenProvider.createToken("ssafy");
+        String token = jwtTokenProvider.createToken("ssafy123");
+        System.out.println(token);
+    }
+
+    @Test
+    void printExpiredTokenForTest() {
+        String token = jwtTokenProvider.createExpiredToken("ssafy123");
         System.out.println(token);
     }
 
