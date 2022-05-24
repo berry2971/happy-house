@@ -47,6 +47,7 @@ public class ArticleController {
             HttpServletRequest request
     ) throws Exception {
         String loginId = (String)request.getAttribute("userId");
+        article.setAuthor(loginId);
         return articleService.createArticle(article);
     }
 

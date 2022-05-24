@@ -1,6 +1,7 @@
 package com.ssafy.happyhouse.controller;
 
 import com.ssafy.happyhouse.domain.dto.UserFindPasswordDto;
+import com.ssafy.happyhouse.domain.dto.UserGetDto;
 import com.ssafy.happyhouse.domain.dto.UserLoginDto;
 import com.ssafy.happyhouse.domain.entity.User;
 import com.ssafy.happyhouse.mapper.BlacklistMapper;
@@ -34,8 +35,18 @@ public class UserController {
 
     @ApiOperation(value = "회원 조회", notes = "id를 통해 회원 정보를 조회")
     @GetMapping("/{id}")
-    public User getUser(@PathVariable String id) throws Exception {
-        return userService.getUser(id);
+    public UserGetDto getUser(@PathVariable String id) throws Exception {
+        User user = userService.getUser(id);
+        return new UserGetDto(
+                user.getId(),
+                user.getName(),
+                user.getTel(),
+                user.getBmk_addr_lv1(),
+                user.getBmk_addr_lv2(),
+                user.getBmk_addr_lv3(),
+                user.getBmk_addr_lv4(),
+                user.getRole()
+        );
     }
 
     @ApiOperation(value = "회원 조회", notes = "id를 통해 회원 정보를 조회")
