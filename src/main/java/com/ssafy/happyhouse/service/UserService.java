@@ -50,6 +50,7 @@ public class UserService {
     }
 
     public User modifyUser(User user) throws Exception {
+        user.setPw(getEncodedPasswordFromRawPassword(user.getPw()));
         user.setRole("ROLE_USER");
         userMapper.modifyUser(user);
         return user;
