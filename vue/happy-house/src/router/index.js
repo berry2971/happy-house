@@ -19,6 +19,11 @@ const routes = [
     component: HomeView,
   },
   {
+    path: "/apt/detail",
+    name: "apt-detail",
+    component: AptDetail,
+  },
+  {
     path: "/board",
     name: "board",
     component: BoardView,
