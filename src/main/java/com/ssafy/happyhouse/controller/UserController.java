@@ -100,6 +100,7 @@ public class UserController {
         String newPw = userFindPasswordDto.getNewPw();
 
         User user = userService.getUser(id);
+        user.setPw(newPw);
         if (!checkUserExists(user)) {
             throw new AuthenticationException("존재하지 않는 아이디입니다.");
         } if (!checkNameAndTelEqualsTarget(user, name, tel)) {
