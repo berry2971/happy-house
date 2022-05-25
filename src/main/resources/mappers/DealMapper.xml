@@ -36,8 +36,21 @@
         WHERE addr_lv1 = #{addr_lv1} AND
               addr_lv2 = #{addr_lv2} AND
               addr_lv3 = #{addr_lv3} AND
-              bunji_main = #{bunji_main} AND
-              bunji_sub = #{bunji_sub}
+              bunji = #{bunji}
+    </select>
+
+    <select id="findDealSummaryByLegacyAddress" resultType="com.ssafy.happyhouse.domain.dto.DealSummaryDto">
+        SELECT
+            MIN(price) as `minPrice`,
+            MAX(price) as `maxPrice`,
+            COUNT(id) as `count`
+        FROM
+            deal
+        WHERE
+            addr_lv1 = #{addr_lv1} and
+            addr_lv2 = #{addr_lv2} and
+            addr_lv3 = #{addr_lv3} and
+            bunji = #{bunji};
     </select>
 
 </mapper>

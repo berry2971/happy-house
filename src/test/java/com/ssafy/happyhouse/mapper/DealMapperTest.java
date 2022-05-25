@@ -23,7 +23,7 @@ class DealMapperTest {
         assertThat(deals.size()).isGreaterThan(1000);
         for (Deal deal : deals) {
             assertThat(deal.getAddr_lv1()).isNotBlank();
-            assertThat(deal.getPrice()).isNotBlank();
+            assertThat(deal.getPrice()).isNotNull();
         }
     }
 
@@ -31,12 +31,12 @@ class DealMapperTest {
     void saveAndFind() throws Exception {
         Deal deal1 = new Deal(0L, "테스트lv1-1", "테스트lv2-1", "테스트lv3-1", "테스트lv4-1",
                 "150-3", "150", "3", "테스트아파트1", "123.456",
-                "205001", "15", "12345", 100, "1234",
+                "205001", "15", 12345L, 100, "1234",
                 "테스트도로명주소1", null, "-", null);
         Deal deal2 = new Deal(0L, "테스트lv1-2", "테스트lv2-2", "테스트lv3-2", "테스트lv4-2",
-                "산2-10", "2", "10", "테스트아파트2", "55",
-                "195005", "30", "9999999999", null, null,
-                "테스트도로명주소2", null, null, null);
+                "73", "73", "0", "테스트아파트2", "38.6",
+                "199110", "1", 12345L, 1, "1234",
+                "테스트도로명주소2", null, "-", null);
 
         dealMapper.save(deal1);
         dealMapper.save(deal2);

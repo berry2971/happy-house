@@ -9,9 +9,7 @@ public class AddressUtil {
             String bunjiMain,
             String bunjiSub
     ) {
-        return bunjiSub.equals("0")
-                ? (addrLv1 + " " + addrLv2 + " " + addrLv3 + " " + bunjiMain).trim()
-                : (addrLv1 + " " + addrLv2 + " " + addrLv3 + " " + bunjiMain + "-" + bunjiSub).trim();
+        return addrLv1 + " " + addrLv2 + " " + addrLv3 + " " + assembleBunjiMainAndBunjiSub(bunjiMain, bunjiSub).trim();
     }
 
     public static String changeComplexAddrToLegacyAddr(
@@ -19,6 +17,13 @@ public class AddressUtil {
             String complexAddr
     ) {
         return complexAddr.substring(0, complexAddr.length() - aptName.length()).trim();
+    }
+
+    public static String assembleBunjiMainAndBunjiSub(
+            String bunjiMain,
+            String bunjiSub
+    ) {
+        return bunjiSub.equals("0") ? bunjiMain : bunjiMain + "-" + bunjiSub;
     }
 
 }

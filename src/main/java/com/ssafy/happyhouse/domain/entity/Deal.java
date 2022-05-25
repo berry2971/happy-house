@@ -14,7 +14,7 @@ public class Deal {
     private String square;
     private String deal_year_month;
     private String deal_day;
-    private String price;
+    private Long price;
     private Integer floor;
     private String built_year;
     private String addr_road;
@@ -26,7 +26,7 @@ public class Deal {
 
     public Deal(Long id, String addr_lv1, String addr_lv2, String addr_lv3, String addr_lv4,
                 String bunji, String bunji_main, String bunji_sub, String apt_name, String square,
-                String deal_year_month, String deal_day, String price, Integer floor, String built_year,
+                String deal_year_month, String deal_day, Long price, Integer floor, String built_year,
                 String addr_road, String rel_data, String deal_type, String dealer_loc) {
         this.id = id;
         this.addr_lv1 = addr_lv1;
@@ -145,11 +145,11 @@ public class Deal {
         this.deal_day = deal_day;
     }
 
-    public String getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
