@@ -19,7 +19,7 @@
     <select id="findByArticleIdAndOffsetAndLimit" resultType="Comment">
         SELECT id, article_id, write_time, author, content
         FROM comment
-        WHERE article_id = #{article_id}
+        WHERE article_id = #{articleId}
         LIMIT #{offset}, #{commentsPerPage};
     </select>
 

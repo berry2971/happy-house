@@ -24,7 +24,7 @@ public class CommentController {
 
     @ApiOperation(value = "댓글 목록 조회", notes = "특정 게시글의 댓글 목록 반환")
     @GetMapping("")
-    public List<Comment> getArticles(
+    public List<Comment> getComment(
             @RequestParam Long articleId,
             @RequestParam(required = false, defaultValue = "1") int page
     ) throws Exception {
