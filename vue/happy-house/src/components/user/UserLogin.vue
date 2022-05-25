@@ -7,7 +7,6 @@
             :src="require('@/assets/img/loginImage.jpg')"
             alt="Image"
             class="rounded-0"
-            style="height: 300px"
           ></b-card-img>
         </b-col>
         <b-col md="6">
@@ -21,7 +20,7 @@
             </b-form>
             <div>
               <router-link to="/user/join">회원가입</router-link>
-              <router-link to="/board">비밀번호 찾기</router-link>
+              <router-link to="/user/forget-password">비밀번호 찾기</router-link>
             </div>
           </b-card-body>
         </b-col>

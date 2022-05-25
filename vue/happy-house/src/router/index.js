@@ -11,6 +11,7 @@ import UserLogin from "@/components/user/UserLogin.vue";
 import UserJoin from "@/components/user/UserJoin.vue";
 import AptDetail from "@/components/map/AptDetail.vue";
 import UserModify from "@/components/user/UserModify.vue";
+import UserFindPassword from "@/components/user/UserFindPassword.vue";
 
 Vue.use(VueRouter);
 
@@ -75,6 +76,11 @@ const routes = [
         component: UserModify,
       },
     ],
+  },
+  {
+    path: "/user/forget-password",
+    name: "UserFindPassword",
+    component: UserFindPassword,
   },
 ];
 

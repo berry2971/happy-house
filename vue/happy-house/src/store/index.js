@@ -10,7 +10,7 @@ const store = new Vuex.Store({
   },
   getters: {
     isLogin(state) {
-      return state.token == null ? false : true;
+      return sessionStorage.getItem("token") == null ? false : true;
     },
   },
   mutations: {

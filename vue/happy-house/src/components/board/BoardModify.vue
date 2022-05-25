@@ -90,11 +90,7 @@ export default {
       http
         .put(
           `/articles/${this.$route.params.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ` + sessionStorage.getItem("token"),
-            },
-          },
+
           {
             id: this.id,
             author: this.author,
@@ -102,6 +98,11 @@ export default {
             title: this.title,
             content: this.content,
             board_name: "community",
+          },
+          {
+            headers: {
+              Authorization: `Bearer ` + sessionStorage.getItem("token"),
+            },
           }
         )
         .then(({ data }) => {
