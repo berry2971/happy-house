@@ -11,13 +11,13 @@
     </insert>
 
     <select id="findById" resultType="Article">
-        SELECT id, article_id, content
+        SELECT id, article_id, write_time, content
         FROM comment
         WHERE id = #{id};
     </select>
 
     <select id="findByArticleIdAndOffsetAndLimit" resultType="Article">
-        SELECT id, article_id, content
+        SELECT id, article_id, write_time, content
         FROM comment
         WHERE article_id = #{articleId}
         LIMIT #{offset}, #{commentsPerPage};
