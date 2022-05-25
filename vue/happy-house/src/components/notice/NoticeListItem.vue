@@ -1,16 +1,16 @@
 <template>
   <tr>
-    <td class="subject">{{ article.subject }}</td>
+    <td class="subject">{{ notice.subject }}</td>
     <td>
       <!-- <router-link :to="`/board/detail?articleno=${article.articleno}`">{{
         article.subject
       }}</router-link> -->
-      <router-link :to="{ name: 'detail', params: { id: article.id } }" class="board-title">{{
-        article.title
+      <router-link :to="{ name: 'detail', params: { id: notice.id } }" class="board-title">{{
+        notice.title
       }}</router-link>
     </td>
-    <td>{{ article.author }}</td>
-    <td>{{ article.write_time | formatDate }}</td>
+    <td>{{ notice.author }}</td>
+    <td>{{ notice.write_time | formatDate }}</td>
   </tr>
 </template>
 
@@ -18,9 +18,9 @@
 import moment from "moment";
 
 export default {
-  name: "BoardListItem",
+  name: "NoticeListItem",
   props: {
-    article: Object,
+    notice: Object,
   },
   filters: {
     formatDate(regtime) {

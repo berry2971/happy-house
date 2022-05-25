@@ -3,7 +3,7 @@
     <div style="text-align: right">
       <b-button variant="outline-secondary" @click="moveWrite">글 등록</b-button>
     </div>
-    <div v-if="articles.length">
+    <div v-if="notices.length">
       <table id="board-list">
         <colgroup>
           <col style="width: 15%" />
@@ -13,18 +13,18 @@
         </colgroup>
         <thead>
           <tr>
-            <th>지역</th>
+            <th>구분</th>
             <th>제목</th>
             <th>작성자</th>
             <th>작성일</th>
           </tr>
         </thead>
         <tbody>
-          <board-list-item
-            v-for="article in articles"
-            :key="article.id"
-            :article="article"
-          ></board-list-item>
+          <notice-list-item
+            v-for="notice in notices"
+            :key="notice.id"
+            :notice="notice"
+          ></notice-list-item>
         </tbody>
       </table>
     </div>
@@ -33,32 +33,32 @@
 </template>
 <script>
 import http from "@/api/http";
-import BoardListItem from "@/components/board/BoardListItem.vue";
+import NoticeListItem from "@/components/notice/NoticeListItem.vue";
 
 export default {
-  name: "BoardList",
+  name: "NoticeList",
   components: {
-    BoardListItem,
+    NoticeListItem,
   },
   data() {
     return {
-      articles: [],
+      notices: [],
     };
   },
   created() {
     http
-      .get("/articles?boardName=community&page=1", {
+      .get("/articles?boardName=notice&page=1", {
         headers: {
           Authorization: `Bearer ` + sessionStorage.getItem("token"),
         },
       })
       .then(({ data }) => {
-        this.articles = data;
+        this.notices = data;
       });
   },
   methods: {
     moveWrite() {
-      this.$router.push({ name: "write" });
+      this.$router.push({ name: "noticeWrite" });
     },
   },
 };

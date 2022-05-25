@@ -7,7 +7,7 @@
 
     <insert id="save" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO comment(article_id, author, content)
-        VALUES (#{articleId}, #{author}, #{content});
+        VALUES (#{article_id}, #{author}, #{content});
     </insert>
 
     <select id="findById" resultType="Comment">
@@ -19,7 +19,7 @@
     <select id="findByArticleIdAndOffsetAndLimit" resultType="Comment">
         SELECT id, article_id, write_time, author, content
         FROM comment
-        WHERE article_id = #{articleId}
+        WHERE article_id = #{article_id}
         LIMIT #{offset}, #{commentsPerPage};
     </select>
 
