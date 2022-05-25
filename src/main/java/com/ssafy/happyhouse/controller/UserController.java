@@ -105,7 +105,6 @@ public class UserController {
         } if (!checkNameAndTelEqualsTarget(user, name, tel)) {
             throw new AccessDeniedException("이름 또는 전화번호가 일치하지 않습니다.");
         } else {
-            user.setPw(userService.getEncodedPasswordFromRawPassword(newPw));
             userService.modifyUser(user);
         }
 
