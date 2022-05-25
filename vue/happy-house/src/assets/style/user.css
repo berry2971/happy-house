@@ -36,3 +36,22 @@
 .join-form input{
   margin:10px;
 }
+
+.findPassword {
+  position: absolute;
+  height: auto;
+  width: 60%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.findPassword a{
+margin: 5%;
+}
+
+.findPassword input{
+margin-top: 5%;
+margin-bottom: 5%;
+}

@@ -33,8 +33,7 @@ export default {
     };
   },
   created() {
-    console.log("실행중");
-    if (this.$store.getters.isLogin != null) {
+    if (this.$store.getters.isLogin) {
       http
         .get("/users/login/current", {
           headers: {
@@ -48,13 +47,16 @@ export default {
   },
   methods: {
     logout() {
-      console.log(sessionStorage.getItem("token"));
       http
-        .post("/users/logout", {
-          headers: {
-            Authorization: `Bearer ` + sessionStorage.getItem("token"),
-          },
-        })
+        .post(
+          "/users/logout",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ` + sessionStorage.getItem("token"),
+            },
+          }
+        )
         .then(({ data }) => {
           sessionStorage.clear("vuex");
           sessionStorage.clear("token");
