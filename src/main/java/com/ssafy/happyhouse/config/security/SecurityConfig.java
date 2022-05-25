@@ -53,7 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/users/auth/**",
             // deal
             "/deals/**",
-            "/districts/**"
+            "/districts/**",
+            // complex
+            "/complex/**"
     };
 
     @Override
