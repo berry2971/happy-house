@@ -24,7 +24,7 @@ export default {
   },
   filters: {
     formatDate(regtime) {
-      return moment(new Date(regtime)).format("YYYY.MM.DD");
+      return moment(new Date(regtime)).add(-1, "day").format("YYYY.MM.DD");
     },
   },
 };

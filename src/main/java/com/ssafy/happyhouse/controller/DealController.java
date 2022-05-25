@@ -38,7 +38,7 @@ public class DealController {
             @RequestParam(value = "bunji_main") String bunji_main,
             @RequestParam(value = "bunji_sub") String bunji_sub
     ) throws Exception {
-        log.info("parameters: address {}, {}, {}, number {}, {}", addr_lv1, addr_lv2, addr_lv3, bunji_main, bunji_sub);
+        //log.info("parameters: address {}, {}, {}, number {}, {}", addr_lv1, addr_lv2, addr_lv3, bunji_main, bunji_sub);
         return dealService.getDealsByLegacyAddress(addr_lv1, addr_lv2, addr_lv3, bunji_main, bunji_sub);
     }
 

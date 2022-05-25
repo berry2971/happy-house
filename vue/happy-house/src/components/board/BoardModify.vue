@@ -41,7 +41,7 @@ export default {
   name: "BoardModify",
   data() {
     return {
-      author: "test",
+      author: "",
       title: "",
       content: "",
       board_name: "community",
@@ -49,13 +49,19 @@ export default {
     };
   },
   created() {
-    http.get(`/articles/${this.$route.params.id}`).then(({ data }) => {
-      this.id = data.id;
-      this.author = data.author;
-      this.subject = data.subject;
-      this.title = data.title;
-      this.content = data.content;
-    });
+    http
+      .get(`/articles/${this.$route.params.id}`, {
+        headers: {
+          Authorization: `Bearer ` + sessionStorage.getItem("token"),
+        },
+      })
+      .then(({ data }) => {
+        this.id = data.id;
+        this.author = data.author;
+        this.subject = data.subject;
+        this.title = data.title;
+        this.content = data.content;
+      });
   },
   methods: {
     // 입력값 체크하기 - 체크가 성공하면 registBook 호출
@@ -82,14 +88,22 @@ export default {
 
     modifyBook() {
       http
-        .put(`/articles/${this.$route.params.id}`, {
-          id: this.id,
-          author: this.author,
-          subject: this.subject,
-          title: this.title,
-          content: this.content,
-          board_name: "community",
-        })
+        .put(
+          `/articles/${this.$route.params.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ` + sessionStorage.getItem("token"),
+            },
+          },
+          {
+            id: this.id,
+            author: this.author,
+            subject: this.subject,
+            title: this.title,
+            content: this.content,
+            board_name: "community",
+          }
+        )
         .then(({ data }) => {
           let msg = "수정 처리시 문제가 발생했습니다.";
           if (data != null) {

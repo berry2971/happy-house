@@ -9,6 +9,8 @@ import BoardModify from "@/components/board/BoardModify.vue";
 import UserView from "@/views/UserView.vue";
 import UserLogin from "@/components/user/UserLogin.vue";
 import UserJoin from "@/components/user/UserJoin.vue";
+import AptDetail from "@/components/map/AptDetail.vue";
+import UserModify from "@/components/user/UserModify.vue";
 
 Vue.use(VueRouter);
 
@@ -17,6 +19,11 @@ const routes = [
     path: "/",
     name: "home",
     component: HomeView,
+  },
+  {
+    path: "/apt/detail",
+    name: "apt-detail",
+    component: AptDetail,
   },
   {
     path: "/board/community",
@@ -61,6 +68,11 @@ const routes = [
         path: "join",
         name: "join",
         component: UserJoin,
+      },
+      {
+        path: "modify/:id",
+        name: "UserModify",
+        component: UserModify,
       },
     ],
   },
