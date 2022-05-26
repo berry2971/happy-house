@@ -1,6 +1,6 @@
 <template>
-  <div id="indexMap">
-    <div id="kakao-map" ref="map"></div>
+  <div id="indexMap" style="overflow-y: hidden">
+    <div id="kakao-map" ref="map" style="height:85vh"></div>
     <div id="deal-list-wrap">
       <div id="deals-list" ref="dealslist">
         <div class="apt-item" v-for="(apt, idx) in apts">
@@ -396,12 +396,24 @@ export default {
 </script>
 
 <style>
-#indexMap {
+body {
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.header {
+  display: table-cell;
+  vertical-align: middle;
+  height: 5vh;
   width: 100%;
-  height: 100%;
+  background-color: #ff5f00;
+}
+
+#indexMap {
+  height: 70%;
+  width: 100%;
   margin: 0px;
   padding: 0px;
-  display: inline-block;
 }
 
 #kakao-map {
@@ -412,11 +424,10 @@ export default {
   float: left;
   position: absolute;
   z-index: 10;
-  /*display: inline-block;*/
 }
 
 #deal-list-wrap {
-  height: 100vh;
+  height: 80vh;
   padding: 1%;
   width: 20%;
   z-index: 15;
@@ -424,22 +435,17 @@ export default {
   float: right;
   position: relative;
   min-height: 100px;
+  scrollbar-color: #ff1616 #5468cb;
+  scrollbar-width: thin;
 }
 
 #deals-list {
-  /*overflow-y: auto;*/
-
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 100%;
   margin: 0px;
   padding: 5px;
   min-height: 100px;
   background-color: rgba(255, 255, 255, 0.7);
-}
-
-#deal-list-wrap {
-  scrollbar-color: #ff1616 #5468cb;
-  scrollbar-width: thin;
 }
 
 #deals-list::-webkit-scrollbar-thumb {

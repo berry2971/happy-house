@@ -111,7 +111,9 @@ export default {
       const config1 = {
         type: "bar",
         data: data1,
-        options: {},
+        options: {
+          barThickness: 18,
+        },
       };
       const myChart1 = new Chart(
         document.getElementById("mchart-square"),
@@ -126,7 +128,7 @@ export default {
             label: "실거래가",
             //labels: ["2021-01-01", "2022-01-01"],
             data: this.chartTimelineItems,
-            backgroundColor: "rgb(255,99,132)",
+            backgroundColor: "rgb(255,95,0)",
           },
         ],
       };
@@ -347,7 +349,7 @@ export default {
 #apt-deals-wrapper th {
   text-align: center;
   padding: 10px 0px 10px 0px;
-  background-color: #cb8282;
+  background-color: rgb(255,95,0);
   color: white;
 }
 

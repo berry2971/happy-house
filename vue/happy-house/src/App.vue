@@ -69,13 +69,6 @@ label {
 .happy_logo {
   width: 250px;
 }
-.header {
-  display: table-cell;
-  vertical-align: middle;
-  height: 5vh;
-  width: 100%;
-  background-color: #ff5f00;
-}
 .header img {
   vertical-align: middle;
 }
@@ -85,11 +78,19 @@ label {
   text-decoration: none;
   font-size: large;
   padding: 10px;
+  box-shadow: inset 0 0 0 0 #ff5f00;
+  /*margin: 0 -.25rem;*/
+  /*padding: 0 .25rem;*/
+  transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+  border-radius: 5px;
 }
 
-.menu a:hover {
-  color: gray;
+.menu-router a:hover {
+  /*color: white;*/
+  font-weight: 900;
   text-decoration: none;
+  box-shadow: inset 100px 0 0 0 #ffffff;
+  color: #ff5f00;
 }
 
 .logo {
@@ -100,5 +101,14 @@ label {
 .underline {
   display: inline-block;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 70%, cyan 30%);
+}
+
+.indexDropdown {
+  font-weight: 500;
+}
+
+.indexDropdown option {
+  font-weight: 500;
+  padding: 3px 0px 3px 0px;
 }
 </style>

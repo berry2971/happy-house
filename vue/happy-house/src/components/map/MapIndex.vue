@@ -1,12 +1,13 @@
 <template>
   <div>
     <!--주소 선택-->
-    <div id="indexDropdownBox">
+    <div id="indexDropdownBox" style="height:10vh">
       <form>
         <select
           id="inputMetropolis"
           class="indexDropdown"
           v-model="addrLv1"
+          style="height:50px; padding-left:15px;"
         >
           <option id="defaultOption1">선택</option>
           <option>서울특별시</option>
@@ -27,10 +28,10 @@
           <option>경상남도</option>
           <option>제주특별자치도</option>
         </select>
-        <select id="inputCity" class="indexDropdown" v-model="addrLv2">
+        <select id="inputCity" class="indexDropdown" v-model="addrLv2" style="height:50px; padding-left:15px;">
           <option id="defaultOption2">선택</option>
         </select>
-        <select id="inputTown" class="indexDropdown" v-model="addrLv3">
+        <select id="inputTown" class="indexDropdown" v-model="addrLv3" style="height:50px; padding-left:15px;">
           <option id="defaultOption3">선택</option>
         </select>
       </form>

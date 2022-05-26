@@ -19,9 +19,9 @@
       <router-link :to="{ name: 'home' }"
         ><img src="@/assets/img/logo_white.png" style="height:10%;width:10%;" class="happy_logo"
       /></router-link>
-      <router-link :to="{ name: 'notice' }">공지사항</router-link>
-      <router-link :to="{ name: 'list' }">커뮤니티</router-link>
-      <router-link :to="{ name: 'home' }">관심지역</router-link>
+      <span class="menu-router"><router-link :to="{ name: 'notice' }">공지사항</router-link></span>
+      <span class="menu-router"><router-link :to="{ name: 'list' }">커뮤니티</router-link></span>
+      <span class="menu-router"><router-link :to="{ name: 'home' }">관심지역</router-link></span>
     </div>
 
   </div>
