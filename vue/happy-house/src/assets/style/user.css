@@ -1,7 +1,7 @@
 .login {
     position: absolute;
     height: auto;
-    width: 60%;
+    width: 35%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -40,7 +40,7 @@
 .findPassword {
   position: absolute;
   height: auto;
-  width: 60%;
+  width: 35%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -62,10 +62,12 @@ margin-bottom: 5%;
   font-weight: bold;
   border: 0;
   outline: 0;
-  width:90%;
+  width:95%;
 }
 
 .login-a{
+  
   text-align: center;
   color:#ff5f00;
 }
+

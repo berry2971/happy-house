@@ -4,10 +4,10 @@
       <span class="author-span">{{ comment.author }}</span>
       |
       <span class="write_time-span">{{ comment.write_time | formatDate }}</span>
-      <span class="content-span" v-html="comment.content"></span>
-      <div v-if="comment.author == currentUser.id">
+      <span v-if="comment.author == currentUser.id" class="comment-span">
         <a class="comment-a" @click="deleteComment(comment.id)">삭제</a>
-      </div>
+      </span>
+      <span class="content-span" v-html="comment.content"></span>
     </div>
     <hr style="clear: both" />
   </div>

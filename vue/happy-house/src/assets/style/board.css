@@ -10,6 +10,7 @@ button,
 }
 .regist{
   margin: 10px;
+  margin-bottom: 100px;
 }
 .regist-form {
   border-radius: 5px;
@@ -34,7 +35,8 @@ a.board-title {
 }
 
 .subject{
-  color:dodgerblue;
+  color:#ff5f00;
+  font-weight: bold;
 }
 
 .subject-span{
@@ -42,7 +44,7 @@ a.board-title {
   width: 30%;
   height: 100%;
   margin-right: 1%;
-  color:dodgerblue;
+  color:#ff5f00;
 }
 
 .title-span{
@@ -67,8 +69,12 @@ a.board-title {
 
 .comment-a{
   text-align: right;
-  background-color:#ff5f00;
-  color:white;
+  color:#ff5f00;
+  margin-left: 10px;
+}
+
+.comment-a a:hover {
+  background-color: lightgray;
 }
 
 .board-btn{
@@ -81,15 +87,25 @@ a.board-title {
   outline: 0;
 }
 
-.board-group a{
+.board-a a:hover {
+  background-color: lightgray;
+}
+
+.board-a{
   text-align: right;
+  float:right;
   color: #ff5f00;
 }
 
+.board-a a{
+  margin:5px;
+}
+
 .notice-subject{
-  color: rgb(39, 39, 215);
+  color: #ff5f00;
   font-weight: bold;
 }
+
 #board-list {
     border-collapse: collapse;
     width: 100%;
@@ -105,4 +121,18 @@ a.board-title {
     text-align: center;
     border-bottom: 1px solid #ddd;
     height: 50px;
+  }
+
+  th{
+    background-color:#ff8f4f ;
+    color: white;
+  }
+  td{
+    background-color: white;
+  }
+
+
+  hr{
+    background-color: #ff5f00;
+
   }

@@ -2,7 +2,7 @@
   <div>
     <div v-if="comments.length">
       <h5>댓글 {{ comments.length }}</h5>
-      <hr />
+      <hr class="comments-hr" />
       <comment-list-item v-for="comment in comments" :key="comment.id" :comment="comment">
       </comment-list-item>
     </div>

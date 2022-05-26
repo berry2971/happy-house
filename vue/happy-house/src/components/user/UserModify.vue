@@ -4,22 +4,22 @@
       <b-card-body title="회원정보관리" style="padding: 10%">
         <b-form class="join-form" @submit.stop.prevent>
           <label for="id">아이디</label>
-          <b-form-input type="text" disabled name="id" v-model="id" />
+          <b-form-input type="text" disabled name="id" v-model="id" required />
           <label for="password">비밀번호</label>
-          <b-form-input type="password" name="pw" v-model="pw" placeholder="비밀번호" />
+          <b-form-input type="password" name="pw" v-model="pw" placeholder="비밀번호" required />
           <label for="name">이름</label>
-          <b-form-input type="text" name="name" v-model="name" />
+          <b-form-input type="text" name="name" v-model="name" required />
           <label for="tel">전화번호</label>
-          <b-form-input type="text" maxlength="11" name="tel" v-model="tel" />
+          <b-form-input type="text" maxlength="11" name="tel" v-model="tel" required />
 
           <label for="bmk_addr_lv1">관심지역(광역시도)</label>
-          <b-form-input type="text" name="bmk_addr_lv1" v-model="bmk_addr_lv1" />
+          <b-form-input type="text" name="bmk_addr_lv1" v-model="bmk_addr_lv1" required />
           <label for="bmk_addr_lv2">관심지역(시군구)</label>
-          <b-form-input type="text" name="bmk_addr_lv2" v-model="bmk_addr_lv2" />
+          <b-form-input type="text" name="bmk_addr_lv2" v-model="bmk_addr_lv2" required />
           <label for="bmk_addr_lv3">관심지역(읍면동)</label>
-          <b-form-input type="text" name="bmk_addr_lv3" v-model="bmk_addr_lv3" />
+          <b-form-input type="text" name="bmk_addr_lv3" v-model="bmk_addr_lv3" required />
           <label for="bmk_addr_lv4">관심지역(리)</label>
-          <b-form-input type="text" name="bmk_addr_lv4" v-model="bmk_addr_lv4" />
+          <b-form-input type="text" name="bmk_addr_lv4" v-model="bmk_addr_lv4" required />
           <b-button @click="checkValue" variant="outline-secondary" style="width: 90%"
             >수정</b-button
           >

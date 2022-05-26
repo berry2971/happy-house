@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-textarea v-model="content"> </b-textarea>
-    <button @click="commentWrite()">댓글 작성</button>
+    <button @click="commentWrite()" class="board-btn">댓글 작성</button>
   </div>
 </template>
 <script>

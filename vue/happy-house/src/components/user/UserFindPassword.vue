@@ -4,7 +4,7 @@
       <b-row no-gutters>
         <b-col md="6">
           <b-card-img
-            :src="require('@/assets/img/loginImage.jpg')"
+            :src="require('@/assets/img/loginImg.jpg')"
             alt="Image"
             class="rounded-0"
             style="height: auto"
@@ -13,15 +13,37 @@
         <b-col md="6">
           <b-card-body title="비밀번호 찾기">
             <b-form @submit.stop.prevent>
-              <b-form-input type="text" id="id" name="id" v-model="id" placeholder="아이디" />
-              <b-form-input type="text" id="name" name="name" v-model="name" placeholder="이름" />
-              <b-form-input type="text" id="tel" name="tel" v-model="tel" placeholder="전화번호" />
+              <b-form-input
+                type="text"
+                id="id"
+                name="id"
+                v-model="id"
+                placeholder="아이디"
+                required
+              />
+              <b-form-input
+                type="text"
+                id="name"
+                name="name"
+                v-model="name"
+                placeholder="이름"
+                required
+              />
+              <b-form-input
+                type="text"
+                id="tel"
+                name="tel"
+                v-model="tel"
+                placeholder="전화번호"
+                required
+              />
               <b-form-input
                 type="password"
                 id="newPw"
                 name="newPw"
                 v-model="newPw"
                 placeholder="새로운 비밀번호"
+                required
               />
               <b-button variant="outline-secondary" @click="checkValue" style="width: 90%"
                 >비밀번호 변경</b-button

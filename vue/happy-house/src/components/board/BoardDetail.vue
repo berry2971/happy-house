@@ -2,19 +2,19 @@
   <div>
     <div class="regist">
       <div class="regist_form">
-        <div class="board-a">
-          <span class="board-group" v-if="article.author == currentUser.id">
-            <a @click="boardDelete()">삭제</a>
-            <a @click="moveModify(article.id)">수정</a>
-          </span>
-          <a @click="moveList()">목록</a>
-        </div>
         <span class="subject-span">{{ article.subject }}</span>
         <span class="title-span">{{ article.title }}</span>
         <br />
         <span class="author-span">{{ article.author }}</span>
         |
         <span class="write_time-span">{{ article.write_time | formatDate }}</span>
+        <span class="board-a">
+          <span class="board-group" v-if="article.author == currentUser.id">
+            <a @click="boardDelete()">삭제</a>
+            <a @click="moveModify(article.id)">수정</a>
+          </span>
+          <a @click="moveList()">목록</a>
+        </span>
         <hr />
         <span class="content-span" v-html="article.content"></span>
       </div>

@@ -79,6 +79,7 @@ export default {
       let msg = "";
       err &&
         !this.subject &&
+        this.subject == null &&
         ((msg = "공지종류를 선택해주세요"), (err = false), this.$refs.subject.focus());
       err && !this.title && ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
       err &&

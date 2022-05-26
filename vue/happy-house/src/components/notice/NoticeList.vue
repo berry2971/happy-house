@@ -1,6 +1,6 @@
 <template>
   <div class="regist">
-    <div style="text-align: right" v:if="currentUser.role=='ROLE_ADMIN'">
+    <div style="text-align: right" v:if="role=='ROLE_ADMIN'">
       <b-button class="board-btn" @click="moveWrite">글 등록</b-button>
     </div>
     <div v-if="notices.length">
@@ -45,6 +45,7 @@ export default {
   data() {
     return {
       notices: [],
+      role: userInfo.role,
     };
   },
   computed: {

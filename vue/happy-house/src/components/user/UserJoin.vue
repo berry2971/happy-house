@@ -11,6 +11,7 @@
             v-model="id"
             :state="idValidation"
             placeholder="아이디"
+            required
           />
           <b-form-invalid-feedback :state="idValidation">
             아이디를 5글자 이상 13글자 이하로 반드시 입력해주세요.
@@ -23,6 +24,7 @@
             v-model="pw"
             :state="pwValidation"
             placeholder="비밀번호"
+            required
           />
           <b-form-invalid-feedback :state="pwValidation">
             비밀번호는 8글자 이상 20글자 이하로 반드시 입력해주세요.
@@ -35,6 +37,7 @@
             v-model="name"
             :state="nameValidation"
             placeholder="이름"
+            required
           />
           <b-form-invalid-feedback :state="nameValidation">
             이름은 2글자 이상 반드시 입력해주세요.
@@ -48,6 +51,7 @@
             v-model="tel"
             :state="telValidation"
             placeholder="010 1234 5678"
+            required
           />
           <b-form-invalid-feedback :state="telValidation">
             전화번호는 반드시 11글자로 입력해주세요.
@@ -59,6 +63,7 @@
             name="bmk_addr_lv1"
             v-model="bmk_addr_lv1"
             placeholder="광역시도"
+            required
           />
           <label for="bmk_addr_lv2">관심지역(시군구)</label>
           <b-form-input
@@ -67,6 +72,7 @@
             name="bmk_addr_lv2"
             v-model="bmk_addr_lv2"
             placeholder="시군구"
+            required
           />
           <label for="bmk_addr_lv3">관심지역(읍면동)</label>
           <b-form-input
@@ -75,6 +81,7 @@
             name="bmk_addr_lv3"
             v-model="bmk_addr_lv3"
             placeholder="읍면동"
+            required
           />
           <label for="bmk_addr_lv4">관심지역(리)</label>
           <b-form-input
@@ -83,10 +90,9 @@
             name="bmk_addr_lv4"
             v-model="bmk_addr_lv4"
             placeholder="리(선택)"
+            required
           />
-          <b-button @click="checkValue" variant="outline-secondary" style="width: 90%"
-            >회원가입</b-button
-          >
+          <b-button @click="checkValue" class="login-btn" style="width: 90%">회원가입</b-button>
         </b-form>
       </b-card-body>
     </b-card>

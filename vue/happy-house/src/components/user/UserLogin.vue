@@ -4,16 +4,31 @@
       <b-row no-gutters>
         <b-col md="6">
           <b-card-img
-            :src="require('@/assets/img/loginImage.jpg')"
+            :src="require('@/assets/img/loginImg.jpg')"
             alt="Image"
+            style="height: 100%"
             class="rounded-0"
           ></b-card-img>
         </b-col>
         <b-col md="6">
           <b-card-body title="로그인">
             <b-form @submit.stop.prevent>
-              <b-form-input type="text" id="id" name="id" v-model="id" placeholder="아이디" />
-              <b-form-input type="password" id="pw" name="pw" v-model="pw" placeholder="비밀번호" />
+              <b-form-input
+                type="text"
+                id="id"
+                name="id"
+                v-model="id"
+                placeholder="아이디"
+                required
+              />
+              <b-form-input
+                type="password"
+                id="pw"
+                name="pw"
+                v-model="pw"
+                placeholder="비밀번호"
+                required
+              />
               <button @click="checkValue" class="login-btn">로그인</button><br />
             </b-form>
             <div class="login-div-a">
