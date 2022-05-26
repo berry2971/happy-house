@@ -10,7 +10,7 @@ public interface CommentMapper {
 
     Comment findById(Long id) throws Exception;
 
-    List<Comment> findByArticleIdAndOffsetAndLimit(Long articleId, int offset, int articlesPerPage) throws Exception;
+    List<Comment> findByArticleIdAndOffsetAndLimit(Long articleId, int offset, int commentsPerPage) throws Exception;
 
     void remove(Long id) throws Exception;
 

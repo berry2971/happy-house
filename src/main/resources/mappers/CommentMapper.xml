@@ -6,20 +6,21 @@
 <mapper namespace="com.ssafy.happyhouse.mapper.CommentMapper">
 
     <insert id="save" parameterType="Comment" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO comment(article_id, content)
-        VALUES (#{articleId}, #{content});
+        INSERT INTO comment(article_id, author, content)
+        VALUES (#{article_id}, #{author}, #{content});
     </insert>
 
-    <select id="findById" resultType="Article">
-        SELECT id, article_id, write_time, content
+    <select id="findById" resultType="Comment">
+        SELECT id, article_id, write_time, author, content
         FROM comment
         WHERE id = #{id};
     </select>
 
-    <select id="findByArticleIdAndOffsetAndLimit" resultType="Article">
-        SELECT id, article_id, write_time, content
+    <select id="findByArticleIdAndOffsetAndLimit" resultType="Comment">
+        SELECT id, article_id, write_time, author, content
         FROM comment
         WHERE article_id = #{articleId}
+        ORDER BY write_time
         LIMIT #{offset}, #{commentsPerPage};
     </select>
 

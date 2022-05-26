@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping("comments")
@@ -22,7 +24,7 @@ public class CommentController {
 
     @ApiOperation(value = "댓글 목록 조회", notes = "특정 게시글의 댓글 목록 반환")
     @GetMapping("")
-    public List<Comment> getArticles(
+    public List<Comment> getComment(
             @RequestParam Long articleId,
             @RequestParam(required = false, defaultValue = "1") int page
     ) throws Exception {
@@ -40,8 +42,11 @@ public class CommentController {
     @ApiOperation(value = "댓글 작성", notes = "댓글 작성 후 댓글 반환")
     @PostMapping("")
     public Comment writeComment(
-            @RequestBody Comment comment
+            @RequestBody Comment comment,
+            HttpServletRequest request
     ) throws Exception {
+        String loginId = (String)request.getAttribute("userId");
+        comment.setAuthor(loginId);
         return commentService.createComment(comment);
     }
 

@@ -20,6 +20,7 @@
         SELECT id, board_name, subject, title, author, write_time, content
         FROM article
         WHERE board_name = #{boardName}
+        ORDER BY write_time desc
         LIMIT #{offset}, #{articlesPerPage};
     </select>
 

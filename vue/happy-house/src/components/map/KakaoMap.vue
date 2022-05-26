@@ -2,7 +2,7 @@
   <div id="indexMap">
     <div id="kakao-map" ref="map"></div>
     <div id="deal-list-wrap">
-      <div id="deals-list" ref="list">
+      <div id="deals-list" ref="dealslist">
         <div class="apt-item" v-for="(apt, idx) in apts">
           <div @click="moveToDetailPage($event)" :id="idx" @mouseover="emphaMarker(apt, $event)" @mouseout="disEmphaMarker(apt, $event)">
             <div>
@@ -11,20 +11,6 @@
             </div>
             <div class="apt-item-addr">{{ apt.addr }}</div>
             <div class="apt-item-roadaddr">{{ apt.roadAddr }}</div>
-<!--            <div class="deal-item" v-for="deal in apt.deals">-->
-<!--              <div>-->
-<!--                가격:-->
-<!--                {{-->
-<!--                  new Intl.NumberFormat("kr-KR", {-->
-<!--                    maximumSignificantDigits: 3,-->
-<!--                  }).format(parseInt(deal.price) * 10000)-->
-<!--                }}-->
-<!--              </div>-->
-<!--              <div>면적: {{ deal.square }}</div>-->
-<!--              <div>연월: {{ deal.deal_year_month }}</div>-->
-<!--              <div>일: {{ deal.deal_day }}</div>-->
-<!--              <div>층: {{ deal.floor }}</div>-->
-<!--            </div>-->
             <div v-if="apt.numDeal > 0">
               <div class="apt-item-num-deal">실거래 {{apt.numDeal}}건</div>
               <div class="apt-item-price-range">최저 {{apt.minPrice/10000}}억 ~ 최고 {{apt.maxPrice/10000}}억</div>
@@ -50,6 +36,7 @@ export default {
       mapLng: 127.03674326873177,
       markers: [],
       overlays: [],
+      addrs: [],
     };
   },
   mounted() {
@@ -70,6 +57,7 @@ export default {
     });
 
     kakao.maps.event.addListener(this.mapInstance, "tilesloaded", () => {
+      document.getElementById("deals-list").innerHTML = "";
       this.displayAptList();
     });
   },
@@ -108,13 +96,21 @@ export default {
       else return stateName;
     },
     displayAptList() {
-      this.apts = [];
 
+      this.addrs = [];
       const places = new kakao.maps.services.Places();
       places.setMap(this.mapInstance);
+      this.$refs.dealslist.innerHTML = "";
 
       // callback after keywordSearch
       const callback = (result, stat, pagination) => {
+
+        this.apts = [];
+        const aptItems = document.getElementsByClassName("apt-item");
+        for (let i = 0; i < aptItems.length; i++) {
+          aptItems[i].remove();
+        }
+
         if (stat == kakao.maps.services.Status.OK) {
           /* marker, overlay */
           for (let i = 0; i < this.markers.length; i++) {
@@ -134,7 +130,7 @@ export default {
               continue;
             }
 
-            //this.displayMarker(apt);
+            this.addrs.push(apt.address_name);
             displayApt(apt);
           }
         }
@@ -155,13 +151,31 @@ export default {
       searchApts();
 
       const displayApt = (apt) => {
-        const splitedAddress = apt.address_name.split(" ");
-        const addrLv1_ = this.briefStateNameToFullStateName(splitedAddress[0]);
-        const addrLv2_ = splitedAddress[1];
-        const addrLv3_ = splitedAddress[2];
-        const splitedBunji = splitedAddress[3].split("-");
-        const bunji_main_ = splitedBunji[0];
-        const bunji_sub_ = splitedBunji.length > 1 ? splitedBunji[1] : "0";
+        let splitedAddress = apt.address_name.split(" ");
+        let addrLv1_ = this.briefStateNameToFullStateName(splitedAddress[0]);
+        let addrLv2_ = splitedAddress[1];
+        let addrLv3_ = splitedAddress[2];
+        let splitedBunji = splitedAddress[3].split("-");
+        let bunji_main_ = splitedBunji[0];
+        let bunji_sub_ = splitedBunji.length > 1 ? splitedBunji[1] : "0";
+        if (addrLv2_.startsWith("성남") ||
+          addrLv2_.startsWith("천안") ||
+          addrLv2_.startsWith("포항") ||
+          addrLv2_.startsWith("수원") ||
+          addrLv2_.startsWith("안양") ||
+          addrLv2_.startsWith("안산") ||
+          addrLv2_.startsWith("용인") ||
+          addrLv2_.startsWith("고양") ||
+          addrLv2_.startsWith("청주") ||
+          addrLv2_.startsWith("전주") ||
+          addrLv2_.startsWith("창원")
+        ) {
+          addrLv2_ = `${addrLv2_.substring(0, 2)}${addrLv3_}`;
+          addrLv3_ = splitedAddress[3];
+          splitedBunji = splitedAddress[4].split("-");
+          bunji_main_ = splitedBunji[0];
+          bunji_sub_ = splitedBunji.length > 1 ? splitedBunji[1] : "0";
+        }
 
         const aptData = {
           name: apt.place_name,
@@ -181,7 +195,6 @@ export default {
           maxPrice: 0,
           marker: null,
         };
-
 
         axios
           .get("http://localhost:8090/deals/where", {
@@ -242,23 +255,40 @@ export default {
     createOverlayContent(numDeal, name, minPrice, maxPrice) {
       if (numDeal != 0) {
         return `
-          <div style="border-radius:5px; padding:5px; width=50px; background-color: white;">
-            <div style="font-size:16px;">${name}</div>
-            <div style="font-size:12px;">${minPrice/10000}억~${maxPrice/10000}억</div>
+          <div style="border-radius:5px; padding:5px; width=50px;
+          border-width: 4px; border-style:solid; border-color: white;
+          box-shadow: 10px 10px rgba(255,95,0,0.5);
+          background-color: rgba(255,95,0); color:white;">
+            <div style="display:inline-block;">
+              <img src="http://localhost:8090/img/santaman.png" />
+            </div>
+            <div style="display:inline-block;">
+              <div style="display: flex; flex-direction: column; align-items:center;">
+              <div style="font-weight: 700; font-size:18px;">${name}</div>
+              <div style="font-weight: 400; font-size:16px;">${minPrice/10000}억~${maxPrice/10000}억</div>
+              </div>
+            </div>
           </div>
         `;
       } else {
         return `
-          <div style="border-radius:5px; padding:5px; width=50px; background-color: white;">
+          <div style="font-weight: 700; border-radius:5px; padding:5px; width=50px; background-color: white;">
             <div>${name}</div>
           </div>
         `;
       }
     },
     displayMarker(apt) {
+      const markerimage = new kakao.maps.MarkerImage(
+          require("@/assets/img/cookieman.png"),
+          new kakao.maps.Size(48, 48),
+          {}
+      );
+
       const position = new kakao.maps.LatLng(apt.y, apt.x);
       const marker = new kakao.maps.Marker({
         position: position,
+        image: markerimage,
       });
       marker.setMap(this.mapInstance);
       this.markers.push(marker);
@@ -299,12 +329,14 @@ export default {
     },
     emphasizeDealListItem(targetBoldItem) {
       targetBoldItem.style.color="white";
-      targetBoldItem.style.backgroundColor="rgba(15, 15, 255, 0.8)";
+      targetBoldItem.style.backgroundColor="rgb(255,95,0)";
       targetBoldItem.style.borderRadius="5px";
       targetBoldItem.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
       });
+
+      targetBoldItem.classList.add("cookieCursor");
 
       const t1 = targetBoldItem.getElementsByClassName("apt-item-price-range");
       Array.prototype.forEach.call(t1, (el) => {
@@ -382,12 +414,31 @@ export default {
 }
 
 #deals-list {
-  overflow-y: auto;
+  /*overflow-y: auto;*/
+
+  overflow-y: scroll;
   height: 100%;
   margin: 0px;
   padding: 5px;
   min-height: 100px;
   background-color: rgba(255, 255, 255, 0.7);
+}
+
+#deal-list-wrap {
+  scrollbar-color: #ff1616 #5468cb;
+  scrollbar-width: thin;
+}
+
+#deals-list::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, 1);
+}
+
+#deals-list::-webkit-scrollbar {
+  width:10px;
+}
+
+#deals-list::-webkit-scrollbar-track {
+  background-color: rgb(255, 95, 1);
 }
 
 .apt-item {
@@ -430,6 +481,12 @@ export default {
 
 .hidden {
   display: block;
+}
+
+.cookieCursor {
+  cursor: pointer;
+  cursor: auto;
+  cursor: url("./santaman.png"), pointer;
 }
 
 </style>

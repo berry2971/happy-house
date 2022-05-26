@@ -7,14 +7,16 @@ public class Comment {
     private Long id;
     private Long article_id;
     private ZonedDateTime write_time;
+    private String author;
     private String content;
 
     public Comment() { }
 
-    public Comment(Long id, Long article_id, ZonedDateTime write_time, String content) {
+    public Comment(Long id, Long article_id, ZonedDateTime write_time, String author, String content) {
         this.id = id;
         this.article_id = article_id;
         this.write_time = write_time;
+        this.author = author;
         this.content = content;
     }
 
@@ -40,6 +42,14 @@ public class Comment {
 
     public void setWrite_time(ZonedDateTime write_time) {
         this.write_time = write_time;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getContent() {

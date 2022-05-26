@@ -28,9 +28,9 @@ public class JwtTokenProvider {
 
     public String createExpiredToken(String id) {
         JWTCreator.Builder builder = JWT.create()
-                        .withIssuer(ISSUER)
-                        .withClaim("id", id)
-                        .withExpiresAt(createExpirationDate(false));
+                .withIssuer(ISSUER)
+                .withClaim("id", id)
+                .withExpiresAt(createExpirationDate(false));
         return builder.sign(Algorithm.HMAC256(SECRET_KEY));
     }
 

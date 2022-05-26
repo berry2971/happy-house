@@ -49,11 +49,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // Swagger UI v3
             "/v3/api-docs/**",
             "/swagger-ui/**",
+            // static resources
+            "/img/**",
             // login
             "/users/auth/**",
             // deal
             "/deals/**",
-            "/districts/**"
+            "/districts/**",
+            // complex
+            "/complex/**"
     };
 
     @Override
@@ -61,11 +65,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http = http.cors().and().csrf().disable();
 
         http
-            .sessionManagement()
+                .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http
-            .exceptionHandling()
+                .exceptionHandling()
                 .authenticationEntryPoint((request, response, e) -> {
                     response.sendError(
                             HttpServletResponse.SC_UNAUTHORIZED,
@@ -74,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 });
 
         http
-            .authorizeRequests()
+                .authorizeRequests()
                 .antMatchers("/admin/**").hasRole(EnumRole.ADMIN.name())
                 .antMatchers(AUTH_PERMIT_LIST).permitAll()
                 .anyRequest().hasRole(EnumRole.USER.name());
