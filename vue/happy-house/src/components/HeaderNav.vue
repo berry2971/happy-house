@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="header-right">
-      <template v-if="this.currentUser">
+      <template v-if="currentUser">
         <a @click="logout()" class="userInfo">로그아웃</a>
         <router-link :to="{ name: 'UserModify', params: { id: currentUser.id } }"
           >정보관리</router-link

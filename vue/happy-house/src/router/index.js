@@ -8,23 +8,6 @@ import { mapState, mapMutations } from "vuex";
 Vue.use(VueRouter);
 const userStore = "userStore";
 
-// TODO: 체크만 하는 함수
-// TODO: 체크하고 넘기는 함수
-// checkIfLogined() {
-//   http
-//       .get("http://localhost:8090/users/login/current", {
-//         headers: {
-//           Authorization: `Bearer ` + sessionStorage.getItem("token"),
-//         },
-//       })
-//       .then((resp) => {
-//         // 로그인되어 있는 상태
-//         this.currentUser = resp.data; // 상단바 상태는 보장이 됨
-//       })
-//       .catch((err) => {
-//         // 로그인되어 있지 않은 상태
-//       });
-// },
 const checkAndPrevent = (to, from, next) => {
   http
     .get("http://localhost:8090/users/login/current", {
@@ -33,10 +16,11 @@ const checkAndPrevent = (to, from, next) => {
       },
     })
     .then((resp) => {
-      // if logined
       next();
     })
     .catch((err) => {
+      console.log("로그인실패");
+      store.mutations.SET_CURRENT_USER(null);
       // if NOT logined
       alert("로그인이 필요한 페이지입니다.");
       next({ name: "login" });
