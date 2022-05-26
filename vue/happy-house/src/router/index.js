@@ -37,7 +37,7 @@ const routes = [
     path: "/board/community",
     name: "board",
     component: () => import("@/views/BoardView.vue"),
-    //beforeEnter: onlyAuthUser,
+    beforeEnter: onlyAuthUser,
     redirect: "/board/community",
     children: [
       {
@@ -53,7 +53,7 @@ const routes = [
       {
         path: "/:id",
         name: "detail",
-        component: () => import("@/components/notice/NoticeDetail.vue"),
+        component: () => import("@/components/board/BoardDetail.vue"),
       },
       {
         path: "edit/:id",
@@ -65,7 +65,7 @@ const routes = [
   {
     path: "/board/notice",
     name: "notice",
-    component: () => import("@/views/BoardView.vue"),
+    component: () => import("@/views/NoticeView.vue"),
     redirect: "/board/notice",
     children: [
       {

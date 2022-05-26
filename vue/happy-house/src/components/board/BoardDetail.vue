@@ -21,21 +21,17 @@
     </b-card>
     <br />
     <comment-list></comment-list>
-    <hr />
-    <comment-write></comment-write>
   </div>
 </template>
 
 <script>
 import http from "@/api/http";
 import moment from "moment";
-import CommentWrite from "@/components/board/comments/CommentWrite.vue";
 import CommentList from "@/components/board/comments/CommentList.vue";
 export default {
   name: "BoardDetail",
   components: {
     CommentList,
-    CommentWrite,
   },
   data: function () {
     return {

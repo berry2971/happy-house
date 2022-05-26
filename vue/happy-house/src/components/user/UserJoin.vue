@@ -143,7 +143,7 @@ export default {
           if (data != null) {
             msg = "회원가입을 축하합니다.";
           }
-          alert(data);
+          alert(msg);
           this.moveLogin();
         });
     },

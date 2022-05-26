@@ -15,16 +15,17 @@ export default {
       article_id: "",
     };
   },
+  props: {
+    articleNum: String,
+  },
   methods: {
     commentWrite() {
-      console.log(this.content);
-      console.log(this.$parent.article_id);
       http
         .post(
           "/comments",
           {
             content: this.content,
-            article_id: this.$parent.article_id,
+            article_id: this.$route.params.id,
           },
           {
             headers: {
@@ -33,11 +34,12 @@ export default {
           }
         )
         .then(({ data }) => {
-          // 서버에서 정상적인 값이 넘어 왔을경우 실행.
-          let msg = "등록 처리시 문제가 발생했습니다.";
+          let msg = "댓글 등록 처리시 문제가 발생했습니다.";
           if (data != null) {
-            msg = "등록이 완료되었습니다.";
+            msg = "댓글 등록이 완료되었습니다.";
+            this.$emit("show-comments");
           }
+          this.content = "";
           alert(msg);
         });
     },
