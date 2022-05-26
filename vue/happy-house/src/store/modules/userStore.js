@@ -9,6 +9,7 @@ const userStore = {
     isLogin: false,
     isLoginError: false,
     userInfo: null,
+    currentUser: null,
   },
   getters: {
     checkUserInfo: function (state) {
@@ -16,6 +17,9 @@ const userStore = {
     },
   },
   mutations: {
+    SET_CURRENT_USER: (state, currentUser) => {
+      state.currentUser = currentUser;
+    },
     SET_IS_LOGIN: (state, isLogin) => {
       state.isLogin = isLogin;
     },

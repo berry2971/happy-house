@@ -1,5 +1,7 @@
 package com.ssafy.happyhouse.domain.entity;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 
 public class Article {
@@ -9,12 +11,12 @@ public class Article {
     private String subject;
     private String title;
     private String author;
-    private ZonedDateTime write_time;
+    private LocalDateTime write_time;
     private String content;
 
     public Article() { }
 
-    public Article(Long id, String board_name, String subject, String title, String author, ZonedDateTime write_time, String content) {
+    public Article(Long id, String board_name, String subject, String title, String author, LocalDateTime write_time, String content) {
         this.id = id;
         this.board_name = board_name;
         this.subject = subject;
@@ -64,11 +66,11 @@ public class Article {
         this.author = author;
     }
 
-    public ZonedDateTime getWrite_time() {
+    public LocalDateTime getWrite_time() {
         return write_time;
     }
 
-    public void setWrite_time(ZonedDateTime write_time) {
+    public void setWrite_time(LocalDateTime write_time) {
         this.write_time = write_time;
     }
 

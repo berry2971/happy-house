@@ -4,7 +4,7 @@
       <b-card-body title="회원정보관리" style="padding: 10%">
         <b-form class="join-form" @submit.stop.prevent>
           <label for="id">아이디</label>
-          <b-form-input type="text" readonly name="id" v-model="id" />
+          <b-form-input type="text" disabled name="id" v-model="id" />
           <label for="password">비밀번호</label>
           <b-form-input type="password" name="pw" v-model="pw" placeholder="비밀번호" />
           <label for="name">이름</label>

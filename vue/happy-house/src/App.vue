@@ -111,4 +111,8 @@ label {
   font-weight: 500;
   padding: 3px 0px 3px 0px;
 }
+
+a {
+  cursor: pointer;
+}
 </style>

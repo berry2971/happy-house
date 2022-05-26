@@ -2,7 +2,47 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import store from "@/store/index.js";
+// import store from "./store";
+import http from "@/api/http";
+import { mapState, mapMutations } from "vuex";
 Vue.use(VueRouter);
+const userStore = "userStore";
+
+// TODO: 체크만 하는 함수
+// TODO: 체크하고 넘기는 함수
+// checkIfLogined() {
+//   http
+//       .get("http://localhost:8090/users/login/current", {
+//         headers: {
+//           Authorization: `Bearer ` + sessionStorage.getItem("token"),
+//         },
+//       })
+//       .then((resp) => {
+//         // 로그인되어 있는 상태
+//         this.currentUser = resp.data; // 상단바 상태는 보장이 됨
+//       })
+//       .catch((err) => {
+//         // 로그인되어 있지 않은 상태
+//       });
+// },
+const checkAndPrevent = (to, from, next) => {
+
+  http
+    .get("http://localhost:8090/users/login/current", {
+      headers: {
+        Authorization: `Bearer ` + sessionStorage.getItem("token"),
+      },
+    })
+    .then((resp) => {
+      // if logined
+      next();
+    })
+    .catch((err) => {
+      // if NOT logined
+      alert("로그인이 필요한 페이지입니다.");
+      next({ name: "login" });
+    });
+};
 
 const onlyAuthUser = async (to, from, next) => {
   // console.log(store);
@@ -17,8 +57,7 @@ const onlyAuthUser = async (to, from, next) => {
     next({ name: "login" });
     // router.push({ name: "signIn" });
   } else {
-    // console.log("로그인 했다.");
-    next();
+    next(); // 로그인 성공
   }
 };
 
@@ -29,6 +68,12 @@ const routes = [
     component: HomeView,
   },
   {
+    path: "/bookmark/home",
+    name: "bookmark-home",
+    component: () => import("@/components/bookmark/BookmarkHome.vue"),
+    beforeEnter: checkAndPrevent,
+  },
+  {
     path: "/apt/detail",
     name: "apt-detail",
     component: () => import("@/components/map/AptDetail.vue"),
@@ -37,7 +82,6 @@ const routes = [
     path: "/board/community",
     name: "board",
     component: () => import("@/views/BoardView.vue"),
-    beforeEnter: onlyAuthUser,
     redirect: "/board/community",
     children: [
       {
@@ -108,7 +152,6 @@ const routes = [
       {
         path: "modify/:id",
         name: "UserModify",
-        beforeEnter: onlyAuthUser,
         component: () => import("@/components/user/UserModify.vue"),
       },
     ],
