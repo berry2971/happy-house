@@ -12,6 +12,10 @@ import UserJoin from "@/components/user/UserJoin.vue";
 import AptDetail from "@/components/map/AptDetail.vue";
 import UserModify from "@/components/user/UserModify.vue";
 import UserFindPassword from "@/components/user/UserFindPassword.vue";
+import NoticeWrite from "@/components/notice/NoticeWrite.vue";
+import NoticeList from "@/components/notice/NoticeList.vue";
+import NoticeDetail from "@/components/notice/NoticeDetail.vue";
+import NoticeModify from "@/components/notice/NoticeModify.vue";
 
 Vue.use(VueRouter);
 
@@ -56,6 +60,34 @@ const routes = [
     ],
   },
   {
+    path: "/board/notice",
+    name: "notice",
+    component: BoardView,
+    redirect: "/board/notice",
+    children: [
+      {
+        path: "/",
+        name: "list",
+        component: NoticeList,
+      },
+      {
+        path: "write",
+        name: "noticeWrite",
+        component: NoticeWrite,
+      },
+      {
+        path: "/:id",
+        name: "noticeDetail",
+        component: NoticeDetail,
+      },
+      {
+        path: "edit/:id",
+        name: "noticeModify",
+        component: NoticeModify,
+      },
+    ],
+  },
+  {
     path: "/user",
     name: "user",
     component: UserView,
@@ -79,7 +111,7 @@ const routes = [
   },
   {
     path: "/user/forget-password",
-    name: "UserFindPassword",
+    name: "userFindPassword",
     component: UserFindPassword,
   },
 ];

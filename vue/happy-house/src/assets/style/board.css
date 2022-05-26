@@ -1,14 +1,12 @@
 button,
 .btn {
-  width: 15%;
-  background-color: #d0d3d0;
-  color: rgb(80, 82, 79);
-  padding: 14px 10px;
-  margin: 8px 15px;
-  border: 1px solid #787878;
+  width: 10%;
+  padding: 10px 10px;
+  margin: 8px 8px;
   border-radius: 4px;
   font-size: small;
   cursor: pointer;
+  float: right;
 }
 .regist{
   padding: 10px;
@@ -51,7 +49,7 @@ a.board-title {
   text-align: center;
   width: 70%;
   height: 130%;
-  font-size: 200%;
+  font-size: 170%;
 }
 
 .author-span{
@@ -64,8 +62,13 @@ a.board-title {
 
 .content-span{
   font-size: 120%;
+  display: block;
 }
 
+.board-btn{
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
 #board-list {
     border-collapse: collapse;
     width: 100%;

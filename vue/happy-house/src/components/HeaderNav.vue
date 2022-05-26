@@ -14,7 +14,7 @@
 
     <div class="menu">
       <router-link to="/"><img src="@/assets/img/logo.png" class="happy_logo" /></router-link>
-      <router-link to="/board">공지사항</router-link>
+      <router-link to="/board/notice">공지사항</router-link>
       <router-link to="/board/community">커뮤니티</router-link>
       <router-link to="/board">관심지역</router-link>
     </div>

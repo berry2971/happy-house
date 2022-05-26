@@ -97,7 +97,7 @@ export default {
             subject: this.subject,
             title: this.title,
             content: this.content,
-            board_name: "community",
+            board_name: "notice",
           },
           {
             headers: {

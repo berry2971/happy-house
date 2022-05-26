@@ -9,8 +9,8 @@
         SELECT *
         FROM complex
         WHERE addr_lv1 = #{state}
-          AND addr_lv2 = #{city}
-          AND addr_lv4 = #{town};
+        AND addr_lv2 = #{city}
+        AND addr_lv4 = #{town};
     </select>
 
 </mapper>

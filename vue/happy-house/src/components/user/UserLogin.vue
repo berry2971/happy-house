@@ -14,7 +14,7 @@
             <b-form @submit.stop.prevent>
               <b-form-input type="text" id="id" name="id" v-model="id" placeholder="아이디" />
               <b-form-input type="password" id="pw" name="pw" v-model="pw" placeholder="비밀번호" />
-              <b-button variant="outline-secondary" @click="checkValue" style="width: 90%"
+              <b-button variant="outline-secondary" @click="checkValue()" style="width: 90%"
                 >로그인</b-button
               >
             </b-form>
@@ -45,8 +45,8 @@ export default {
     checkValue() {
       let err = true;
       let msg = "";
-      !this.id && ((msg = "아이디를 입력해주세요."), (err = false), this.$refs.id.focus());
-      err && !this.pw && ((msg = "비밀번호를 입력해주세요"), (err = false), this.$refs.pw.focus());
+      !this.id && ((msg = "아이디를 입력해주세요."), (err = false));
+      err && !this.pw && ((msg = "비밀번호를 입력해주세요"), (err = false));
 
       if (!err) alert(msg);
       else this.userAuth();
@@ -59,18 +59,23 @@ export default {
           pw: this.pw,
         })
         .then(({ data }) => {
-          // 서버에서 정상적인 값이 넘어 왔을경우 실행.
-          let msg = "로그인 문제가 발생했습니다.";
           if (data != null) {
             sessionStorage.clear("vuex");
             sessionStorage.clear("token");
 
             this.$store.dispatch("setToken", data);
-            msg = "로그인이 완료되었습니다.";
+            alert("로그인이 완료되었습니다.");
+          } else {
+            alert("로그인 문제가 발생했습니다.");
           }
-          alert(msg);
           location.href = "/";
-          //this.$router.push({ name: "home" });
+        })
+        .catch((error) => {
+          if (error.response.status == 500) {
+            alert("아이디와 비밀번호를 다시 확인 부탁드립니다.");
+          } else if (error.response.status == 401) {
+            alert("비밀번호를 다시 확인 부탁드립니다.");
+          }
         });
     },
   },
