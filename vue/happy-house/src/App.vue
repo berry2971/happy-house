@@ -15,6 +15,14 @@ export default {
 </script>
 
 <style>
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css');
+
+* {
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
+  "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
+  "Malgun Gothic", sans-serif;
+}
+
 a {
   text-decoration: none;
   color: #787878;
@@ -62,10 +70,11 @@ label {
   width: 250px;
 }
 .header {
-  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  height: 5vh;
   width: 100%;
-  height: 20%;
-  background-color: #000000;
+  background-color: #ff5f00;
 }
 .header img {
   vertical-align: middle;

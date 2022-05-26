@@ -5,7 +5,7 @@
       <form>
         <select
           id="inputMetropolis"
-          class="bg-dark indexDropdown"
+          class="indexDropdown"
           v-model="addrLv1"
         >
           <option id="defaultOption1">선택</option>
@@ -27,10 +27,10 @@
           <option>경상남도</option>
           <option>제주특별자치도</option>
         </select>
-        <select id="inputCity" class="bg-dark indexDropdown" v-model="addrLv2">
+        <select id="inputCity" class="indexDropdown" v-model="addrLv2">
           <option id="defaultOption2">선택</option>
         </select>
-        <select id="inputTown" class="bg-dark indexDropdown" v-model="addrLv3">
+        <select id="inputTown" class="indexDropdown" v-model="addrLv3">
           <option id="defaultOption3">선택</option>
         </select>
       </form>
@@ -107,4 +107,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#indexDropdownBox {
+  background-color: rgb(255,95,0);
+}
+
+.indexDropdown {
+  background-color: rgb(255,95,0);
+}
+
+</style>

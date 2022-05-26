@@ -398,7 +398,7 @@ export default {
 <style>
 #indexMap {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   margin: 0px;
   padding: 0px;
   display: inline-block;

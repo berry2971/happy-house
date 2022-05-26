@@ -1,5 +1,6 @@
 <template>
   <div class="header">
+
     <div class="header-right">
       <template v-if="userInfo">
         <a @click="logout()" class="userInfo">로그아웃</a>
@@ -14,14 +15,15 @@
       </template>
     </div>
 
-    <div class="menu">
+    <div class="menu" style="">
       <router-link :to="{ name: 'home' }"
-        ><img src="@/assets/img/logo.png" class="happy_logo"
+        ><img src="@/assets/img/logo_white.png" style="height:10%;width:10%;" class="happy_logo"
       /></router-link>
       <router-link :to="{ name: 'notice' }">공지사항</router-link>
       <router-link :to="{ name: 'list' }">커뮤니티</router-link>
       <router-link :to="{ name: 'home' }">관심지역</router-link>
     </div>
+
   </div>
 </template>
 
