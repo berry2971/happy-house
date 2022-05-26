@@ -26,7 +26,6 @@ const userStore = "userStore";
 //       });
 // },
 const checkAndPrevent = (to, from, next) => {
-
   http
     .get("http://localhost:8090/users/login/current", {
       headers: {

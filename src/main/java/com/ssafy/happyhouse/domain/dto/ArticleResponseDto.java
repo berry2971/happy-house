@@ -1,22 +1,20 @@
-package com.ssafy.happyhouse.domain.entity;
+package com.ssafy.happyhouse.domain.dto;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.ssafy.happyhouse.domain.entity.Article;
 
-import java.time.LocalDateTime;
-
-public class Article {
+public class ArticleResponseDto {
 
     private Long id;
     private String board_name;
     private String subject;
     private String title;
     private String author;
-    private LocalDateTime write_time;
+    private String write_time;
     private String content;
 
-    public Article() { }
+    public ArticleResponseDto() { }
 
-    public Article(Long id, String board_name, String subject, String title, String author, LocalDateTime write_time, String content) {
+    public ArticleResponseDto(Long id, String board_name, String subject, String title, String author, String write_time, String content) {
         this.id = id;
         this.board_name = board_name;
         this.subject = subject;
@@ -24,6 +22,16 @@ public class Article {
         this.author = author;
         this.write_time = write_time;
         this.content = content;
+    }
+
+    public ArticleResponseDto(Article article) {
+        this.id = article.getId();
+        this.board_name = article.getBoard_name();
+        this.subject = article.getSubject();
+        this.title = article.getTitle();
+        this.author = article.getAuthor();
+        this.write_time = article.getWrite_time().toString();
+        this.content = article.getContent();
     }
 
     public Long getId() {
@@ -66,11 +74,11 @@ public class Article {
         this.author = author;
     }
 
-    public LocalDateTime getWrite_time() {
+    public String getWrite_time() {
         return write_time;
     }
 
-    public void setWrite_time(LocalDateTime write_time) {
+    public void setWrite_time(String write_time) {
         this.write_time = write_time;
     }
 

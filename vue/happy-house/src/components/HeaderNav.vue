@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="header-right">
-      <template v-if="currentUser">
+      <template v-if="this.currentUser">
         <a @click="logout()" class="userInfo">로그아웃</a>
         <router-link :to="{ name: 'UserModify', params: { id: currentUser.id } }"
           >정보관리</router-link
@@ -58,12 +58,10 @@ export default {
         },
       })
       .then((resp) => { // if logined
-        this.$store.state["userStore/currentUser"] = resp.data;
+        this.SET_CURRENT_USER(resp.data);
       })
       .catch((err) => { // if NOT logined
-        this.$store.state["userStore/currentUser"] = null;
-
-
+        this.SET_CURRENT_USER(null);
       });
   },
   methods: {

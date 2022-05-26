@@ -1,5 +1,7 @@
 package com.ssafy.happyhouse.controller;
 
+import com.ssafy.happyhouse.domain.dto.ArticleRequestDto;
+import com.ssafy.happyhouse.domain.dto.ArticleResponseDto;
 import com.ssafy.happyhouse.domain.entity.Article;
 import com.ssafy.happyhouse.service.ArticleService;
 import io.swagger.annotations.ApiOperation;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -25,30 +28,45 @@ public class ArticleController {
 
     @ApiOperation(value = "게시글 목록 조회", notes = "특정 게시판의 게시글 목록 반환")
     @GetMapping("")
-    public List<Article> getArticles(
+    public List<ArticleResponseDto> getArticles(
             @RequestParam String boardName,
             @RequestParam(required = false, defaultValue = "1") int page
     ) throws Exception {
-        return articleService.getArticlesByBoardName(boardName, page);
+        List<Article> articles = articleService.getArticlesByBoardName(boardName, page);
+        List<ArticleResponseDto> articleResponseDtos = new ArrayList<>();
+        for (Article article : articles) {
+            articleResponseDtos.add(new ArticleResponseDto(article));
+        }
+        return articleResponseDtos;
     }
 
     @ApiOperation(value = "게시글 조회", notes = "id에 해당하는 게시글 반환")
     @GetMapping("/{id}")
-    public Article getArticle(
+    public ArticleResponseDto getArticle(
             @PathVariable Long id
     ) throws Exception {
-        return articleService.getArticle(id);
+        Article article = articleService.getArticle(id);
+        return new ArticleResponseDto(article);
     }
 
     @ApiOperation(value = "게시글 작성", notes = "게시글 작성 후 게시글 반환")
     @PostMapping("")
-    public Article writeArticle(
-            @RequestBody Article article,
+    public ArticleResponseDto writeArticle(
+            @RequestBody ArticleRequestDto articleRequestDto,
             HttpServletRequest request
     ) throws Exception {
+        Article article = new Article(
+                null,
+                articleRequestDto.getBoard_name(),
+                articleRequestDto.getSubject(),
+                articleRequestDto.getTitle(),
+                articleRequestDto.getAuthor(),
+                null,
+                articleRequestDto.getContent()
+        );
         String loginId = (String)request.getAttribute("userId");
         article.setAuthor(loginId);
-        return articleService.createArticle(article);
+        return new ArticleResponseDto(articleService.createArticle(article));
     }
 
     @ApiOperation(value = "게시글 삭제", notes = "게시글 삭제 후 boolean 반환")
@@ -63,13 +81,13 @@ public class ArticleController {
 
     @ApiOperation(value = "게시글 수정", notes = "게시글 수정 후 게시글 반환")
     @PutMapping("/{id}")
-    public Article modifyArticle(
+    public ArticleResponseDto modifyArticle(
             @PathVariable Long id,
             @RequestBody Article article,
             HttpServletRequest request
     ) throws Exception {
         String loginId = (String)request.getAttribute("userId");
-        return articleService.modifyArticle(id, article, loginId);
+        return new ArticleResponseDto(articleService.modifyArticle(id, article, loginId));
     }
 
 }

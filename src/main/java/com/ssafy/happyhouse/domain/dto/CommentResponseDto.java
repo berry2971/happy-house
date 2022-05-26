@@ -1,25 +1,31 @@
-package com.ssafy.happyhouse.domain.entity;
+package com.ssafy.happyhouse.domain.dto;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.ssafy.happyhouse.domain.entity.Comment;
 
-import java.time.LocalDateTime;
-
-public class Comment {
+public class CommentResponseDto {
 
     private Long id;
     private Long article_id;
-    private LocalDateTime write_time;
+    private String write_time;
     private String author;
     private String content;
 
-    public Comment() { }
+    public CommentResponseDto() { }
 
-    public Comment(Long id, Long article_id, LocalDateTime write_time, String author, String content) {
+    public CommentResponseDto(Long id, Long article_id, String write_time, String author, String content) {
         this.id = id;
         this.article_id = article_id;
         this.write_time = write_time;
         this.author = author;
         this.content = content;
+    }
+
+    public CommentResponseDto(Comment comment) {
+        this.id = comment.getId();
+        this.article_id = comment.getArticle_id();
+        this.write_time = comment.getWrite_time().toString();
+        this.author = comment.getAuthor();
+        this.content = comment.getContent();
     }
 
     public Long getId() {
@@ -38,11 +44,11 @@ public class Comment {
         this.article_id = article_id;
     }
 
-    public LocalDateTime getWrite_time() {
+    public String getWrite_time() {
         return write_time;
     }
 
-    public void setWrite_time(LocalDateTime write_time) {
+    public void setWrite_time(String write_time) {
         this.write_time = write_time;
     }
 

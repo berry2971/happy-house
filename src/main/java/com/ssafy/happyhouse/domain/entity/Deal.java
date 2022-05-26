@@ -1,5 +1,7 @@
 package com.ssafy.happyhouse.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Deal {
 
     private Long id;

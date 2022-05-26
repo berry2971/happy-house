@@ -1,11 +1,14 @@
 package com.ssafy.happyhouse.controller;
 
+import com.ssafy.happyhouse.domain.dto.CommentRequestDto;
+import com.ssafy.happyhouse.domain.dto.CommentResponseDto;
 import com.ssafy.happyhouse.domain.entity.Comment;
 import com.ssafy.happyhouse.service.CommentService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,30 +27,42 @@ public class CommentController {
 
     @ApiOperation(value = "댓글 목록 조회", notes = "특정 게시글의 댓글 목록 반환")
     @GetMapping("")
-    public List<Comment> getComment(
+    public List<CommentResponseDto> getComment(
             @RequestParam Long articleId,
             @RequestParam(required = false, defaultValue = "1") int page
     ) throws Exception {
-        return commentService.getCommentsByArticleId(articleId, page);
+        List<Comment> comments = commentService.getCommentsByArticleId(articleId, page);
+        List<CommentResponseDto> commentResponseDtos = new ArrayList<>();
+        for (Comment comment : comments) {
+            commentResponseDtos.add(new CommentResponseDto(comment));
+        }
+        return commentResponseDtos;
     }
 
     @ApiOperation(value = "댓글 조회", notes = "id에 해당하는 댓글 반환")
     @GetMapping("/{id}")
-    public Comment getComment(
+    public CommentResponseDto getComment(
             @PathVariable Long id
     ) throws Exception {
-        return commentService.getComment(id);
+        return new CommentResponseDto(commentService.getComment(id));
     }
 
     @ApiOperation(value = "댓글 작성", notes = "댓글 작성 후 댓글 반환")
     @PostMapping("")
-    public Comment writeComment(
-            @RequestBody Comment comment,
+    public CommentResponseDto writeComment(
+            @RequestBody CommentRequestDto commentRequestDto,
             HttpServletRequest request
     ) throws Exception {
         String loginId = (String)request.getAttribute("userId");
+        Comment comment = new Comment(
+                null,
+                commentRequestDto.getArticle_id(),
+                null,
+                commentRequestDto.getAuthor(),
+                commentRequestDto.getContent()
+        );
         comment.setAuthor(loginId);
-        return commentService.createComment(comment);
+        return new CommentResponseDto(commentService.createComment(comment));
     }
 
     @ApiOperation(value = "댓글 삭제", notes = "댓글 삭제 후 boolean 반환")

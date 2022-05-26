@@ -1,37 +1,21 @@
-package com.ssafy.happyhouse.domain.entity;
+package com.ssafy.happyhouse.domain.dto;
 
-import org.springframework.format.annotation.DateTimeFormat;
+public class ArticleRequestDto {
 
-import java.time.LocalDateTime;
-
-public class Article {
-
-    private Long id;
     private String board_name;
     private String subject;
     private String title;
     private String author;
-    private LocalDateTime write_time;
     private String content;
 
-    public Article() { }
+    public ArticleRequestDto() { }
 
-    public Article(Long id, String board_name, String subject, String title, String author, LocalDateTime write_time, String content) {
-        this.id = id;
+    public ArticleRequestDto(String board_name, String subject, String title, String author, String content) {
         this.board_name = board_name;
         this.subject = subject;
         this.title = title;
         this.author = author;
-        this.write_time = write_time;
         this.content = content;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getBoard_name() {
@@ -64,14 +48,6 @@ public class Article {
 
     public void setAuthor(String author) {
         this.author = author;
-    }
-
-    public LocalDateTime getWrite_time() {
-        return write_time;
-    }
-
-    public void setWrite_time(LocalDateTime write_time) {
-        this.write_time = write_time;
     }
 
     public String getContent() {

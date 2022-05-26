@@ -7,8 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,7 +38,7 @@ class ArticleServiceTest {
                 "서울",
                 "테스트1",
                 "글쓴이1",
-                ZonedDateTime.now(),
+                LocalDateTime.now(),
                 "내용1"
         );
         Article article2 = new Article(
@@ -45,7 +47,7 @@ class ArticleServiceTest {
                 "부산",
                 "테스트2",
                 "글쓴이2",
-                ZonedDateTime.of(2022, 4, 10, 16, 15, 45, 9193, ZoneId.of("Asia/Seoul")),
+                LocalDateTime.of(2022, 4, 10, 16, 15, 45, 9193),
                 "내용2"
         );
         Article articleResult1 = articleService.createArticle(article1);
@@ -62,6 +64,13 @@ class ArticleServiceTest {
 
     @Test
     void modifyArticle() {
+    }
+
+    @Test
+    void printDate() throws Exception {
+        List<Article> articles = articleService.getArticlesByBoardName("공지사항", 1);
+        Article article = articles.get(0);
+        System.out.println(article.getWrite_time());
     }
 
 }
