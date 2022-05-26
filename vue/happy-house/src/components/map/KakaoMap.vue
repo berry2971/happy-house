@@ -4,16 +4,23 @@
     <div id="deal-list-wrap">
       <div id="deals-list" ref="dealslist">
         <div class="apt-item" v-for="(apt, idx) in apts">
-          <div @click="moveToDetailPage($event)" :id="idx" @mouseover="emphaMarker(apt, $event)" @mouseout="disEmphaMarker(apt, $event)">
+          <div
+            @click="moveToDetailPage($event)"
+            :id="idx"
+            @mouseover="emphaMarker(apt, $event)"
+            @mouseout="disEmphaMarker(apt, $event)"
+          >
             <div>
-              <img src="./apt_blue.png" style="height:16px; width:16px; margin-right: 3px;">
+              <img src="./apt_blue.png" style="height: 16px; width: 16px; margin-right: 3px" />
               <span class="apt-item-name">{{ apt.name }}</span>
             </div>
             <div class="apt-item-addr">{{ apt.addr }}</div>
             <div class="apt-item-roadaddr">{{ apt.roadAddr }}</div>
             <div v-if="apt.numDeal > 0">
-              <div class="apt-item-num-deal">실거래 {{apt.numDeal}}건</div>
-              <div class="apt-item-price-range">최저 {{apt.minPrice/10000}}억 ~ 최고 {{apt.maxPrice/10000}}억</div>
+              <div class="apt-item-num-deal">실거래 {{ apt.numDeal }}건</div>
+              <div class="apt-item-price-range">
+                최저 {{ apt.minPrice / 10000 }}억 ~ 최고 {{ apt.maxPrice / 10000 }}억
+              </div>
             </div>
           </div>
         </div>
@@ -63,8 +70,7 @@ export default {
   },
   methods: {
     moveToDetailPage(ev) {
-      const addr =
-        ev.currentTarget.getElementsByClassName("apt-item-addr")[0].innerText;
+      const addr = ev.currentTarget.getElementsByClassName("apt-item-addr")[0].innerText;
       const splitedAddress = addr.split(" ");
       const addrLv1_ = this.briefStateNameToFullStateName(splitedAddress[0]);
       const addrLv2_ = splitedAddress[1];
@@ -83,8 +89,7 @@ export default {
     briefStateNameToFullStateName(stateName) {
       if (["부산", "인천", "대구", "대전", "광주", "울산"].includes(stateName))
         return stateName + "광역시";
-      else if (["경기", "강원", "제주"].includes(stateName))
-        return stateName + "도";
+      else if (["경기", "강원", "제주"].includes(stateName)) return stateName + "도";
       else if (stateName == "서울") return "서울특별시";
       else if (stateName == "경남") return "경상남도";
       else if (stateName == "경북") return "경상북도";
@@ -96,7 +101,6 @@ export default {
       else return stateName;
     },
     displayAptList() {
-
       this.addrs = [];
       const places = new kakao.maps.services.Places();
       places.setMap(this.mapInstance);
@@ -104,7 +108,6 @@ export default {
 
       // callback after keywordSearch
       const callback = (result, stat, pagination) => {
-
         this.apts = [];
         const aptItems = document.getElementsByClassName("apt-item");
         for (let i = 0; i < aptItems.length; i++) {
@@ -158,7 +161,8 @@ export default {
         let splitedBunji = splitedAddress[3].split("-");
         let bunji_main_ = splitedBunji[0];
         let bunji_sub_ = splitedBunji.length > 1 ? splitedBunji[1] : "0";
-        if (addrLv2_.startsWith("성남") ||
+        if (
+          addrLv2_.startsWith("성남") ||
           addrLv2_.startsWith("천안") ||
           addrLv2_.startsWith("포항") ||
           addrLv2_.startsWith("수원") ||
@@ -235,7 +239,12 @@ export default {
     emphaMarker(apt, event) {
       this.emphasizeDealListItem(event.currentTarget.parentNode);
       const position = new kakao.maps.LatLng(apt.y, apt.x);
-      let overlayContent = this.createOverlayContent(apt.numDeal, apt.name, apt.minPrice, apt.maxPrice);
+      let overlayContent = this.createOverlayContent(
+        apt.numDeal,
+        apt.name,
+        apt.minPrice,
+        apt.maxPrice
+      );
       const overlay = new kakao.maps.CustomOverlay({
         content: overlayContent,
         // map: this.mapInstance,
@@ -265,7 +274,9 @@ export default {
             <div style="display:inline-block;">
               <div style="display: flex; flex-direction: column; align-items:center;">
               <div style="font-weight: 700; font-size:18px;">${name}</div>
-              <div style="font-weight: 400; font-size:16px;">${minPrice/10000}억~${maxPrice/10000}억</div>
+              <div style="font-weight: 400; font-size:16px;">${minPrice / 10000}억~${
+          maxPrice / 10000
+        }억</div>
               </div>
             </div>
           </div>
@@ -280,9 +291,9 @@ export default {
     },
     displayMarker(apt) {
       const markerimage = new kakao.maps.MarkerImage(
-          require("@/assets/img/cookieman.png"),
-          new kakao.maps.Size(48, 48),
-          {}
+        require("@/assets/img/cookieman.png"),
+        new kakao.maps.Size(48, 48),
+        {}
       );
 
       const position = new kakao.maps.LatLng(apt.y, apt.x);
@@ -293,7 +304,12 @@ export default {
       marker.setMap(this.mapInstance);
       this.markers.push(marker);
 
-      let overlayContent = this.createOverlayContent(apt.numDeal, apt.name, apt.minPrice, apt.maxPrice);
+      let overlayContent = this.createOverlayContent(
+        apt.numDeal,
+        apt.name,
+        apt.minPrice,
+        apt.maxPrice
+      );
       apt.marker = marker;
 
       const overlay = new kakao.maps.CustomOverlay({
@@ -303,7 +319,7 @@ export default {
       });
       this.overlays.push(overlay);
 
-      kakao.maps.event.addListener(marker, 'mouseover', () => {
+      kakao.maps.event.addListener(marker, "mouseover", () => {
         overlay.setMap(this.mapInstance);
         const dealsListItem = document.getElementsByClassName("apt-item-name");
         for (let i = 0; i < dealsListItem.length; i++) {
@@ -315,7 +331,7 @@ export default {
         }
       });
 
-      kakao.maps.event.addListener(marker, 'mouseout', () => {
+      kakao.maps.event.addListener(marker, "mouseout", () => {
         overlay.setMap(null);
         const dealsListItem = document.getElementsByClassName("apt-item-name");
         for (let i = 0; i < dealsListItem.length; i++) {
@@ -328,9 +344,9 @@ export default {
       });
     },
     emphasizeDealListItem(targetBoldItem) {
-      targetBoldItem.style.color="white";
-      targetBoldItem.style.backgroundColor="rgb(255,95,0)";
-      targetBoldItem.style.borderRadius="5px";
+      targetBoldItem.style.color = "white";
+      targetBoldItem.style.backgroundColor = "rgb(255,95,0)";
+      targetBoldItem.style.borderRadius = "5px";
       targetBoldItem.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
@@ -340,27 +356,26 @@ export default {
 
       const t1 = targetBoldItem.getElementsByClassName("apt-item-price-range");
       Array.prototype.forEach.call(t1, (el) => {
-        el.style.color="white";
-      })
+        el.style.color = "white";
+      });
       const t2 = targetBoldItem.getElementsByClassName("apt-item-num-deal");
       Array.prototype.forEach.call(t2, (el) => {
-        el.style.color="white";
-      })
-
+        el.style.color = "white";
+      });
     },
     disEmphasizeDealListItem(targetBoldItem) {
-      targetBoldItem.style.color="black";
-      targetBoldItem.style.backgroundColor="rgba(255, 255, 255, 0)";
-      targetBoldItem.style.borderRadius="0px";
+      targetBoldItem.style.color = "black";
+      targetBoldItem.style.backgroundColor = "rgba(255, 255, 255, 0)";
+      targetBoldItem.style.borderRadius = "0px";
 
       const t1 = targetBoldItem.getElementsByClassName("apt-item-price-range");
       Array.prototype.forEach.call(t1, (el) => {
-        el.style.color="firebrick";
-      })
+        el.style.color = "firebrick";
+      });
       const t2 = targetBoldItem.getElementsByClassName("apt-item-num-deal");
       Array.prototype.forEach.call(t2, (el) => {
-        el.style.color="firebrick";
-      })
+        el.style.color = "firebrick";
+      });
     },
   },
   watch: {
@@ -373,9 +388,7 @@ export default {
       this.mapInstance.setLevel(5);
     },
     addrLv3() {
-      this.moveMapWithKeyword(
-        `${this.addrLv1} ${this.addrLv2} ${this.addrLv3}`
-      );
+      this.moveMapWithKeyword(`${this.addrLv1} ${this.addrLv2} ${this.addrLv3}`);
       this.mapInstance.setLevel(3);
     },
   },
@@ -434,7 +447,7 @@ export default {
 }
 
 #deals-list::-webkit-scrollbar {
-  width:10px;
+  width: 10px;
 }
 
 #deals-list::-webkit-scrollbar-track {
@@ -446,7 +459,7 @@ export default {
   padding: 5px;
   border-style: solid;
   border-width: 3px;
-  border-color: rgba(255,255,255,0);
+  border-color: rgba(255, 255, 255, 0);
 }
 
 .deal-item {
@@ -488,5 +501,4 @@ export default {
   cursor: auto;
   cursor: url("./santaman.png"), pointer;
 }
-
 </style>

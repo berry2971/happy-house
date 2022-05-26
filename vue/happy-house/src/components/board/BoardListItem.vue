@@ -24,7 +24,8 @@ export default {
   },
   filters: {
     formatDate(regtime) {
-      return moment(new Date(regtime)).format("YYYY.MM.DD");
+      let date = new Date(Date.parse(regtime) - 1000 * 60 * 60 * 9);
+      return moment(date).format("YYYY.MM.DD");
     },
   },
 };

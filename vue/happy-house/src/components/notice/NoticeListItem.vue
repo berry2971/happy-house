@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td class="subject">{{ notice.subject }}</td>
+    <td class="subject notice-subject">{{ notice.subject }}</td>
     <td>
       <!-- <router-link :to="`/board/detail?articleno=${article.articleno}`">{{
         article.subject

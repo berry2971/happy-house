@@ -3,27 +3,15 @@ import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
+
+import userStore from "./modules/userStore.js";
+import boardStore from "./modules/boardStore.js";
+
 const store = new Vuex.Store({
-  namespaced: true,
-  state: {
-    token: null,
+  modules: {
+    userStore,
+    boardStore,
   },
-  getters: {
-    isLogin(state) {
-      return sessionStorage.getItem("token") == null ? false : true;
-    },
-  },
-  mutations: {
-    setToken(state, _token) {
-      sessionStorage.setItem("token", _token);
-    },
-  },
-  actions: {
-    setToken: ({ commit }, _token) => {
-      commit("setToken", _token);
-    },
-  },
-  modules: {},
   plugins: [
     createPersistedState({
       storage: sessionStorage,

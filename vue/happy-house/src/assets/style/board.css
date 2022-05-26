@@ -9,7 +9,7 @@ button,
   float: right;
 }
 .regist{
-  padding: 10px;
+  margin: 10px;
 }
 .regist-form {
   border-radius: 5px;
@@ -68,6 +68,11 @@ a.board-title {
 .board-btn{
   padding-top: 15px;
   padding-bottom: 15px;
+}
+
+.notice-subject{
+  color: rgb(39, 39, 215);
+  font-weight: bold;
 }
 #board-list {
     border-collapse: collapse;

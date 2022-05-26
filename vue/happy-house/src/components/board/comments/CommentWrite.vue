@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-textarea placeholder="댓글을 입력해주세요." v-model="content"> </b-textarea>
+    <b-textarea v-model="content"> </b-textarea>
     <b-button variant="outline-secondary" @click="commentWrite()">댓글 작성</b-button>
   </div>
 </template>

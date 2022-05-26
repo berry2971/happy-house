@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="regist">
+    <b-card class="regist">
       <div class="regist_form">
         <span class="subject-span">{{ article.subject }}</span>
         <span class="title-span">{{ article.title }}</span>
@@ -11,18 +11,17 @@
         <hr />
         <span class="content-span" v-html="article.content"></span>
       </div>
-    </div>
-    <div class="board-Btn">
-      <b-button variant="outline-secondary" class="btn" @click="boardDelete()"> 삭제 </b-button>
-      <b-button variant="outline-secondary" class="btn" @click="moveModify(article.id)">
-        수정
-      </b-button>
-      <b-button variant="outline-secondary" class="btn" @click="moveList()">목록</b-button>
-    </div>
+      <div class="board-Btn">
+        <b-button variant="outline-secondary" class="btn" @click="boardDelete()"> 삭제 </b-button>
+        <b-button variant="outline-secondary" class="btn" @click="moveModify(article.id)">
+          수정
+        </b-button>
+        <b-button variant="outline-secondary" class="btn" @click="moveList()">목록</b-button>
+      </div>
+    </b-card>
     <br />
-    <hr style="clear: both" />
-    <div>{{ article_id }}</div>
     <comment-list></comment-list>
+    <hr />
     <comment-write></comment-write>
   </div>
 </template>
@@ -30,8 +29,8 @@
 <script>
 import http from "@/api/http";
 import moment from "moment";
-import CommentWrite from "./comments/CommentWrite.vue";
-import CommentList from "./comments/CommentList.vue";
+import CommentWrite from "@/components/board/comments/CommentWrite.vue";
+import CommentList from "@/components/board/comments/CommentList.vue";
 export default {
   name: "BoardDetail",
   components: {
@@ -81,7 +80,8 @@ export default {
   },
   filters: {
     formatDate(regtime) {
-      return moment(new Date(regtime)).add(-1, "day").format("YYYY.MM.DD");
+      let date = new Date(Date.parse(regtime) - 1000 * 60 * 60 * 9);
+      return moment(date).format("YYYY.MM.DD HH:mm:ss");
     },
   },
 };

@@ -1,51 +1,42 @@
 <template>
   <div class="header">
     <div class="header-right">
-      <template v-if="id">
+      <template v-if="userInfo">
         <a @click="logout()" class="userInfo">로그아웃</a>
-        <a @click="moveModify(id)" class="userInfo">정보관리</a>
-        <span class="userInfo">{{ this.id }}님 안녕하세요</span>
+        <router-link :to="{ name: 'UserModify', params: { id: userInfo.id } }"
+          >정보관리</router-link
+        >
+        <span class="userInfo">{{ userInfo.id }}님 안녕하세요</span>
       </template>
       <template v-else>
-        <router-link to="/user/login">로그인</router-link>
-        <router-link to="/user/join">회원가입</router-link>
+        <router-link :to="{ name: 'login' }">로그인</router-link>
+        <router-link :to="{ name: 'join' }">회원가입</router-link>
       </template>
     </div>
 
     <div class="menu">
-      <router-link to="/"><img src="@/assets/img/logo.png" class="happy_logo" /></router-link>
-      <router-link to="/board/notice">공지사항</router-link>
-      <router-link to="/board/community">커뮤니티</router-link>
-      <router-link to="/board">관심지역</router-link>
+      <router-link :to="{ name: 'home' }"
+        ><img src="@/assets/img/logo.png" class="happy_logo"
+      /></router-link>
+      <router-link :to="{ name: 'notice' }">공지사항</router-link>
+      <router-link :to="{ name: 'list' }">커뮤니티</router-link>
+      <router-link :to="{ name: 'home' }">관심지역</router-link>
     </div>
   </div>
 </template>
 
 <script>
 import http from "@/api/http";
-const store = "store";
+import { mapState, mapMutations } from "vuex";
+const userStore = "userStore";
 
 export default {
   name: "HeaderNav",
-  data() {
-    return {
-      id: "",
-    };
-  },
-  created() {
-    if (this.$store.getters.isLogin) {
-      http
-        .get("/users/login/current", {
-          headers: {
-            Authorization: `Bearer ` + sessionStorage.getItem("token"),
-          },
-        })
-        .then(({ data }) => {
-          this.id = data.id;
-        });
-    }
+  computed: {
+    ...mapState(userStore, ["isLogin", "userInfo"]),
   },
   methods: {
+    ...mapMutations(userStore, ["SET_IS_LOGIN", "SET_USER_INFO"]),
     logout() {
       http
         .post(
@@ -58,14 +49,12 @@ export default {
           }
         )
         .then(({ data }) => {
-          sessionStorage.clear("vuex");
-          sessionStorage.clear("token");
-          alert("로그아웃 되었습니다.");
-          location.href = "/";
+          this.SET_IS_LOGIN(false);
+          this.SET_USER_INFO(null);
+          sessionStorage.removeItem("vuex");
+          sessionStorage.removeItem("token");
+          if (this.$route.path != "/") this.$router.push({ name: "home" });
         });
-    },
-    moveModify(id) {
-      this.$router.push({ name: "UserModify", params: { id: id } });
     },
   },
 };

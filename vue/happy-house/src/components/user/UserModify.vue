@@ -77,9 +77,9 @@ export default {
       err && !this.bmk_addr_lv3 && ((msg = "읍면동를 입력해주세요"), (err = false));
       err && !this.bmk_addr_lv4 && ((msg = "리, 상세주소를 입력해주세요"), (err = false));
       if (!err) alert(msg);
-      else this.modifyUser();
+      else this.User();
     },
-    modifyUser() {
+    User() {
       http
         .put(
           `/users/${this.$route.params.id}`,
