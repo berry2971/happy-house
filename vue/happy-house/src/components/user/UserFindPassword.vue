@@ -4,7 +4,7 @@
       <b-row no-gutters>
         <b-col md="6">
           <b-card-img
-            :src="require('@/assets/img/loginImg.jpg')"
+            :src="require('@/assets/img/passwordImage.jpg')"
             alt="Image"
             class="rounded-0"
             style="height: auto"

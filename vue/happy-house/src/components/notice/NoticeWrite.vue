@@ -1,7 +1,7 @@
 <template>
   <div class="regist">
     <b-form class="regist-form" @submit.stop.prevent>
-      <b-form-input hidden v-model="author" name="author" />
+      <b-form-input hidden v-model="author" name="author" v:if="role==='ROLE_ADMIN'" />
       <b-form-select
         v-model="subject"
         :options="options"
@@ -56,20 +56,19 @@ export default {
         { value: "이벤트", text: "이벤트" },
         { value: "발표", text: "발표" },
       ],
+      role: currentUser.role,
     };
   },
   created() {
-    if (this.$store.getters.isLogin != null) {
-      http
-        .get("/users/login/current", {
-          headers: {
-            Authorization: `Bearer ` + sessionStorage.getItem("token"),
-          },
-        })
-        .then(({ data }) => {
-          this.author = data.id;
-        });
-    }
+    http
+      .get("/users/login/current", {
+        headers: {
+          Authorization: `Bearer ` + sessionStorage.getItem("token"),
+        },
+      })
+      .then(({ data }) => {
+        this.author = data.id;
+      });
   },
   methods: {
     checkValue() {

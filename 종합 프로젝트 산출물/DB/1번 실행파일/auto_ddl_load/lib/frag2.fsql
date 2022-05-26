@@ -1,0 +1,13 @@
+"
+INTO TABLE `district`
+CHARACTER SET UTF8MB4
+FIELDS TERMINATED BY ","
+LINES TERMINATED BY '\r\n'
+IGNORE 1 ROWS
+(@id, @addr_lv1, @addr_lv2, @addr_lv3, @addr_lv4)
+SET
+`id` = @id,
+`addr_lv1` = @addr_lv1,
+`addr_lv2` = @addr_lv2,
+`addr_lv3` = @addr_lv3,
+`addr_lv4` = @addr_lv4;

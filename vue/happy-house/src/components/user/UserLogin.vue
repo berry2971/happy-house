@@ -33,7 +33,7 @@
             </b-form>
             <div class="login-div-a">
               <router-link class="login-a" to="/user/join"> 회원 가입 </router-link>
-              <router-link class="login-a" to="/board">비밀번호 찾기</router-link>
+              <router-link class="login-a" to="/user/forget-password">비밀번호 찾기</router-link>
             </div>
           </b-card-body>
         </b-col>

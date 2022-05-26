@@ -1,3 +1,0 @@
-SET PORT=3307
-SET ID=ssafy
-SET PW=ssafy
