@@ -65,6 +65,7 @@ const routes = [
     path: "/board/community",
     name: "board",
     component: () => import("@/views/BoardView.vue"),
+    beforeEnter: checkAndPrevent,
     redirect: "/board/community",
     children: [
       {
