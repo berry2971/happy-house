@@ -12,30 +12,13 @@
         <b-col md="6">
           <b-card-body title="로그인">
             <b-form @submit.stop.prevent>
-              <b-form-input
-                type="text"
-                id="id"
-                name="id"
-                v-model="id"
-                placeholder="아이디"
-              />
-              <b-form-input
-                type="password"
-                id="pw"
-                name="pw"
-                v-model="pw"
-                placeholder="비밀번호"
-              />
-              <b-button
-                variant="outline-secondary"
-                @click="checkValue"
-                style="width: 90%"
-                >로그인</b-button
-              >
+              <b-form-input type="text" id="id" name="id" v-model="id" placeholder="아이디" />
+              <b-form-input type="password" id="pw" name="pw" v-model="pw" placeholder="비밀번호" />
+              <button @click="checkValue" class="login-btn">로그인</button><br />
             </b-form>
-            <div>
-              <router-link to="/user/join">회원가입</router-link>
-              <router-link to="/board">비밀번호 찾기</router-link>
+            <div class="login-div-a">
+              <router-link class="login-a" to="/user/join"> 회원 가입 </router-link>
+              <router-link class="login-a" to="/board">비밀번호 찾기</router-link>
             </div>
           </b-card-body>
         </b-col>

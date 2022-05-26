@@ -65,9 +65,25 @@ a.board-title {
   display: block;
 }
 
+.comment-a{
+  text-align: right;
+  background-color:#ff5f00;
+  color:white;
+}
+
 .board-btn{
   padding-top: 15px;
   padding-bottom: 15px;
+  background-color:#ff5f00;
+  color:white;
+  font-weight: bold;
+  border: 0;
+  outline: 0;
+}
+
+.board-group a{
+  text-align: right;
+  color: #ff5f00;
 }
 
 .notice-subject{

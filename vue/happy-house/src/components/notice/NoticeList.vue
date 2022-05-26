@@ -1,7 +1,7 @@
 <template>
   <div class="regist">
-    <div style="text-align: right">
-      <b-button variant="outline-secondary" @click="moveWrite">글 등록</b-button>
+    <div style="text-align: right" v:if="currentUser.role=='ROLE_ADMIN'">
+      <b-button class="board-btn" @click="moveWrite">글 등록</b-button>
     </div>
     <div v-if="notices.length">
       <table id="board-list">
@@ -34,6 +34,8 @@
 <script>
 import http from "@/api/http";
 import NoticeListItem from "@/components/notice/NoticeListItem.vue";
+import { mapState, mapMutations } from "vuex";
+const userStore = "userStore";
 
 export default {
   name: "NoticeList",
@@ -44,6 +46,9 @@ export default {
     return {
       notices: [],
     };
+  },
+  computed: {
+    ...mapState(userStore, ["isLogin", "userInfo", "currentUser"]),
   },
   created() {
     http

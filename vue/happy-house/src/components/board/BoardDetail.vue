@@ -1,7 +1,14 @@
 <template>
   <div>
-    <b-card class="regist">
+    <div class="regist">
       <div class="regist_form">
+        <div class="board-a">
+          <span class="board-group" v-if="article.author == currentUser.id">
+            <a @click="boardDelete()">삭제</a>
+            <a @click="moveModify(article.id)">수정</a>
+          </span>
+          <a @click="moveList()">목록</a>
+        </div>
         <span class="subject-span">{{ article.subject }}</span>
         <span class="title-span">{{ article.title }}</span>
         <br />
@@ -11,14 +18,7 @@
         <hr />
         <span class="content-span" v-html="article.content"></span>
       </div>
-      <div class="board-Btn">
-        <b-button variant="outline-secondary" class="btn" @click="boardDelete()"> 삭제 </b-button>
-        <b-button variant="outline-secondary" class="btn" @click="moveModify(article.id)">
-          수정
-        </b-button>
-        <b-button variant="outline-secondary" class="btn" @click="moveList()">목록</b-button>
-      </div>
-    </b-card>
+    </div>
     <br />
     <comment-list></comment-list>
   </div>
@@ -28,10 +28,17 @@
 import http from "@/api/http";
 import moment from "moment";
 import CommentList from "@/components/board/comments/CommentList.vue";
+import { mapState, mapMutations } from "vuex";
+const userStore = "userStore";
+
 export default {
   name: "BoardDetail",
   components: {
     CommentList,
+  },
+
+  computed: {
+    ...mapState(userStore, ["isLogin", "userInfo", "currentUser"]),
   },
   data: function () {
     return {
@@ -60,7 +67,7 @@ export default {
         })
         .then(({ data }) => {
           let msg = "삭제 처리시 문제가 발생했습니다.";
-          if (data != "null") {
+          if (data != null) {
             msg = "삭제가 완료되었습니다.";
           }
           alert(msg);
@@ -77,7 +84,7 @@ export default {
   filters: {
     formatDate(regtime) {
       let date = new Date(Date.parse(regtime) - 1000 * 60 * 60 * 9);
-      return moment(date).format("YYYY.MM.DD HH:mm:ss");
+      return moment(date).format("YYYY년 MM월 DD일");
     },
   },
 };

@@ -100,11 +100,11 @@ export default {
           }
         )
         .then(({ data }) => {
-          let msg = "회원정보 수정시 문제가 발생했습니다.";
+          let msg = "회원정보 수정 과정에서 문제가 발생했습니다.";
           if (data != null) {
             msg = "회원정보 수정을 완료했습니다.";
           }
-          alert(data);
+          alert(msg);
           this.$router.push({ name: "home" });
         });
     },

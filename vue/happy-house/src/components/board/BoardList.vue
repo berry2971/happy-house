@@ -1,7 +1,7 @@
 <template>
   <div class="regist">
     <div style="text-align: right">
-      <b-button variant="outline-secondary" :to="{ name: 'write' }">글 등록</b-button>
+      <button class="board-btn" :to="{ name: 'write' }">글 등록</button>
     </div>
     <div v-if="articles.length">
       <table id="board-list">

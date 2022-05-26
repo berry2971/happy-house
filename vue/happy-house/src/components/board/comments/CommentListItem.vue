@@ -5,9 +5,9 @@
       |
       <span class="write_time-span">{{ comment.write_time | formatDate }}</span>
       <span class="content-span" v-html="comment.content"></span>
-      <b-button variant="outline-secondary" class="comment-btn" @click="deleteComment(comment.id)"
-        >삭제</b-button
-      >
+      <div v-if="comment.author == currentUser.id">
+        <a class="comment-a" @click="deleteComment(comment.id)">삭제</a>
+      </div>
     </div>
     <hr style="clear: both" />
   </div>
@@ -16,11 +16,16 @@
 <script>
 import http from "@/api/http";
 import moment from "moment";
+import { mapState, mapMutations } from "vuex";
+const userStore = "userStore";
 
 export default {
   name: "CommentListItem",
   props: {
     comment: Object,
+  },
+  computed: {
+    ...mapState(userStore, ["isLogin", "userInfo", "currentUser"]),
   },
   filters: {
     formatDate(regtime) {
